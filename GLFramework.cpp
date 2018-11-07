@@ -12,6 +12,7 @@ GLFramework::GLFramework(std::string strWinTitle)
 
 GLFramework::~GLFramework()
 {
+	남주영씨발롬아
 
 }
 
