@@ -21,11 +21,16 @@
   <ItemGroup>
     <ClInclude Include="GLFramework.h" />
     <ClInclude Include="GLScene.h" />
+    <ClInclude Include="GLScenesInfo.h" />
+    <ClInclude Include="Singame.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLFramework.cpp" />
     <ClCompile Include="GLScene.cpp" />
+    <ClCompile Include="GLScenesInfo.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Singame.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

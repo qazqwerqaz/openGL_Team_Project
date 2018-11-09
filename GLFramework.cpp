@@ -4,6 +4,8 @@
 #include "GLScenesInfo.h"
 #endif
 
+using namespace std;
+
 GLFramework::GLFramework(std::string strWinTitle)
 {
 	m_WinTitle = strWinTitle;
@@ -12,12 +14,12 @@ GLFramework::GLFramework(std::string strWinTitle)
 
 GLFramework::~GLFramework()
 {
-	남주영씨발롬아
-
+	
 }
 
 void GLFramework::init(int argc, char * argv[], int WinWidth, int WinHeight, bool bFullScreen, int DisplayMode)
 {
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowPosition(100, 100);
@@ -27,14 +29,14 @@ void GLFramework::init(int argc, char * argv[], int WinWidth, int WinHeight, boo
 	);
 	glutCreateWindow(m_WinTitle.c_str());
 
-	//m_Framework = this;
+	m_Framework = this;
 
 	if (bFullScreen)
 		glutFullScreen();
 
-	/*for (auto scene : SCENES)
+	for (auto scene : SCENES)
 		addScene(scene.name, scene.pScene, scene.bInitAtStart);
-	toScene(STARTING_SCENE);*/
+	toScene(STARTING_SCENE);
 }
 
 void GLFramework::run()
@@ -76,34 +78,166 @@ void GLFramework::reshape(int w, int h)
 
 void GLFramework::keyboardDown(unsigned char key, int x, int y)
 {
-
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->keyboard(key, true, x, y, false);
 }
 
 void GLFramework::keyboardUp(unsigned char key, int x, int y)
 {
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->keyboard(key, false, x, y, false);
 }
 
 void GLFramework::mouse(int button, int state, int x, int y)
 {
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->mouse(button, state == GLUT_DOWN, x, y);
 }
 
 void GLFramework::motion(int x, int y)
 {
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->motion(true, x, y);
 }
 
 void GLFramework::freeMotion(int x, int y)
 {
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->motion(false, x, y);
 }
 
 void GLFramework::specialDown(int key, int x, int y)
 {
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->keyboard(key, true, x, y, true);
 }
 
 void GLFramework::specialUp(int key, int x, int y)
 {
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->keyboard(key, false, x, y, true);
 }
 
-void GLFramework::update(int deltaTime)
+void GLFramework::update(int value)
 {
+	//m_Timer.tick();
+	if (m_Scenes[m_CurrentScene])
+		m_Scenes[m_CurrentScene]->update(0.1);
+	/*m_Timer.getTimeElapsed()*/
+	std::string fps_title = m_WinTitle + " - ( " + std::to_string(10) + " FPS )";
+	/*m_Timer.getFPS()*/
+	glutSetWindowTitle(fps_title.c_str());
+	glutPostRedisplay();
+	glutTimerFunc(m_fps, fnTimer, 1);
 }
 
+void GLFramework::regDrawFunction(DrawFunc draw)
+{
+	fnDraw = draw;
+}
+
+void GLFramework::regReshapeFunction(ReshapeFunc reshape)
+{
+	fnReshape = reshape;
+}
+
+void GLFramework::regTimerFunction(TimerFunc timer)
+{
+	fnTimer = timer;
+}
+
+void GLFramework::regKeyboardFunction(KeyboardFunc keyboardDown, KeyboardFunc keyboardUp)
+{
+	fnKeyboardDown = keyboardDown;
+	fnKeyboardUp = keyboardUp;
+}
+
+void GLFramework::regMouseFunction(MouseFunc mouse)
+{
+	fnMouse = mouse;
+}
+
+void GLFramework::regMotionFunction(MotionFunc motion, MotionFunc freeMotion)
+{
+	fnMotion = motion;
+	fnFreeMotion = freeMotion;
+}
+
+void GLFramework::regSpecialFunction(SpecialFunc specialDown, SpecialFunc specialUp)
+{
+	fnSpecialDown = specialDown;
+	fnSpecialUp = specialUp;
+}
+
+void GLFramework::bindFunctions()
+{
+	glutDisplayFunc(fnDraw);
+	glutReshapeFunc(fnReshape);
+	glutKeyboardFunc(fnKeyboardDown);
+	glutKeyboardUpFunc(fnKeyboardUp);
+	glutMouseFunc(fnMouse);
+	glutMotionFunc(fnMotion);
+	glutPassiveMotionFunc(fnFreeMotion);
+	glutSpecialFunc(fnSpecialDown);
+	glutSpecialUpFunc(fnSpecialUp);
+	glutTimerFunc(m_fps, fnTimer, 1);
+}
+
+void GLFramework::addScene(std::string strSceneName, GLScene * pScene, bool bInitAtStart)
+{
+	if (!pScene) return;
+
+	if (bInitAtStart)
+	{
+		pScene->drawLoadingScreen();
+		pScene->init();
+	}
+
+	pScene->RTLoad = !bInitAtStart;
+	m_Scenes.emplace(strSceneName, pScene);
+}
+
+void GLFramework::deleteCurrentScene(std::string strNextScene)
+{
+	assert(m_Scenes.find(strNextScene) != m_Scenes.end());
+	deleteScene(m_CurrentScene);
+	m_CurrentScene = strNextScene;
+}
+
+void GLFramework::deleteScene(std::string strSceneName)
+{
+	assert(m_Scenes.find(strSceneName) != m_Scenes.end());
+	if (m_Scenes[strSceneName])
+		delete m_Scenes[strSceneName];
+	m_Scenes.erase(strSceneName);
+}
+
+void GLFramework::deleteScenes()
+{
+	for (auto& pScene : m_Scenes)
+		if (pScene.second)
+		{
+			delete pScene.second;
+			pScene.second = nullptr;
+		}
+}
+
+void GLFramework::toScene(std::string sceneName)
+{
+	assert(m_Scenes.find(sceneName) != m_Scenes.end());
+
+	if (m_CurrentScene.size() > 0)
+	{
+		if (m_Scenes[m_CurrentScene]->RTLoad)
+			m_Scenes[m_CurrentScene]->exit();
+	}
+
+	m_CurrentScene = sceneName;
+
+	if (m_Scenes[m_CurrentScene]->RTLoad)
+	{
+		m_Scenes[m_CurrentScene]->drawLoadingScreen();
+		m_Scenes[m_CurrentScene]->init();
+	}
+	m_Scenes[m_CurrentScene]->reset();
+}
