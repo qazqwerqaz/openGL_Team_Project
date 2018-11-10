@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\Scenes">
       <UniqueIdentifier>{90356cf5-6c22-4f5e-81f2-a75d344bfc01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Utilities">
+      <UniqueIdentifier>{a0f9c7a3-1284-4962-8c42-9b2c2a1d4e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Utilities">
+      <UniqueIdentifier>{15dc097a-fbd1-42ff-8350-c51c2397db36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -43,16 +49,16 @@
       <Filter>헤더 파일\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Transformations.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="LinearMath.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations.h">
+      <Filter>헤더 파일\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -75,16 +81,16 @@
       <Filter>소스 파일\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Transformations.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="LinearMath.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Transformations.cpp">
+      <Filter>소스 파일\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
