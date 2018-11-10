@@ -14,7 +14,7 @@ Singame::~Singame()
 
 void Singame::init()
 {
-	reshape(800, 600);
+	
 }
 
 void Singame::exit()
@@ -40,7 +40,7 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 	{
 	case VK_ESCAPE:
 	{
-		printf("남\n중\n여\n");
+		print("남\n중\n여\n",0,0,1);
 		break;
 	}
 	}
