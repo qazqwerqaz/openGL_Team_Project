@@ -36,6 +36,14 @@ void Singame::reshape(int w, int h)
 
 void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 {
+	switch (key)
+	{
+	case VK_ESCAPE:
+	{
+		printf("≥≤\n¡ﬂ\nø©\n");
+		break;
+	}
+	}
 }
 
 void Singame::mouse(int button, bool pressed, int x, int y)

@@ -28,7 +28,7 @@ void GLFramework::init(int argc, char * argv[], int WinWidth, int WinHeight, boo
 		(glutGet(GLUT_SCREEN_HEIGHT) - WinHeight) / 2
 	);
 	glutCreateWindow(m_WinTitle.c_str());
-
+	glutFullScreen();
 	m_Framework = this;
 
 	if (bFullScreen)
