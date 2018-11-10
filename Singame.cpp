@@ -27,6 +27,7 @@ void Singame::reset()
 
 void Singame::render()
 {
+
 }
 
 void Singame::reshape(int w, int h)

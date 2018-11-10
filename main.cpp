@@ -6,7 +6,7 @@ constexpr auto DEF_WIN_HEIGHT{ 600 };
 
 using namespace std;
 
-GLFramework fw("The Star");
+GLFramework fw("πŒ±‘√÷∞Ì");
 
 int main(int argc, char* argv[])
 {
