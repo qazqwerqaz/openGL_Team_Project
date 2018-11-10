@@ -1,4 +1,5 @@
 #pragma once
+#include "Timer.h"
 
 class GLScene;
 
@@ -76,5 +77,7 @@ private:
 	std::string			m_WinTitle;
 
 	bool				m_FullScreen{ true };
+
+	Timer				m_Timer;
 };
 

@@ -20,20 +20,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="LinearMath.h" />
     <ClInclude Include="GLFramework.h" />
     <ClInclude Include="GLScene.h" />
     <ClInclude Include="GLScenesInfo.h" />
     <ClInclude Include="Singame.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Transformations.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="LinearMath.cpp" />
     <ClCompile Include="GLFramework.cpp" />
     <ClCompile Include="GLScene.cpp" />
     <ClCompile Include="GLScenesInfo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Singame.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Transformations.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

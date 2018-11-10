@@ -28,7 +28,7 @@ void GLFramework::init(int argc, char * argv[], int WinWidth, int WinHeight, boo
 		(glutGet(GLUT_SCREEN_HEIGHT) - WinHeight) / 2
 	);
 	glutCreateWindow(m_WinTitle.c_str());
-	glutFullScreen();
+
 	m_Framework = this;
 
 	if (bFullScreen)
@@ -120,12 +120,11 @@ void GLFramework::specialUp(int key, int x, int y)
 
 void GLFramework::update(int value)
 {
-	//m_Timer.tick();
+	m_Timer.tick();
 	if (m_Scenes[m_CurrentScene])
-		m_Scenes[m_CurrentScene]->update(0.1);
-	/*m_Timer.getTimeElapsed()*/
-	std::string fps_title = m_WinTitle + " - ( " + std::to_string(10) + " FPS )";
-	/*m_Timer.getFPS()*/
+		m_Scenes[m_CurrentScene]->update(m_Timer.getTimeElapsed());
+	
+	std::string fps_title = m_WinTitle + " - ( " + std::to_string(m_Timer.getFPS()) + " FPS )";
 	glutSetWindowTitle(fps_title.c_str());
 	glutPostRedisplay();
 	glutTimerFunc(m_fps, fnTimer, 1);
