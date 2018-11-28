@@ -113,6 +113,14 @@ Vector3 & Vector3::operator=(Vector3 && other) noexcept
 	return *this;
 }
 
+Vector3 & Vector3::operator*(float other)
+{
+	x *= other;
+	y *= other;
+	z *= other;
+	return *this;
+}
+
 float & Vector3::operator[](size_t idx)
 {
 	assert(idx >= 0 && idx < 3);

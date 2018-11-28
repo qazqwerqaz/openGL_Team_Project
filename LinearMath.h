@@ -54,6 +54,7 @@ public:
 
 	Vector3& operator=(const Vector3& other);
 	Vector3& operator=(Vector3&& other) noexcept;
+	Vector3& operator*(float);
 
 	float& operator[](size_t idx);
 	float  operator[](size_t idx) const;

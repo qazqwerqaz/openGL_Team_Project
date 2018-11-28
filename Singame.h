@@ -2,6 +2,8 @@
 
 #include "GLScene.h"
 
+#include "Camera.h"
+
 class Singame:
 	public GLScene
 {
@@ -19,7 +21,20 @@ public:
 	virtual void motion(bool pressed, int x, int y);
 	virtual void update(float fDeltaTime);
 
+	void computeMatricesFromInputs(int x, int y, int key, int pressed);
+
+
 private:
+	Camera* m_Camera;
+	QuaternionRotation	m_QuaternionRotation;
+
+
+	bool right_button_pressed{false};
+
+	float rotation_x;
+	float rotation_y;
+	float rotation_z;
+
 
 };
 
