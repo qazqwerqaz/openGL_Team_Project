@@ -24,8 +24,7 @@ void GLFramework::init(int argc, char * argv[], int WinWidth, int WinHeight, boo
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(
-		(glutGet(GLUT_SCREEN_WIDTH) - WinWidth) / 2,
-		(glutGet(GLUT_SCREEN_HEIGHT) - WinHeight) / 2
+		800,800
 	);
 	glutCreateWindow(m_WinTitle.c_str());
 
