@@ -3,6 +3,8 @@
 #include "GLScene.h"
 
 #include "Camera.h"
+#include "OBJLoader.h"
+
 
 class Singame:
 	public GLScene
@@ -27,8 +29,14 @@ public:
 private:
 	Camera* m_Camera;
 	QuaternionRotation	m_QuaternionRotation;
+	//구 클래스가 가지고 있어야 하는 인자
+	OBJLoader a;
 
+	std::vector<Vector3> vertices;
+	std::vector<Vector2> uvs;
+	std::vector<Vector3> normals;
 
+	//
 	bool right_button_pressed{false};
 
 	float rotation_x;

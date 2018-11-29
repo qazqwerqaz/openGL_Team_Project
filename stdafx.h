@@ -7,5 +7,7 @@
 #include<cmath>
 #include <chrono>
 
+#include <vector>
+
 //GL
 #include<gl/freeglut.h>

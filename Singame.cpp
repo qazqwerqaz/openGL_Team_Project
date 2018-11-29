@@ -23,6 +23,8 @@ void Singame::init()
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 3500.f);
 	m_Camera->setSensitivity(1.f);
+
+	a.loadOBJ("»êÅ¸.obj", vertices, uvs, normals);
 }
 
 void Singame::exit()
@@ -39,13 +41,22 @@ void Singame::render()
 {
 	m_Camera->ready();
 
-	glPushMatrix();
+	/*glPushMatrix();
 	glTranslatef(0, 0, -200);
 	Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
 
 	glMultMatrixf(&a);
 	glutWireSphere(30, 50, 50);
-	glPopMatrix();
+	glPopMatrix();*/
+
+	glBegin(GL_TRIANGLES);
+	for (auto& a : vertices)
+	{
+		
+		glVertex3f(a.x, a.y, a.z);
+		
+	}
+	glEnd();
 	
 }
 
@@ -178,3 +189,5 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	lastTime = currentTime;
 }
+
+
