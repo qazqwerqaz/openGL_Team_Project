@@ -30,9 +30,19 @@ public:
 private:
 	Camera* m_Camera;
 	QuaternionRotation	m_QuaternionRotation;
-	//구 클래스가 가지고 있어야 하는 인자
+	//gameobject
 	Ball aw;
 	Map minGu;
+	//
+
+	// 조명
+	const GLfloat AmbientLight[4] = { 1.0f, 0.0f, 0.0f, 0.5F }; // 녹색조명 
+	const GLfloat DiffuseLight[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; // 적색조명 
+	const GLfloat SpecularLight[4] = { 1.0, 1.0, 1.0, 1.0 }; // 백색조명 
+	GLfloat lightPos[4] = { -60.0, 10.0, 0.0, 1.0 };
+
+	GLfloat specref[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	int Specular = 60;
 
 	//
 	bool right_button_pressed{false};

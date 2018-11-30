@@ -24,6 +24,10 @@ void Singame::init()
 	m_Camera->setPerspective(60.f, 10.f, 3500.f);
 	m_Camera->setSensitivity(1.f);
 
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	 //À§Ä¡
 	aw.init();
 	minGu.init();
 	
@@ -44,8 +48,25 @@ void Singame::render()
 {
 	m_Camera->ready();
 	
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	
+
+
 	glPushMatrix();
-	glTranslatef(0, 0, -200);
+	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
+	glutSolidCube(10);
+	glPopMatrix();
+
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+	//glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, gray);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
+	glMateriali(GL_FRONT, GL_SHININESS, Specular);
+	glPushMatrix();
 	Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
 
 	glMultMatrixf(&a);
@@ -83,6 +104,19 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 			break;
 		case 'd':
 			m_QuaternionRotation.rotate(rotation_z--* 3.14 / 180.f, { 0,0,1 });
+			break;
+
+		case '5':
+			lightPos[0] += 10;
+			break;
+		case '2':
+			lightPos[0] -= 10;
+			break;
+		case '1':
+			lightPos[1] += 10;
+			break;
+		case '3':
+			lightPos[1] -= 10;
 			break;
 		default:
 			break;

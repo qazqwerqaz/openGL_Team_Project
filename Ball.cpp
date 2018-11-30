@@ -22,11 +22,13 @@ void Ball::init()
 
 void Ball::Draw()
 {
-
+	glPushMatrix();
+	glTranslatef(0, 100, 0);
 	glBegin(GL_TRIANGLES);
 	for (auto& a : vertices)
 	{
 		glVertex3f(a.x, a.y, a.z);
 	}
 	glEnd();
+	glPopMatrix();
 }
