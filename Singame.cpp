@@ -26,6 +26,7 @@ void Singame::init()
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glShadeModel(GL_SMOOTH);
 
 	 //À§Ä¡
 	aw.init();
