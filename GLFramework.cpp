@@ -33,7 +33,7 @@ void GLFramework::init(int argc, char * argv[], int WinWidth, int WinHeight, boo
 	if (bFullScreen)
 		glutFullScreen();
 
-	for (auto scene : SCENES)
+	for (auto& scene : SCENES)
 		addScene(scene.name, scene.pScene, scene.bInitAtStart);
 	toScene(STARTING_SCENE);
 }

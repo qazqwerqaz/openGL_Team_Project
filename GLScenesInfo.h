@@ -15,7 +15,7 @@ struct GLSceneInfo
 /*~~~~~~~SCENES~~~~~~~*/
 const GLSceneInfo SCENES[] =
 {
-	{"Ingame", new Singame, false}
+	{"Ingame", new Singame, true}
 };
 
 /*~~~STARTING SCENE~~~*/

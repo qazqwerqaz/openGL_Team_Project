@@ -3,7 +3,8 @@
 #include "GLScene.h"
 
 #include "Camera.h"
-#include "OBJLoader.h"
+#include "Map.h"
+#include "Ball.h"
 
 
 class Singame:
@@ -30,11 +31,8 @@ private:
 	Camera* m_Camera;
 	QuaternionRotation	m_QuaternionRotation;
 	//구 클래스가 가지고 있어야 하는 인자
-	OBJLoader a;
-
-	std::vector<Vector3> vertices;
-	std::vector<Vector2> uvs;
-	std::vector<Vector3> normals;
+	Ball aw;
+	Map minGu;
 
 	//
 	bool right_button_pressed{false};
