@@ -2,6 +2,111 @@
 #include "Singame.h"
 #include "GLFramework.h"
 
+#include "World.h"
+#include "Body.h"
+#include "Joint.h"
+
+Body bodies[200];
+Joint joints[100];
+
+Body* bomb = NULL;
+
+float timeStep = 1.0f / 60.0f;
+int iterations = 10;
+Vector2 gravity(0.0f, -10.0f);
+
+int numBodies = 0;
+int numJoints = 0;
+
+int demoIndex = 0;
+
+World world(gravity, iterations);
+
+void DrawBody(Body* body)
+{
+	Matrix2x2 R(body->rotation);
+	Vector2 x = body->position;
+	Vector2 h = 0.5f * body->width;
+
+	Vector2 v1 = x + R * Vector2(-h.x, -h.y);
+	Vector2 v2 = x + R * Vector2(h.x, -h.y);
+	Vector2 v3 = x + R * Vector2(h.x, h.y);
+	Vector2 v4 = x + R * Vector2(-h.x, h.y);
+
+	if (body == bomb)
+		glColor3f(0.4f, 0.9f, 0.4f);
+	else
+		glColor3f(0.8f, 0.8f, 0.9f);
+
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(v1.x, v1.y);
+	glVertex2f(v2.x, v2.y);
+	glVertex2f(v3.x, v3.y);
+	glVertex2f(v4.x, v4.y);
+	glEnd();
+
+	glPushMatrix();
+	if (v1.y <= 0)
+		v1.y = 10;
+	glTranslatef( 0,v1.x/ 10, -v1.y / 10);
+	glutSolidCube(100);
+
+	glPopMatrix();
+}
+
+void DrawJoint(Joint* joint)
+{
+	Body* b1 = joint->body1;
+	Body* b2 = joint->body2;
+
+	Matrix2x2 R1(b1->rotation);
+	Matrix2x2 R2(b2->rotation);
+
+	Vector2 x1 = b1->position;
+	Vector2 p1 = x1 + R1 * joint->localAnchor1;
+
+	Vector2 x2 = b2->position;
+	Vector2 p2 = x2 + R2 * joint->localAnchor2;
+
+	glColor3f(0.5f, 0.5f, 0.8f);
+	glBegin(GL_LINES);
+	glVertex2f(x1.x, x1.y);
+	glVertex2f(p1.x, p1.y);
+	glVertex2f(x2.x, x2.y);
+	glVertex2f(p2.x, p2.y);
+	glEnd();
+	
+	
+}
+
+void Demo1(Body* b, Joint* j)
+{
+	b->Set(Vector2(100.0f, 20.0f), FLT_MAX);
+	b->position.Set(0.0f, -0.5f * b->width.y);
+	world.Add(b);
+	++b; ++numBodies;
+
+	b->Set(Vector2(1.0f, 1.0f), 200.0f);
+	b->position.Set(0.0f, 4.0f);
+	world.Add(b);
+	++b; ++numBodies;
+}
+void LaunchBomb()
+{
+	/*if (!bomb)
+	{
+		bomb = bodies + numBodies;
+		bomb->Set(Vec2(1.0f, 1.0f), 50.0f);
+		bomb->friction = 0.2f;
+		world.Add(bomb);
+		++numBodies;
+	}
+
+	bomb->position.Set(Random(-15.0f, 15.0f), 15.0f);
+	bomb->rotation = Random(-1.5f, 1.5f);
+	bomb->velocity = -1.5f * bomb->position;
+	bomb->angularVelocity = Random(-20.0f, 20.0f);*/
+}
 
 Singame::Singame()
 {
@@ -14,6 +119,12 @@ Singame::~Singame()
 
 void Singame::init()
 {
+	world.Clear();
+	numBodies = 0;
+	numJoints = 0;
+	bomb = NULL;
+
+	Demo1(bodies, joints);
 
 	m_Camera = new Camera;
 	//glEnable(GL_LIGHTING);
@@ -27,7 +138,7 @@ void Singame::init()
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	glShadeModel(GL_FLAT);
 
 	 //À§Ä¡
@@ -75,10 +186,24 @@ void Singame::render()
 
 	glMultMatrixf(&a);
 	aw.Draw();
+	minGu.Draw();
 	glPopMatrix();
 	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(0.0f, 100.0f, -25.0f);
+
 	
-	minGu.Draw();
+
+	world.Step(timeStep);
+
+	for (int i = 0; i < numBodies; ++i)
+		DrawBody(bodies + i);
+
+	for (int i = 0; i < numJoints; ++i)
+		DrawJoint(joints + i);
+	
+	
 
 
 }

@@ -23,7 +23,7 @@ void Ball::init()
 void Ball::Draw()
 {
 	glPushMatrix();
-	glTranslatef(0, 100, 0);
+	glTranslatef(100, 100, 0);
 	glBegin(GL_TRIANGLES);
 	for (auto& a : vertices)
 	{
