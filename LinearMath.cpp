@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "LinearMath.h"
 
 /* VECTOR 2 ------------------------------------------------------------------------------------------------------ */
@@ -43,6 +43,19 @@ Vector2 & Vector2::operator=(Vector2 && other) noexcept
 	x = std::move(other.x);
 	y = std::move(other.y);
 	return *this;
+}
+
+Vector2 & Vector2::operator*(float other)
+{
+	x *= other;
+	y *= other;
+	return *this;
+}
+
+void Vector2::Set(float x1, float y1)
+{
+	x = x1;
+	y = y1;
 }
 
 float & Vector2::operator[](size_t idx)
@@ -303,4 +316,3 @@ float* Matrix4x4::operator&()
 {
 	return &v[0][0];
 }
-

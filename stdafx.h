@@ -4,10 +4,10 @@
 #include<string>
 #include<map>
 #include<assert.h>
-#include<cmath>
+#include<math.h>
 #include <chrono>
 
 #include <vector>
-
+#include<limits>
 //GL
 #include<gl/freeglut.h>

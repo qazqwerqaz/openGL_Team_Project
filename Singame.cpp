@@ -14,6 +14,7 @@ Singame::~Singame()
 
 void Singame::init()
 {
+
 	m_Camera = new Camera;
 	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
@@ -26,7 +27,8 @@ void Singame::init()
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	glShadeModel(GL_SMOOTH);
+	glEnable(GL_CULL_FACE);
+	glShadeModel(GL_FLAT);
 
 	 //À§Ä¡
 	aw.init();
@@ -67,13 +69,15 @@ void Singame::render()
 	//glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, gray);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 	glMateriali(GL_FRONT, GL_SHININESS, Specular);
+
 	glPushMatrix();
 	Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
 
 	glMultMatrixf(&a);
+	aw.Draw();
 	glPopMatrix();
 	
-	aw.Draw();
+	
 	minGu.Draw();
 
 
