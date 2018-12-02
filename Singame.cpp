@@ -178,7 +178,7 @@ void Singame::render()
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 	glMateriali(GL_FRONT, GL_SHININESS, Specular);
 
-	glPushMatrix();
+	glPushMatrix(); 
 	Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
 
 	glMultMatrixf(&a);

@@ -36,8 +36,8 @@ private:
 	//
 
 	// 조명
-	const GLfloat AmbientLight[4] = { 1.0f, 0.0f, 0.0f, 0.5F }; // 녹색조명 
-	const GLfloat DiffuseLight[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; // 적색조명 
+	const GLfloat AmbientLight[4] = { 0.25f, 0.25f, 0.25f, 0.5F }; // 녹색조명 
+	const GLfloat DiffuseLight[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; // 적색조명 
 	const GLfloat SpecularLight[4] = { 1.0, 1.0, 1.0, 1.0 }; // 백색조명 
 	GLfloat lightPos[4] = { -60.0, 10.0, 0.0, 1.0 };
 
