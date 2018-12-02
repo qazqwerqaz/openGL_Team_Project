@@ -33,3 +33,8 @@ void Map::Draw()
 	}
 	glEnd();
 }
+
+void Map::Collide(std::vector<Vector3>& other)
+{
+	
+}

@@ -10,6 +10,8 @@ public:
 
 	void Draw();
 
+	void Collide(std::vector<Vector3>& other);
+
 private:
 	OBJLoader a;
 

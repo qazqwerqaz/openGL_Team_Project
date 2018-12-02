@@ -23,7 +23,7 @@ void Ball::init()
 void Ball::Draw()
 {
 	glPushMatrix();
-	glTranslatef(100, 100, 0);
+	glTranslatef(Pos.x, Pos.y, Pos.z);
 	glBegin(GL_TRIANGLES);
 	for (auto& a : vertices)
 	{
@@ -32,3 +32,15 @@ void Ball::Draw()
 	glEnd();
 	glPopMatrix();
 }
+
+void Ball::update(float time)
+{
+	Pos.y -= 1;
+}
+
+void Ball::Collide()
+{
+
+}
+
+

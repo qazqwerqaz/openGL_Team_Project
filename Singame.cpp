@@ -13,7 +13,7 @@ Body* bomb = NULL;
 
 float timeStep = 1.0f / 60.0f;
 int iterations = 10;
-Vector2 gravity(0.0f, -10.0f);
+Vector2 gravity(0.0f, -1.0f);
 
 int numBodies = 0;
 int numJoints = 0;
@@ -39,16 +39,16 @@ void DrawBody(Body* body)
 		glColor3f(0.8f, 0.8f, 0.9f);
 
 	glBegin(GL_LINE_LOOP);
-	glVertex2f(v1.x, v1.y);
-	glVertex2f(v2.x, v2.y);
-	glVertex2f(v3.x, v3.y);
-	glVertex2f(v4.x, v4.y);
+	glVertex3f(v1.x, v1.y, 0);
+	glVertex3f(v2.x, v2.y, 0);
+	glVertex3f(v3.x, v3.y, 0);
+	glVertex3f(v4.x, v4.y, 0);
 	glEnd();
 
 	glPushMatrix();
 	if (v1.y <= 0)
 		v1.y = 10;
-	glTranslatef( 0,v1.x/ 10, -v1.y / 10);
+	glTranslatef(v2.x, v2.y, 0);
 	glutSolidCube(100);
 
 	glPopMatrix();
@@ -81,7 +81,7 @@ void DrawJoint(Joint* joint)
 
 void Demo1(Body* b, Joint* j)
 {
-	b->Set(Vector2(100.0f, 20.0f), FLT_MAX);
+	b->Set(Vector2(200.0f, 20.0f), FLT_MAX);
 	b->position.Set(0.0f, -0.5f * b->width.y);
 	world.Add(b);
 	++b; ++numBodies;
@@ -93,38 +93,35 @@ void Demo1(Body* b, Joint* j)
 }
 void LaunchBomb()
 {
-	/*if (!bomb)
+	if (!bomb)
 	{
 		bomb = bodies + numBodies;
-		bomb->Set(Vec2(1.0f, 1.0f), 50.0f);
+		bomb->Set(Vector2(1.0f, 0.0f), 500.0f);
 		bomb->friction = 0.2f;
 		world.Add(bomb);
 		++numBodies;
 	}
 
-	bomb->position.Set(Random(-15.0f, 15.0f), 15.0f);
-	bomb->rotation = Random(-1.5f, 1.5f);
+	bomb->position.Set( 15.0f, 15.0f);
+	bomb->rotation =  0.0;
 	bomb->velocity = -1.5f * bomb->position;
-	bomb->angularVelocity = Random(-20.0f, 20.0f);*/
+	bomb->angularVelocity = 0.0;
 }
 
 Singame::Singame()
 {
+
 }
 
 
 Singame::~Singame()
 {
+
 }
 
 void Singame::init()
 {
-	world.Clear();
-	numBodies = 0;
-	numJoints = 0;
-	bomb = NULL;
 
-	Demo1(bodies, joints);
 
 	m_Camera = new Camera;
 	//glEnable(GL_LIGHTING);
@@ -189,23 +186,6 @@ void Singame::render()
 	minGu.Draw();
 	glPopMatrix();
 	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(0.0f, 100.0f, -25.0f);
-
-	
-
-	world.Step(timeStep);
-
-	for (int i = 0; i < numBodies; ++i)
-		DrawBody(bodies + i);
-
-	for (int i = 0; i < numJoints; ++i)
-		DrawJoint(joints + i);
-	
-	
-
-
 }
 
 void Singame::reshape(int w, int h)
@@ -237,6 +217,7 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 			break;
 
 		case '5':
+			LaunchBomb();
 			lightPos[0] += 10;
 			break;
 		case '2':
@@ -271,7 +252,7 @@ void Singame::motion(bool pressed, int x, int y)
 
 void Singame::update(float fDeltaTime)
 {
-
+	aw.update(fDeltaTime);
 }
 
 
