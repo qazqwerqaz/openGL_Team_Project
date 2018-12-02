@@ -25,6 +25,9 @@ void Map::init()
 
 void Map::Draw()
 {
+	glEnable(GL_TEXTURE_2D); 
+	a.skybox();
+
 	glBegin(GL_TRIANGLES);
 	for (auto& a : vertices)
 	{
