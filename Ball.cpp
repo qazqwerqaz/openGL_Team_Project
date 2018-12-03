@@ -45,10 +45,10 @@ bool Ball::Collide(std::vector<Vector3>& other)
 {
 	for (auto& a : other)
 	{
-		if (Pos.x - 20 > a.x) continue;
-		if (Pos.x + 20 < a.x) continue;
-		if (Pos.z - 20 > a.z) continue;
-		if (Pos.z + 20 < a.z) continue;
+		if (Pos.x - ballSize > a.x) continue;
+		if (Pos.x + ballSize < a.x) continue;
+		if (Pos.z - ballSize > a.z) continue;
+		if (Pos.z + ballSize < a.z) continue;
 
 		if (a.y > Pos.y)
 		{
@@ -64,16 +64,16 @@ void Ball::move(int key)
 	switch (key)
 	{
 	case 'w':
-		Pos.x += 1;
+		Pos.x += Move.x;
 		break;
 	case 's':
-		Pos.x -= 1;
+		Pos.x -= Move.x;
 		break;
 	case 'a':
-		Pos.z += 1;
+		Pos.z += Move.z;
 		break;
 	case 'd':
-		Pos.z -= 1;
+		Pos.z -= Move.z;
 		break;
 	default:
 		break;
