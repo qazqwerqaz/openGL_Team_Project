@@ -203,19 +203,24 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 			exit();
 			break;
 		}
+		//case 'w':
+		//	m_QuaternionRotation.rotate(rotation_x++ * 3.14 / 180.f, { 1,0,0 });
+		//	break;
+		//case 's':
+		//	m_QuaternionRotation.rotate(rotation_x--* 3.14 / 180.f, { 1,0,0 });
+		//	break;
+		//case 'a':
+		//	m_QuaternionRotation.rotate(rotation_z++* 3.14 / 180.f, { 0,0,1 });
+		//	break;
+		//case 'd':
+		//	m_QuaternionRotation.rotate(rotation_z--* 3.14 / 180.f, { 0,0,1 });
+		//	break;
 		case 'w':
-			m_QuaternionRotation.rotate(rotation_x++ * 3.14 / 180.f, { 1,0,0 });
-			break;
 		case 's':
-			m_QuaternionRotation.rotate(rotation_x--* 3.14 / 180.f, { 1,0,0 });
-			break;
 		case 'a':
-			m_QuaternionRotation.rotate(rotation_z++* 3.14 / 180.f, { 0,0,1 });
-			break;
 		case 'd':
-			m_QuaternionRotation.rotate(rotation_z--* 3.14 / 180.f, { 0,0,1 });
+			aw.move(key);
 			break;
-
 		case '5':
 			LaunchBomb();
 			lightPos[0] += 10;
@@ -252,7 +257,7 @@ void Singame::motion(bool pressed, int x, int y)
 
 void Singame::update(float fDeltaTime)
 {
-	aw.update(fDeltaTime);
+	aw.update(fDeltaTime, minGu.vertices);
 }
 
 
@@ -330,6 +335,9 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	m_Camera->setTarget(V3::add(position, direction));
 	m_Camera->setUp(up);
 
+	lightPos[0] = position.x;
+	lightPos[1] = position.y;
+	lightPos[2] = position.z;
 	lastTime = currentTime;
 }
 

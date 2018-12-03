@@ -17,10 +17,6 @@ void Map::init()
 {
 	a.initTexture();
 	a.loadOBJ("ªÍ≈∏.obj", vertices, uvs, normals);
-	for (auto& a : vertices)
-	{
-		a.y -= 100;
-	}
 }
 
 void Map::Draw()
@@ -37,7 +33,7 @@ void Map::Draw()
 	glEnd();
 }
 
-void Map::Collide(std::vector<Vector3>& other)
+void Map::Collide()
 {
 	
 }

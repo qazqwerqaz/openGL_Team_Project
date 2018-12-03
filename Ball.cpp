@@ -33,13 +33,51 @@ void Ball::Draw()
 	glPopMatrix();
 }
 
-void Ball::update(float time)
+void Ball::update(float time , std::vector<Vector3>& other)
 {
-	Pos.y -= 1;
+	Pos.y -= Move.y;
+	if (Collide(other))
+		Pos.y += Move.y;
+		
 }
 
-void Ball::Collide()
+bool Ball::Collide(std::vector<Vector3>& other)
 {
+	for (auto& a : other)
+	{
+		if (Pos.x - 20 > a.x) continue;
+		if (Pos.x + 20 < a.x) continue;
+		if (Pos.z - 20 > a.z) continue;
+		if (Pos.z + 20 < a.z) continue;
+
+		if (a.y > Pos.y)
+		{
+			Move.y = a.y - Pos.y;
+			return true;
+		}
+	}
+	return false;
+}
+
+void Ball::move(int key)
+{
+	switch (key)
+	{
+	case 'w':
+		Pos.x += 1;
+		break;
+	case 's':
+		Pos.x -= 1;
+		break;
+	case 'a':
+		Pos.z += 1;
+		break;
+	case 'd':
+		Pos.z -= 1;
+		break;
+	default:
+		break;
+	}
 
 }
 

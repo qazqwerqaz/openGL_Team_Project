@@ -10,9 +10,9 @@ public:
 
 	void Draw();
 
-	void Collide(std::vector<Vector3>& other);
+	void Collide();
 
-private:
+public:
 	OBJLoader a;
 
 	std::vector<Vector3> vertices;
