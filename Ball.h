@@ -16,7 +16,7 @@ public:
 private:
 	OBJLoader a;
 
-	Vector3 Pos{ 0,200,0 };
+	Vector3 Pos{ 0,0,0 };
 	Vector3 Move{ 1,1,1 };
 
 	std::vector<Vector3> vertices;
