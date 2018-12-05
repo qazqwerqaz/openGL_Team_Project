@@ -133,8 +133,8 @@ void Singame::init()
 	m_Camera->setPerspective(60.f, 10.f, 3500.f);
 	m_Camera->setSensitivity(1.f);
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
 	//glEnable(GL_CULL_FACE);
 	glShadeModel(GL_FLAT);
 

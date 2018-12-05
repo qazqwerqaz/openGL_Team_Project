@@ -2,6 +2,7 @@
 #include "OBJLoader.h"
 
 #include "LinearMath.h"
+#include "Transformations.h"
 class Ball
 {
 public:
@@ -23,9 +24,14 @@ private:
 	std::vector<Vector2> uvs;
 	std::vector<Vector3> normals;
 
+	QuaternionRotation	m_QuaternionRotation;
+	
+	float rotation_x{0};
+	float rotation_z{ 0 };
+
 
 	Vector3 p0{ 0,0,0 }, p1{ 0,0,1 }, p2{ 1,0,0 };
 
-	int ballSize{ 20 };
+	int ballSize{ 60 };
 };
 
