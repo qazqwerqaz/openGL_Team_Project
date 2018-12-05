@@ -17,12 +17,7 @@ void Map::init()
 {
 	a.initTexture();
 	a.loadOBJ("ªÍ≈∏µÈ.obj", vertices, uvs, normals);
-	for (auto& a : vertices)
-	{
-		a.x *= 20;
-		a.y *= 20;
-		a.z *= 20;
-	}
+	
 	//glTranslatef(0, 200, 0);
 }
 

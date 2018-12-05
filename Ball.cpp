@@ -28,19 +28,25 @@ void Ball::init()
 void Ball::Draw()
 {
 	glPushMatrix();
-	//glTranslatef(Pos.x, Pos.y, Pos.z);
+	
 	glColor3f(1, 0, 0);
 
+	
+	Matrix4x4 b;
+	//glGetFloatv(GL_MODELVIEW_MATRIX, &ball_matrix);
+	
 	glPushMatrix();
 	{
-		Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
-
-		glMultMatrixf(&a);
-
+		//glMultMatrixf(&ball_matrix);
+		glMultMatrixf(&m_QuaternionRotation_Z.getRotationMatrix());
+		
+		
 		glutSolidSphere(20, 30, 30);
 		glColor3f(1, 1, 1);
 		glutWireSphere(21, 30, 30);
+
 	}
+	
 	glPopMatrix();
 	glEnd();
 	glPopMatrix();
@@ -79,24 +85,28 @@ void Ball::move(int key)
 	switch (key)
 	{
 	case 'w':
+	{
 		Pos.x += Move.x;
-		m_QuaternionRotation.rotate(rotation_x++ * 3.14 / 180.f, { 1,0,0 });
-
+		m_QuaternionRotation_Z.rotate(3.141592 / 180, m_QuaternionRotation_Z.rotatePoint(V3::add(Rotate_shaft, { 0,0,1 })));
+	}
 		break;
 	case 's':
+	{
 		Pos.x -= Move.x;
-		m_QuaternionRotation.rotate(rotation_x++ * 3.14 / 180.f, { 1,0,0 });
-
+		m_QuaternionRotation_Z.rotate(-3.141592 / 180, m_QuaternionRotation_Z.rotatePoint(V3::add(Rotate_shaft, { 0,0,1 })));
+	}
 		break;
 	case 'a':
+	{
 		Pos.z += Move.z;
-		m_QuaternionRotation.rotate(rotation_z++ * 3.14 / 180.f, { 1,0,0 });
-
+		m_QuaternionRotation_Z.rotate(3.141592 / 180, m_QuaternionRotation_Z.rotatePoint(V3::add(Rotate_shaft, { 1,0,0 })));
+	}
 		break;
 	case 'd':
+	{
 		Pos.z -= Move.z;
-		m_QuaternionRotation.rotate(rotation_z++ * 3.14 / 180.f, { 1,0,0 });
-
+		m_QuaternionRotation_Z.rotate(-3.141592 / 180, m_QuaternionRotation_Z.rotatePoint(V3::add(Rotate_shaft, { 1,0,0 })));
+	}
 		break;
 	default:
 		break;
