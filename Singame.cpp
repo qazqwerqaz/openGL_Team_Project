@@ -133,8 +133,8 @@ void Singame::init()
 	m_Camera->setPerspective(60.f, 10.f, 3500.f);
 	m_Camera->setSensitivity(1.f);
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
 	//glEnable(GL_CULL_FACE);
 	glShadeModel(GL_FLAT);
 
@@ -219,7 +219,7 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 's':
 		case 'a':
 		case 'd':
-			aw.move(key);
+			aw.move(key, m_Camera);
 			break;
 		case '5':
 			LaunchBomb();
@@ -257,7 +257,7 @@ void Singame::motion(bool pressed, int x, int y)
 
 void Singame::update(float fDeltaTime)
 {
-	aw.update(fDeltaTime, minGu.vertices);
+	aw.update(fDeltaTime, minGu.vertices, minGu.normals);
 }
 
 
@@ -271,7 +271,7 @@ float verticalAngle = 0.0f;
 float initialFoV = 60.f;
 
 float speed = 0.5f; // 3 units / second
-float mouseSpeed = 0.001f;
+float mouseSpeed = 0.0005f;
 
 void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 

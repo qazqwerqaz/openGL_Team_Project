@@ -45,79 +45,70 @@ void Ball::Draw()
 	glColor3f(1, 1, 1);
 }
 
-void Ball::update(float time , std::vector<Vector3>& other)
+void Ball::update(float time , std::vector<Vector3>& other,std::vector<Vector3>& otherNormal)
 {
-	Pos.y -= Move.y;
-	if (Collide(other))
+	Pos.x -= Move.x;
+	Pos.y -= Move.y; 
+	Pos.z -= Move.z;
+	if (Collide(other,otherNormal))
+	{
+		Pos.x += Move.x;
 		Pos.y += Move.y;
+		Pos.z += Move.z;
+	}
 		
 }
 
-bool Ball::Collide(std::vector<Vector3>& other)
+bool Ball::Collide(std::vector<Vector3>& otherV, std::vector<Vector3>& otherNormal)
 {
+	static int aa = 0;
 	int count = 0;
 	Vector3 Vertex[3];
-	for (auto& a : other)
+	for(int i=0;i<otherV.size();++i)
 	{
-		//if (Pos.x - ballSize > a.x) continue;
-		//if (Pos.x + ballSize < a.x) continue;
-		//if (Pos.z - ballSize > a.z) continue;
-		//if (Pos.z + ballSize < a.z) continue;
-		//
-		//if (a.y > Pos.y)
-		//{
-		//	//if(abs(a.y - Pos.y) < 20)
-		//	Move.y = a.y - Pos.y;
-		//	return true;
-		//}
-		Vertex[count];
-		count++;
-		if (count == 3)
+		if (Pos.x - ballSize > otherV[i].x) continue;
+		if (Pos.x + ballSize < otherV[i].x) continue;
+		if (Pos.z - ballSize > otherV[i].z) continue;
+		if (Pos.z + ballSize < otherV[i].z) continue;
+		
+		if (otherV[i].y > Pos.y)
 		{
-			if (Pos.x - ballSize > a.x) continue;
-			if (Pos.x + ballSize < a.x) continue;
-			if (Pos.z - ballSize > a.z) continue;
-			if (Pos.z + ballSize < a.z) continue;
 
-
-			Vector3 p0 = V3::subtract(Vertex[0], Vertex[1]);
-			Vector3 p1 = V3::subtract(Vertex[2], Vertex[1]);
-
-			Vector3 normal = V3::cross(p0, p1);
-
-			if (normal.x*(a.x - Vertex[0].x) + normal.y*(a.y - Vertex[0].y) + normal.z*(a.z - Vertex[0].z) <= 0)
-				return true;
-
-			count = 0;
+			Move.y = otherV[i].y - Pos.y;
+			return true;
 		}
+		 
 	}
 	return false;
 }
 
-void Ball::move(int key)
+void Ball::move(int key,Camera *m_Camera)
 {
+	Vector3 shaft_x = V3::normalize(V3::cross(m_Camera->getTarget(), m_Camera->getEye()));
+	Vector3 shaft_z = V3::normalize(V3::subtract(m_Camera->getTarget(), m_Camera->getEye()));
+
 	switch (key)
 	{
 	case 'w':
-		Pos.x += Move.x;
-
-		m_QuaternionRotation_X.rotate(3.14 / 180.f, m_QuaternionRotation_X.rotatePoint(V3::add(Rotate_shaft, { 0,0,1 })));
+		m_QuaternionRotation_X.rotate(3.14 / 180.f * 10, m_QuaternionRotation_X.rotatePoint({ shaft_x.x,0,shaft_x.z }));
+		Pos.x += shaft_x.z;
+		Pos.z -= shaft_x.x;
 
 		break;
 	case 's':
-		Pos.x -= Move.x;
-		m_QuaternionRotation_X.rotate(-3.14 / 180.f, m_QuaternionRotation_X.rotatePoint(V3::add(Rotate_shaft, { 0,0,1 })));
-
+		m_QuaternionRotation_X.rotate(-3.14 / 180.f * 10, m_QuaternionRotation_X.rotatePoint({ shaft_x.x,0,shaft_x.z }));
+		Pos.x -= shaft_x.z;
+		Pos.z += shaft_x.x;
 		break;
 	case 'a':
-		Pos.z += Move.z;
-		m_QuaternionRotation_X.rotate(-3.14 / 180.f, m_QuaternionRotation_X.rotatePoint(V3::add(Rotate_shaft, { 1,0,0 })));
-
+		m_QuaternionRotation_X.rotate(3.14 / 180.f * 10, m_QuaternionRotation_X.rotatePoint({ shaft_z.x,0,shaft_z.z }));
+		Pos.x -= shaft_x.x;
+		Pos.z -= shaft_x.z;
 		break;
 	case 'd':
-		Pos.z -= Move.z;
-			m_QuaternionRotation_X.rotate(3.14 / 180.f, m_QuaternionRotation_X.rotatePoint(V3::add(Rotate_shaft, { 1,0,0 })));
-
+		m_QuaternionRotation_X.rotate(-3.14 / 180.f * 10, m_QuaternionRotation_X.rotatePoint({ shaft_z.x,0,shaft_z.z }));
+		Pos.x += shaft_x.x;
+		Pos.z += shaft_x.z;
 		break;
 	default:
 		break;

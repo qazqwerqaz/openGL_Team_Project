@@ -1,6 +1,7 @@
 #pragma once
 #include "OBJLoader.h"
 
+#include "Camera.h"
 #include "LinearMath.h"
 #include "Transformations.h"
 class Ball
@@ -10,10 +11,10 @@ public:
 	~Ball();
 	void init();
 	void Draw();
-	void update(float time, std::vector<Vector3>& other);
-	bool Collide(std::vector<Vector3>& other);
+	void update(float time, std::vector<Vector3>& other, std::vector<Vector3>& otherU);
+	bool Collide(std::vector<Vector3>& otherV, std::vector<Vector3>& otherUV);
 
-	void move(int key);
+	void move(int key,Camera *m_Camera);
 private:
 	OBJLoader a;
 
