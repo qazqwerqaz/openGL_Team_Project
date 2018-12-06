@@ -16,7 +16,7 @@ Map::~Map()
 void Map::init()
 {
 	a.initTexture();
-	a.loadOBJ("ªÍ≈∏µÈ.obj", vertices, uvs, normals);
+	a.loadOBJ("ff.obj", vertices, uvs, normals);
 	
 	//glTranslatef(0, 200, 0);
 }
