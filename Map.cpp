@@ -19,7 +19,6 @@ void Map::init()
 	a.loadOBJ("ff.obj", vertices, uvs, normals);
 
 
-
 }
 
 void Map::Draw()
