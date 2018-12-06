@@ -16,9 +16,10 @@ Map::~Map()
 void Map::init()
 {
 	a.initTexture();
-	a.loadOBJ("ªÍ≈∏µÈ.obj", vertices, uvs, normals);
-	
-	//glTranslatef(0, 200, 0);
+	a.loadOBJ("ff.obj", vertices, uvs, normals);
+
+
+
 }
 
 void Map::Draw()
@@ -27,6 +28,7 @@ void Map::Draw()
 	a.skybox();
 
 	glColor3f(0.0, 1.0, 0.5);
+
 	glBegin(GL_TRIANGLES);
 	for (auto& a : vertices)
 	{
