@@ -166,11 +166,12 @@ GLuint OBJLoader::LoadTexture(const char * filename, int width, int height)
 
 void OBJLoader::skybox()
 {
+
 	float x = 0;
 	float y = 0; 
 	float z = 0;
-	float width = 1000;
-	float height = 1000;
+	float width = glutGet(GLUT_WINDOW_WIDTH);
+	float height = glutGet(GLUT_WINDOW_HEIGHT);
 	float length = 1000;
 
 	// Center the skybox
