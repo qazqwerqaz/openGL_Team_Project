@@ -186,6 +186,7 @@ void Singame::init()
 	InitDemo();
 
 	m_Camera = new Camera;
+	glutFullScreen();
 	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
 	rotation_x = 0;
