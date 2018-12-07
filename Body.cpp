@@ -4,14 +4,12 @@
 * Permission to use, copy, modify, distribute and sell this software
 * and its documentation for any purpose is hereby granted without fee,
 * provided that the above copyright notice appear in all copies.
-* Erin Catto makes no representations about the suitability 
-* of this software for any purpose.  
+* Erin Catto makes no representations about the suitability
+* of this software for any purpose.
 * It is provided "as is" without express or implied warranty.
 */
-#include"stdafx.h"
 
 #include "Body.h"
-
 
 Body::Body()
 {
@@ -30,7 +28,7 @@ Body::Body()
 	invI = 0.0f;
 }
 
-void Body::Set(const Vector2& w, float m)
+void Body::Set(const Vec2& w, float m)
 {
 	position.Set(0.0f, 0.0f);
 	rotation = 0.0f;

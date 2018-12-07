@@ -4,15 +4,16 @@
 * Permission to use, copy, modify, distribute and sell this software
 * and its documentation for any purpose is hereby granted without fee,
 * provided that the above copyright notice appear in all copies.
-* Erin Catto makes no representations about the suitability 
-* of this software for any purpose.  
+* Erin Catto makes no representations about the suitability
+* of this software for any purpose.
 * It is provided "as is" without express or implied warranty.
 */
-#include "stdafx.h"
+
 #include "Arbiter.h"
 #include "Body.h"
 #include "World.h"
 
+#include "glut.h"
 
 Arbiter::Arbiter(Body* b1, Body* b2)
 {
@@ -100,29 +101,29 @@ void Arbiter::PreStep(float inv_dt)
 	{
 		Contact* c = contacts + i;
 
-		Vector2 r1 = c->position - body1->position;
-		Vector2 r2 = c->position - body2->position;
+		Vec2 r1 = c->position - body1->position;
+		Vec2 r2 = c->position - body2->position;
 
 		// Precompute normal mass, tangent mass, and bias.
-		float rn1 = V2::dot(r1, c->normal);
-		float rn2 = V2::dot(r2, c->normal);
+		float rn1 = Dot(r1, c->normal);
+		float rn2 = Dot(r2, c->normal);
 		float kNormal = body1->invMass + body2->invMass;
-		kNormal += body1->invI * (V2::dot(r1, r1) - rn1 * rn1) + body2->invI * (V2::dot(r2, r2) - rn2 * rn2);
+		kNormal += body1->invI * (Dot(r1, r1) - rn1 * rn1) + body2->invI * (Dot(r2, r2) - rn2 * rn2);
 		c->massNormal = 1.0f / kNormal;
 
-		Vector2 tangent = Cross(c->normal, 1.0f);
-		float rt1 = V2::dot(r1, tangent);
-		float rt2 = V2::dot(r2, tangent);
+		Vec2 tangent = Cross(c->normal, 1.0f);
+		float rt1 = Dot(r1, tangent);
+		float rt2 = Dot(r2, tangent);
 		float kTangent = body1->invMass + body2->invMass;
-		kTangent += body1->invI * (V2::dot(r1, r1) - rt1 * rt1) + body2->invI * (V2::dot(r2, r2) - rt2 * rt2);
-		c->massTangent = 1.0f /  kTangent;
+		kTangent += body1->invI * (Dot(r1, r1) - rt1 * rt1) + body2->invI * (Dot(r2, r2) - rt2 * rt2);
+		c->massTangent = 1.0f / kTangent;
 
 		c->bias = -k_biasFactor * inv_dt * Min(0.0f, c->separation + k_allowedPenetration);
 
 		if (World::accumulateImpulses)
 		{
 			// Apply normal + friction impulse
-			Vector2 P = c->Pn * c->normal + c->Pt * tangent;
+			Vec2 P = c->Pn * c->normal + c->Pt * tangent;
 
 			body1->velocity -= body1->invMass * P;
 			body1->angularVelocity -= body1->invI * Cross(r1, P);
@@ -145,10 +146,10 @@ void Arbiter::ApplyImpulse()
 		c->r2 = c->position - b2->position;
 
 		// Relative velocity at contact
-		Vector2 dv = b2->velocity + Cross(b2->angularVelocity, c->r2) - b1->velocity - Cross(b1->angularVelocity, c->r1);
+		Vec2 dv = b2->velocity + Cross(b2->angularVelocity, c->r2) - b1->velocity - Cross(b1->angularVelocity, c->r1);
 
 		// Compute normal impulse
-		float vn = V2::dot(dv, c->normal);
+		float vn = Dot(dv, c->normal);
 
 		float dPn = c->massNormal * (-vn + c->bias);
 
@@ -165,7 +166,7 @@ void Arbiter::ApplyImpulse()
 		}
 
 		// Apply contact impulse
-		Vector2 Pn = dPn * c->normal;
+		Vec2 Pn = dPn * c->normal;
 
 		b1->velocity -= b1->invMass * Pn;
 		b1->angularVelocity -= b1->invI * Cross(c->r1, Pn);
@@ -176,8 +177,8 @@ void Arbiter::ApplyImpulse()
 		// Relative velocity at contact
 		dv = b2->velocity + Cross(b2->angularVelocity, c->r2) - b1->velocity - Cross(b1->angularVelocity, c->r1);
 
-		Vector2 tangent = Cross(c->normal, 1.0f);
-		float vt = V2::dot(dv, tangent);
+		Vec2 tangent = Cross(c->normal, 1.0f);
+		float vt = Dot(dv, tangent);
 		float dPt = c->massTangent * (-vt);
 
 		if (World::accumulateImpulses)
@@ -197,7 +198,7 @@ void Arbiter::ApplyImpulse()
 		}
 
 		// Apply contact impulse
-		Vector2 Pt = dPt * tangent;
+		Vec2 Pt = dPt * tangent;
 
 		b1->velocity -= b1->invMass * Pt;
 		b1->angularVelocity -= b1->invI * Cross(c->r1, Pt);

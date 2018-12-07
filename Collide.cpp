@@ -4,11 +4,10 @@
 * Permission to use, copy, modify, distribute and sell this software
 * and its documentation for any purpose is hereby granted without fee,
 * provided that the above copyright notice appear in all copies.
-* Erin Catto makes no representations about the suitability 
-* of this software for any purpose.  
+* Erin Catto makes no representations about the suitability
+* of this software for any purpose.
 * It is provided "as is" without express or implied warranty.
 */
-#include"stdafx.h"
 
 #include "Arbiter.h"
 #include "Body.h"
@@ -45,25 +44,25 @@ enum EdgeNumbers
 struct ClipVertex
 {
 	ClipVertex() { fp.value = 0; }
-	Vector2 v;
+	Vec2 v;
 	FeaturePair fp;
 };
 
 void Flip(FeaturePair& fp)
 {
-	std::swap(fp.e.inEdge1, fp.e.inEdge2);
-	std::swap(fp.e.outEdge1, fp.e.outEdge2);
+	Swap(fp.e.inEdge1, fp.e.inEdge2);
+	Swap(fp.e.outEdge1, fp.e.outEdge2);
 }
 
 int ClipSegmentToLine(ClipVertex vOut[2], ClipVertex vIn[2],
-					  const Vector2& normal, float offset, char clipEdge)
+	const Vec2& normal, float offset, char clipEdge)
 {
 	// Start with no output points
 	int numOut = 0;
 
 	// Calculate the distance of end points to the line
-	float distance0 = V2::dot(normal, vIn[0].v) - offset;
-	float distance1 = V2::dot(normal, vIn[1].v) - offset;
+	float distance0 = Dot(normal, vIn[0].v) - offset;
+	float distance1 = Dot(normal, vIn[1].v) - offset;
 
 	// If the points are behind the plane
 	if (distance0 <= 0.0f) vOut[numOut++] = vIn[0];
@@ -74,7 +73,7 @@ int ClipSegmentToLine(ClipVertex vOut[2], ClipVertex vIn[2],
 	{
 		// Find intersection point of edge and plane
 		float interp = distance0 / (distance0 - distance1);
-		vOut[numOut].v = vIn[0].v + interp * (V2::subtract(vIn[1].v, vIn[0].v));
+		vOut[numOut].v = vIn[0].v + interp * (vIn[1].v - vIn[0].v);
 		if (distance0 > 0.0f)
 		{
 			vOut[numOut].fp = vIn[0].fp;
@@ -93,15 +92,14 @@ int ClipSegmentToLine(ClipVertex vOut[2], ClipVertex vIn[2],
 	return numOut;
 }
 
-static void ComputeIncidentEdge(ClipVertex c[2], const Vector2& h, const Vector2& pos,
-								const Matrix2x2& Rot,Vector2& normal)
+static void ComputeIncidentEdge(ClipVertex c[2], const Vec2& h, const Vec2& pos,
+	const Mat22& Rot, const Vec2& normal)
 {
 	// The normal is from the reference box. Convert it
 	// to the incident boxe's frame and flip sign.
-
-	Matrix2x2 RotT = Rot.Transpose();
-	Vector2 n = -(RotT * normal);
-	Vector2 nAbs = Vector2{ abs(n.x),abs(n.y) };
+	Mat22 RotT = Rot.Transpose();
+	Vec2 n = -(RotT * normal);
+	Vec2 nAbs = Abs(n);
 
 	if (nAbs.x > nAbs.y)
 	{
@@ -158,42 +156,42 @@ static void ComputeIncidentEdge(ClipVertex c[2], const Vector2& h, const Vector2
 int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 {
 	// Setup
-	Vector2 hA = 0.5f * bodyA->width;
-	Vector2 hB = 0.5f * bodyB->width;
+	Vec2 hA = 0.5f * bodyA->width;
+	Vec2 hB = 0.5f * bodyB->width;
 
-	Vector2 posA = bodyA->position;
-	Vector2 posB = bodyB->position;
+	Vec2 posA = bodyA->position;
+	Vec2 posB = bodyB->position;
 
-	Matrix2x2 RotA(bodyA->rotation), RotB(bodyB->rotation);
+	Mat22 RotA(bodyA->rotation), RotB(bodyB->rotation);
 
-	Matrix2x2 RotAT = RotA.Transpose();
-	Matrix2x2 RotBT = RotB.Transpose();
+	Mat22 RotAT = RotA.Transpose();
+	Mat22 RotBT = RotB.Transpose();
 
-	Vector2 a1 = RotA.col1, a2 = RotA.col2;
-	Vector2 b1 = RotB.col1, b2 = RotB.col2;
+	Vec2 a1 = RotA.col1, a2 = RotA.col2;
+	Vec2 b1 = RotB.col1, b2 = RotB.col2;
 
-	Vector2 dp = posB - posA;
-	Vector2 dA = RotAT * dp;
-	Vector2 dB = RotBT * dp;
+	Vec2 dp = posB - posA;
+	Vec2 dA = RotAT * dp;
+	Vec2 dB = RotBT * dp;
 
-	Matrix2x2 C = RotAT * RotB;
-	Matrix2x2 absC = Abs(C);
-	Matrix2x2 absCT = absC.Transpose();
+	Mat22 C = RotAT * RotB;
+	Mat22 absC = Abs(C);
+	Mat22 absCT = absC.Transpose();
 
 	// Box A faces
-	Vector2 faceA = Abs(dA) - hA - absC * hB;
+	Vec2 faceA = Abs(dA) - hA - absC * hB;
 	if (faceA.x > 0.0f || faceA.y > 0.0f)
 		return 0;
 
 	// Box B faces
-	Vector2 faceB = Abs(dB) - absCT * hA - hB;
+	Vec2 faceB = Abs(dB) - absCT * hA - hB;
 	if (faceB.x > 0.0f || faceB.y > 0.0f)
 		return 0;
 
 	// Find best axis
 	Axis axis;
 	float separation;
-	Vector2 normal;
+	Vec2 normal;
 
 	// Box A faces
 	axis = FACE_A_X;
@@ -226,7 +224,7 @@ int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 	}
 
 	// Setup clipping plane data based on the separating axis
-	Vector2 frontNormal, sideNormal;
+	Vec2 frontNormal, sideNormal;
 	ClipVertex incidentEdge[2];
 	float front, negSide, posSide;
 	char negEdge, posEdge;
@@ -235,60 +233,60 @@ int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 	switch (axis)
 	{
 	case FACE_A_X:
-		{
-			frontNormal = normal;
-			front = V2::dot(posA, frontNormal) + hA.x;
-			sideNormal = RotA.col2;
-			float side = V2::dot(posA, sideNormal);
-			negSide = -side + hA.y;
-			posSide =  side + hA.y;
-			negEdge = EDGE3;
-			posEdge = EDGE1;
-			ComputeIncidentEdge(incidentEdge, hB, posB, RotB, frontNormal);
-		}
-		break;
+	{
+		frontNormal = normal;
+		front = Dot(posA, frontNormal) + hA.x;
+		sideNormal = RotA.col2;
+		float side = Dot(posA, sideNormal);
+		negSide = -side + hA.y;
+		posSide = side + hA.y;
+		negEdge = EDGE3;
+		posEdge = EDGE1;
+		ComputeIncidentEdge(incidentEdge, hB, posB, RotB, frontNormal);
+	}
+	break;
 
 	case FACE_A_Y:
-		{
-			frontNormal = normal ;
-			front = V2::dot(posA, frontNormal) + hA.y;
-			sideNormal = RotA.col1;
-			float side = V2::dot(posA, sideNormal);
-			negSide = -side + hA.x;
-			posSide =  side + hA.x;
-			negEdge = EDGE2;
-			posEdge = EDGE4;
-			ComputeIncidentEdge(incidentEdge, hB, posB, RotB, frontNormal);
-		}
-		break;
+	{
+		frontNormal = normal;
+		front = Dot(posA, frontNormal) + hA.y;
+		sideNormal = RotA.col1;
+		float side = Dot(posA, sideNormal);
+		negSide = -side + hA.x;
+		posSide = side + hA.x;
+		negEdge = EDGE2;
+		posEdge = EDGE4;
+		ComputeIncidentEdge(incidentEdge, hB, posB, RotB, frontNormal);
+	}
+	break;
 
 	case FACE_B_X:
-		{
+	{
 		frontNormal = -normal;
-			front = V2::dot(posB, frontNormal) + hB.x;
-			sideNormal = RotB.col2;
-			float side = V2::dot(posB, sideNormal);
-			negSide = -side + hB.y;
-			posSide =  side + hB.y;
-			negEdge = EDGE3;
-			posEdge = EDGE1;
-			ComputeIncidentEdge(incidentEdge, hA, posA, RotA, frontNormal);
-		}
-		break;
+		front = Dot(posB, frontNormal) + hB.x;
+		sideNormal = RotB.col2;
+		float side = Dot(posB, sideNormal);
+		negSide = -side + hB.y;
+		posSide = side + hB.y;
+		negEdge = EDGE3;
+		posEdge = EDGE1;
+		ComputeIncidentEdge(incidentEdge, hA, posA, RotA, frontNormal);
+	}
+	break;
 
 	case FACE_B_Y:
-		{
-			frontNormal = -normal;
-			front = V2::dot(posB, frontNormal) + hB.y;
-			sideNormal = RotB.col1;
-			float side = V2::dot(posB, sideNormal);
-			negSide = -side + hB.x;
-			posSide =  side + hB.x;
-			negEdge = EDGE2;
-			posEdge = EDGE4;
-			ComputeIncidentEdge(incidentEdge, hA, posA, RotA, frontNormal);
-		}
-		break;
+	{
+		frontNormal = -normal;
+		front = Dot(posB, frontNormal) + hB.y;
+		sideNormal = RotB.col1;
+		float side = Dot(posB, sideNormal);
+		negSide = -side + hB.x;
+		posSide = side + hB.x;
+		negEdge = EDGE2;
+		posEdge = EDGE4;
+		ComputeIncidentEdge(incidentEdge, hA, posA, RotA, frontNormal);
+	}
+	break;
 	}
 
 	// clip other face with 5 box planes (1 face plane, 4 edge planes)
@@ -298,13 +296,13 @@ int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 	int np;
 
 	// Clip to box side 1
-	np = ClipSegmentToLine(clipPoints1, incidentEdge, sideNormal * -1.f, negSide, negEdge);
+	np = ClipSegmentToLine(clipPoints1, incidentEdge, -sideNormal, negSide, negEdge);
 
 	if (np < 2)
 		return 0;
 
 	// Clip to negative box side 1
-	np = ClipSegmentToLine(clipPoints2, clipPoints1,  sideNormal, posSide, posEdge);
+	np = ClipSegmentToLine(clipPoints2, clipPoints1, sideNormal, posSide, posEdge);
 
 	if (np < 2)
 		return 0;
@@ -315,14 +313,14 @@ int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 	int numContacts = 0;
 	for (int i = 0; i < 2; ++i)
 	{
-		float separation = V2::dot(frontNormal, clipPoints2[i].v) - front;
+		float separation = Dot(frontNormal, clipPoints2[i].v) - front;
 
 		if (separation <= 0)
 		{
 			contacts[numContacts].separation = separation;
 			contacts[numContacts].normal = normal;
 			// slide contact point onto reference face (easy to cull)
-			contacts[numContacts].position = V2::subtract(clipPoints2[i].v, frontNormal * separation);
+			contacts[numContacts].position = clipPoints2[i].v - separation * frontNormal;
 			contacts[numContacts].feature = clipPoints2[i].fp;
 			if (axis == FACE_B_X || axis == FACE_B_Y)
 				Flip(contacts[numContacts].feature);

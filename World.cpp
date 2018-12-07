@@ -4,8 +4,8 @@
 * Permission to use, copy, modify, distribute and sell this software
 * and its documentation for any purpose is hereby granted without fee,
 * provided that the above copyright notice appear in all copies.
-* Erin Catto makes no representations about the suitability 
-* of this software for any purpose.  
+* Erin Catto makes no representations about the suitability
+* of this software for any purpose.
 * It is provided "as is" without express or implied warranty.
 */
 
@@ -105,7 +105,7 @@ void World::Step(float dt)
 
 	for (int i = 0; i < (int)joints.size(); ++i)
 	{
-		joints[i]->PreStep(inv_dt);	
+		joints[i]->PreStep(inv_dt);
 	}
 
 	// Perform iterations

@@ -6,6 +6,7 @@
 #include "Body.h"
 #include "Joint.h"
 
+
 Body bodies[200];
 Joint joints[100];
 
@@ -24,14 +25,14 @@ World world(gravity, iterations);
 
 void DrawBody(Body* body)
 {
-	Matrix2x2 R(body->rotation);
-	Vector2 x = body->position;
-	Vector2 h = 0.5f * body->width;
+	Mat22 R(body->rotation);
+	Vec2 x = body->position;
+	Vec2 h = 0.5f * body->width;
 
-	Vector2 v1 = x + R * Vector2(-h.x, -h.y);
-	Vector2 v2 = x + R * Vector2(h.x, -h.y);
-	Vector2 v3 = x + R * Vector2(h.x, h.y);
-	Vector2 v4 = x + R * Vector2(-h.x, h.y);
+	Vec2 v1 = x + R * Vec2(-h.x, -h.y);
+	Vec2 v2 = x + R * Vec2(h.x, -h.y);
+	Vec2 v3 = x + R * Vec2(h.x, h.y);
+	Vec2 v4 = x + R * Vec2(-h.x, h.y);
 
 	if (body == bomb)
 		glColor3f(0.4f, 0.9f, 0.4f);
@@ -39,19 +40,11 @@ void DrawBody(Body* body)
 		glColor3f(0.8f, 0.8f, 0.9f);
 
 	glBegin(GL_LINE_LOOP);
-	glVertex3f(v1.x, v1.y, 0);
-	glVertex3f(v2.x, v2.y, 0);
-	glVertex3f(v3.x, v3.y, 0);
-	glVertex3f(v4.x, v4.y, 0);
+	glVertex2f(v1.x, v1.y);
+	glVertex2f(v2.x, v2.y);
+	glVertex2f(v3.x, v3.y);
+	glVertex2f(v4.x, v4.y);
 	glEnd();
-
-	glPushMatrix();
-	if (v1.y <= 0)
-		v1.y = 10;
-	glTranslatef(v2.x, v2.y, 0);
-	glutSolidCube(100);
-
-	glPopMatrix();
 }
 
 void DrawJoint(Joint* joint)
@@ -59,14 +52,14 @@ void DrawJoint(Joint* joint)
 	Body* b1 = joint->body1;
 	Body* b2 = joint->body2;
 
-	Matrix2x2 R1(b1->rotation);
-	Matrix2x2 R2(b2->rotation);
+	Mat22 R1(b1->rotation);
+	Mat22 R2(b2->rotation);
 
-	Vector2 x1 = b1->position;
-	Vector2 p1 = x1 + R1 * joint->localAnchor1;
+	Vec2 x1 = b1->position;
+	Vec2 p1 = x1 + R1 * joint->localAnchor1;
 
-	Vector2 x2 = b2->position;
-	Vector2 p2 = x2 + R2 * joint->localAnchor2;
+	Vec2 x2 = b2->position;
+	Vec2 p2 = x2 + R2 * joint->localAnchor2;
 
 	glColor3f(0.5f, 0.5f, 0.8f);
 	glBegin(GL_LINES);
@@ -75,8 +68,6 @@ void DrawJoint(Joint* joint)
 	glVertex2f(x2.x, x2.y);
 	glVertex2f(p2.x, p2.y);
 	glEnd();
-	
-	
 }
 
 void Demo1(Body* b, Joint* j)

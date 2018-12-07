@@ -4,37 +4,36 @@
 * Permission to use, copy, modify, distribute and sell this software
 * and its documentation for any purpose is hereby granted without fee,
 * provided that the above copyright notice appear in all copies.
-* Erin Catto makes no representations about the suitability 
-* of this software for any purpose.  
+* Erin Catto makes no representations about the suitability
+* of this software for any purpose.
 * It is provided "as is" without express or implied warranty.
 */
 
 #ifndef BODY_H
 #define BODY_H
 
-#include "LinearMath.h"
+#include "MathUtils.h"
 
 struct Body
 {
 	Body();
-	void Set(const Vector2& w, float m);
+	void Set(const Vec2& w, float m);
 
-	void AddForce(const Vector2& f)
+	void AddForce(const Vec2& f)
 	{
-		force.x += f.x;
-		force.y += f.y;
+		force += f;
 	}
 
-	Vector2 position;
+	Vec2 position;
 	float rotation;
 
-	Vector2 velocity;
+	Vec2 velocity;
 	float angularVelocity;
 
-	Vector2 force;
+	Vec2 force;
 	float torque;
 
-	Vector2 width;
+	Vec2 width;
 
 	float friction;
 	float mass, invMass;

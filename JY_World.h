@@ -15,5 +15,5 @@ public:
 public:
 	std::list<JY_Ball> Ball;
 
-	Vector3 m_gravity
+	Vector3 m_gravity;
 };

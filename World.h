@@ -4,8 +4,8 @@
 * Permission to use, copy, modify, distribute and sell this software
 * and its documentation for any purpose is hereby granted without fee,
 * provided that the above copyright notice appear in all copies.
-* Erin Catto makes no representations about the suitability 
-* of this software for any purpose.  
+* Erin Catto makes no representations about the suitability
+* of this software for any purpose.
 * It is provided "as is" without express or implied warranty.
 */
 
@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <map>
+#include "MathUtils.h"
 #include "Arbiter.h"
 
 struct Body;
@@ -21,7 +22,7 @@ struct Joint;
 
 struct World
 {
-	World(Vector2 gravity, int iterations) : gravity(gravity), iterations(iterations) {}
+	World(Vec2 gravity, int iterations) : gravity(gravity), iterations(iterations) {}
 
 	void Add(Body* body);
 	void Add(Joint* joint);
@@ -34,7 +35,7 @@ struct World
 	std::vector<Body*> bodies;
 	std::vector<Joint*> joints;
 	std::map<ArbiterKey, Arbiter> arbiters;
-	Vector2 gravity;
+	Vec2 gravity;
 	int iterations;
 	static bool accumulateImpulses;
 	static bool warmStarting;
