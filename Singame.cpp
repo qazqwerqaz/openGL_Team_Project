@@ -26,6 +26,8 @@ int demoIndex = 0;
 World world(gravity, iterations);
 Matrix4x4 curMatrix;
 
+float Box_size = 30;
+
 void DrawBody(Body* body)
 {
 	Mat22 R(body->rotation);
@@ -45,11 +47,12 @@ void DrawBody(Body* body)
 	glPushMatrix();
 
 	glMultMatrixf(&curMatrix);
-	
-	float y = 10;
+
+	float y = Box_size;
 	//abs(v1.x - v3.x);
 	if (body != Box_Ball)
 	{
+		glTranslatef(0, -10, 0);
 		glBegin(GL_QUADS);
 		glVertex3f(v1.x, 0.0f, v1.y);
 		glVertex3f(v2.x, 0.0f, v2.y);
@@ -126,7 +129,7 @@ void LaunchBomb()
 		++numBodies;
 	}
 
-	bomb->position.Set(Random(0.0f, 500.0f), 150.0f);
+	bomb->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
 	bomb->rotation = Random(-1.5f, 1.5f);
 	bomb->velocity = -1.5f * bomb->position;
 	bomb->angularVelocity = Random(-20.0f, 20.0f);
@@ -151,33 +154,51 @@ void LaunchBox_Ball()
 
 void Demo5(Body* b, Joint* j)
 {
-	//b->Set(Vec2(100.0f, 20.0f), FLT_MAX);
-	//b->friction = 0.2f;
-	//b->position.Set(0.0f, -0.5f * b->width.y);
-	//b->rotation = 0.0f;
-	//world.Add(b);
-	//++b; ++numBodies;
+	//벽그리기
+	{
+		b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
+		b->friction = 0.2f;
+		b->position.Set(500.0f, 0.0f * b->width.y);
+		b->rotation = 0.0f;
+		world.Add(b);
+		++b; ++numBodies;
+
+		b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
+		b->friction = 0.2f;
+		b->position.Set(-500.0f, 0.0f * b->width.y);
+		b->rotation = 0.0f;
+		world.Add(b);
+		++b; ++numBodies;
+
+		b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
+		b->friction = 0.2f;
+		b->position.Set(0.0f, 500.0f * b->width.y);
+		b->rotation = 0.0f;
+		world.Add(b);
+		++b; ++numBodies;
+
+		b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
+		b->friction = 0.2f;
+		b->position.Set(0.0f, -500.0f * b->width.y);
+		b->rotation = 0.0f;
+		world.Add(b);
+		++b; ++numBodies;
+	}
 
 	Vec2 x(-6.0f, 0.75f);
 	Vec2 y;
 
-	for (int i = 0; i < 12; ++i)
+	std::random_device rn;
+	std::uniform_int_distribution<int> range(-400, 400);
+	for (int i = 0; i < 10; ++i)
 	{
-		y = x;
-
-		for (int j = i; j < 12; ++j)
-		{
-			b->Set(Vec2(10.0f, 10.0f), 10.0f);
-			b->friction = 0.5f;
-			b->position = y;
-			world.Add(b);
-			++b; ++numBodies;
-
-			y += Vec2(30.125f, 0.0f);
-		}
-
-		//x += Vec2(0.5625f, 1.125f);
-		x += Vec2(30.5625f, 20.0f);
+		y.x = range(rn);
+		y.y = range(rn);
+		b->Set(Vec2(Box_size, Box_size), 10.0f);
+		b->friction = 0.5f;
+		b->position = y;
+		world.Add(b);
+		++b; ++numBodies;
 	}
 }
 
@@ -207,14 +228,14 @@ void Singame::init()
 	InitDemo();
 
 	m_Camera = new Camera;
-	glutFullScreen();
+	//glutFullScreen();
 	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
 	rotation_x = 0;
 	rotation_z = 0;
 
 	m_Camera->setDistance(200.f);
-	m_Camera->setPerspective(60.f, 10.f, 3500.f);
+	m_Camera->setPerspective(60.f, 10.f, 7000.f);
 	m_Camera->setSensitivity(1.f);
 
 	//glEnable(GL_LIGHTING);
@@ -222,10 +243,10 @@ void Singame::init()
 	//glEnable(GL_CULL_FACE);
 	glShadeModel(GL_FLAT);
 
-	 //위치
+	//위치
 	aw.init();
 	minGu.init();
-	
+	m_skybox.initTexture();
 	LaunchBox_Ball();
 }
 
@@ -242,13 +263,13 @@ void Singame::reset()
 void Singame::render()
 {
 	m_Camera->ready();
-	
+	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-	
+
 
 
 	glPushMatrix();
@@ -262,7 +283,7 @@ void Singame::render()
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 	glMateriali(GL_FRONT, GL_SHININESS, Specular);
 
-	glPushMatrix(); 
+	glPushMatrix();
 	{
 		Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
 
@@ -288,7 +309,7 @@ void Singame::render()
 
 	for (int i = 0; i < numJoints; ++i)
 		DrawJoint(joints + i);
-	
+
 }
 
 void Singame::reshape(int w, int h)
@@ -348,6 +369,13 @@ void Singame::motion(bool pressed, int x, int y)
 
 void Singame::update(float fDeltaTime)
 {
+	static float timer;
+	timer += fDeltaTime;
+	if (timer >= 5)
+	{
+		LaunchBomb();
+		timer = 0;
+	}
 	aw.update(fDeltaTime, minGu.vertices, minGu.normals);
 }
 

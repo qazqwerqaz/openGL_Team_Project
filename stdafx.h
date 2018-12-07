@@ -7,6 +7,7 @@
 #include<assert.h>
 #include<math.h>
 #include <chrono>
+#include<random>
 
 #include <vector>
 #include<limits>

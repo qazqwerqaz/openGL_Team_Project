@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Map.h"
 #include "Ball.h"
+#include "OBJLoader.h"
 
 
 class Singame:
@@ -28,7 +29,7 @@ public:
 
 
 private:
-	
+	OBJLoader m_skybox;
 	Camera* m_Camera;
 	QuaternionRotation	m_QuaternionRotation;
 	//gameobject

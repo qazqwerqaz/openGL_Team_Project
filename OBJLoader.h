@@ -17,7 +17,7 @@ public:
 	//Texture ·Îµå
 	void initTexture();
 	GLuint LoadTexture(const char * filename, int width, int height);
-	void skybox();
+	void skybox(Vector3 Eye);
 	void FreeTexture(GLuint texture);
 private:
 	GLuint texture[6];

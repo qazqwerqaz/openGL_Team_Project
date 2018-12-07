@@ -1,7 +1,7 @@
 #include"stdafx.h"
 
 #include "Map.h"
-
+#include "Camera.h"
 
 
 Map::Map()
@@ -22,12 +22,11 @@ void Map::init()
 void Map::Draw()
 {
 	glEnable(GL_TEXTURE_2D); 
-	a.skybox();
 
 	glColor3f(1, 0, 0);
 
 	//glBegin(GL_TRIANGLES);
-	glPushMatrix();
+	/*glPushMatrix();
 	glTranslatef(0, -100, 0);
 	for (auto& a : vertices)
 	{
@@ -40,6 +39,14 @@ void Map::Draw()
 		glutSolidCube(5);
 		glPopMatrix();
 	}
+	glPopMatrix();*/
+
+	glColor3f(1.f, 1.f, 0.f);
+	glPushMatrix();
+	glTranslatef(0, -45, 0);
+	glScalef(1000.f, 1.f, 1000.f);
+	glutSolidCube(1);
+
 	glPopMatrix();
 	//glEnd();
 	glColor3f(1,1,1);

@@ -19,7 +19,7 @@ public:
 	OBJLoader a;
 
 	Vector3 Pos{ 0,0,0 };
-	Vector3 Move{ 1,1,1 };
+	Vector3 Move{ 0,0,0 };
 	Vector3 Rotate_shaft{ 0,0,0 };
 	Matrix4x4 ball_matrix;
 
