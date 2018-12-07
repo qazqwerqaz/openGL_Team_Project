@@ -15,7 +15,7 @@ public:
 	bool Collide(std::vector<Vector3>& otherV, std::vector<Vector3>& otherUV);
 
 	void move(int key,Camera *m_Camera);
-private:
+public:
 	OBJLoader a;
 
 	Vector3 Pos{ 0,0,0 };

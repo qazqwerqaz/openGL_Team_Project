@@ -127,6 +127,17 @@ void World::Step(float dt)
 	{
 		Body* b = bodies[i];
 
+
+		b->count++;
+
+		if (b->count >= b->mass)
+		{
+			b->velocity.x -= b->velocity.x / (b->mass);
+			b->velocity.y -= b->velocity.y / (b->mass);
+			b->angularVelocity -= b->angularVelocity / (b->mass);
+			b->count = 0;
+		}
+
 		b->position += dt * b->velocity;
 		b->rotation += dt * b->angularVelocity;
 

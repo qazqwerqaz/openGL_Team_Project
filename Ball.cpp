@@ -50,7 +50,7 @@ void Ball::update(float time , std::vector<Vector3>& other,std::vector<Vector3>&
 	Pos.x -= Move.x;
 	Pos.y -= Move.y; 
 	Pos.z -= Move.z;
-	if (Collide(other,otherNormal))
+	if (true)//Collide(other,otherNormal))
 	{
 		Pos.x += Move.x;
 		Pos.y += Move.y;

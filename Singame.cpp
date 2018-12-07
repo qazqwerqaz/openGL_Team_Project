@@ -12,6 +12,8 @@ Joint joints[100];
 
 Body* bomb = NULL;
 
+Body* Box_Ball = NULL;
+
 float timeStep = 1.0f / 60.0f;
 int iterations = 10;
 Vec2 gravity(0.0f, 0.0f);
@@ -46,40 +48,42 @@ void DrawBody(Body* body)
 	
 	float y = 10;
 	//abs(v1.x - v3.x);
-	glBegin(GL_QUADS);
-	glVertex3f(v1.x, 0.0f, v1.y);
-	glVertex3f(v2.x, 0.0f, v2.y);
-	glVertex3f(v3.x, 0.0f, v3.y);
-	glVertex3f(v4.x, 0.0f, v4.y);
+	if (body != Box_Ball)
+	{
+		glBegin(GL_QUADS);
+		glVertex3f(v1.x, 0.0f, v1.y);
+		glVertex3f(v2.x, 0.0f, v2.y);
+		glVertex3f(v3.x, 0.0f, v3.y);
+		glVertex3f(v4.x, 0.0f, v4.y);
 
 
-	glVertex3f(v1.x, y, v1.y);
-	glVertex3f(v2.x, y, v2.y);
-	glVertex3f(v3.x, y, v3.y);
-	glVertex3f(v4.x, y, v4.y);
+		glVertex3f(v1.x, y, v1.y);
+		glVertex3f(v2.x, y, v2.y);
+		glVertex3f(v3.x, y, v3.y);
+		glVertex3f(v4.x, y, v4.y);
 
-	glVertex3f(v4.x, 0, v4.y);
-	glVertex3f(v1.x, 0, v1.y);
-	glVertex3f(v1.x, y, v1.y);
-	glVertex3f(v4.x, y, v4.y);
+		glVertex3f(v4.x, 0, v4.y);
+		glVertex3f(v1.x, 0, v1.y);
+		glVertex3f(v1.x, y, v1.y);
+		glVertex3f(v4.x, y, v4.y);
 
-	glVertex3f(v3.x, 0, v3.y);
-	glVertex3f(v2.x, 0, v2.y);
-	glVertex3f(v2.x, y, v2.y);
-	glVertex3f(v3.x, y, v3.y);
+		glVertex3f(v3.x, 0, v3.y);
+		glVertex3f(v2.x, 0, v2.y);
+		glVertex3f(v2.x, y, v2.y);
+		glVertex3f(v3.x, y, v3.y);
 
-	glVertex3f(v1.x, 0.0f, v1.y);
-	glVertex3f(v2.x, 0.0f, v2.y);
-	glVertex3f(v2.x, y, v2.y);
-	glVertex3f(v1.x, y, v1.y);
-	
-	glVertex3f(v4.x, 0.0f, v4.y);
-	glVertex3f(v3.x, 0.0f, v3.y);
-	glVertex3f(v3.x, y, v3.y);
-	glVertex3f(v4.x, y, v4.y);
+		glVertex3f(v1.x, 0.0f, v1.y);
+		glVertex3f(v2.x, 0.0f, v2.y);
+		glVertex3f(v2.x, y, v2.y);
+		glVertex3f(v1.x, y, v1.y);
 
-	glEnd();
+		glVertex3f(v4.x, 0.0f, v4.y);
+		glVertex3f(v3.x, 0.0f, v3.y);
+		glVertex3f(v3.x, y, v3.y);
+		glVertex3f(v4.x, y, v4.y);
 
+		glEnd();
+	}
 	glPopMatrix();
 }
 
@@ -126,6 +130,23 @@ void LaunchBomb()
 	bomb->rotation = Random(-1.5f, 1.5f);
 	bomb->velocity = -1.5f * bomb->position;
 	bomb->angularVelocity = Random(-20.0f, 20.0f);
+}
+
+void LaunchBox_Ball()
+{
+	if (!Box_Ball)
+	{
+		Box_Ball = bodies + numBodies;
+		Box_Ball->Set(Vec2(30.0f, 30.0f), 100.0f);
+		Box_Ball->friction = 0.2f;
+		world.Add(Box_Ball);
+		++numBodies;
+	}
+
+	Box_Ball->position.Set(0, 0);
+	Box_Ball->rotation = Random(-1.5f, 1.5f);
+	Box_Ball->velocity = -1.5f * Box_Ball->position;
+	Box_Ball->angularVelocity = Random(-20.0f, 20.0f);
 }
 
 void Demo5(Body* b, Joint* j)
@@ -205,7 +226,7 @@ void Singame::init()
 	aw.init();
 	minGu.init();
 	
-
+	LaunchBox_Ball();
 }
 
 void Singame::exit()
@@ -242,13 +263,16 @@ void Singame::render()
 	glMateriali(GL_FRONT, GL_SHININESS, Specular);
 
 	glPushMatrix(); 
-	Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
+	{
+		Matrix4x4 a = m_QuaternionRotation.getRotationMatrix();
 
-	glMultMatrixf(&a);
+		glMultMatrixf(&a);
 
-	glGetFloatv(GL_MODELVIEW_MATRIX,&curMatrix);
-	aw.Draw();
-	minGu.Draw();
+		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
+		aw.Draw();
+		Box_Ball->position.Set(aw.Pos.x, aw.Pos.z);
+		minGu.Draw();
+	}
 	glPopMatrix();
 
 

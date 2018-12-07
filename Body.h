@@ -38,6 +38,8 @@ struct Body
 	float friction;
 	float mass, invMass;
 	float I, invI;
+
+	int count = 0;
 };
 
 #endif
