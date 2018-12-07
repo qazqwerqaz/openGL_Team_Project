@@ -41,12 +41,43 @@ void DrawBody(Body* body)
 		glColor3f(0.8f, 0.8f, 0.9f);
 
 	glPushMatrix();
+
 	glMultMatrixf(&curMatrix);
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(v1.x, v1.y, 0.0f);
-	glVertex3f(v2.x, v2.y, 0.0f);
-	glVertex3f(v3.x, v3.y, 0.0f);
-	glVertex3f(v4.x, v4.y, 0.0f);
+	
+	float y = 10;
+	//abs(v1.x - v3.x);
+	glBegin(GL_QUADS);
+	glVertex3f(v1.x, 0.0f, v1.y);
+	glVertex3f(v2.x, 0.0f, v2.y);
+	glVertex3f(v3.x, 0.0f, v3.y);
+	glVertex3f(v4.x, 0.0f, v4.y);
+
+
+	glVertex3f(v1.x, y, v1.y);
+	glVertex3f(v2.x, y, v2.y);
+	glVertex3f(v3.x, y, v3.y);
+	glVertex3f(v4.x, y, v4.y);
+
+	glVertex3f(v4.x, 0, v4.y);
+	glVertex3f(v1.x, 0, v1.y);
+	glVertex3f(v1.x, y, v1.y);
+	glVertex3f(v4.x, y, v4.y);
+
+	glVertex3f(v3.x, 0, v3.y);
+	glVertex3f(v2.x, 0, v2.y);
+	glVertex3f(v2.x, y, v2.y);
+	glVertex3f(v3.x, y, v3.y);
+
+	glVertex3f(v1.x, 0.0f, v1.y);
+	glVertex3f(v2.x, 0.0f, v2.y);
+	glVertex3f(v2.x, y, v2.y);
+	glVertex3f(v1.x, y, v1.y);
+	
+	glVertex3f(v4.x, 0.0f, v4.y);
+	glVertex3f(v3.x, 0.0f, v3.y);
+	glVertex3f(v3.x, y, v3.y);
+	glVertex3f(v4.x, y, v4.y);
+
 	glEnd();
 
 	glPopMatrix();
@@ -71,10 +102,10 @@ void DrawJoint(Joint* joint)
 	glPushMatrix();
 	glMultMatrixf(&curMatrix);
 	glBegin(GL_LINES);
-	glVertex3f(x1.x, x1.y, 0.0f);
-	glVertex3f(p1.x, p1.y, 0.0f);
-	glVertex3f(x2.x, x2.y, 0.0f);
-	glVertex3f(p2.x, p2.y, 0.0f);
+	glVertex3f(x1.x, 0.0f, x1.y);
+	glVertex3f(p1.x, 0.0f, p1.y);
+	glVertex3f(x2.x, 0.0f, x2.y);
+	glVertex3f(p2.x, 0.0f, p2.y);
 	glEnd();
 
 	glPopMatrix();
@@ -85,13 +116,13 @@ void LaunchBomb()
 	if (!bomb)
 	{
 		bomb = bodies + numBodies;
-		bomb->Set(Vec2(1.0f, 1.0f), 50.0f);
+		bomb->Set(Vec2(10.0f, 10.0f), 50.0f);
 		bomb->friction = 0.2f;
 		world.Add(bomb);
 		++numBodies;
 	}
 
-	bomb->position.Set(Random(-15.0f, 15.0f), 15.0f);
+	bomb->position.Set(Random(0.0f, 500.0f), 150.0f);
 	bomb->rotation = Random(-1.5f, 1.5f);
 	bomb->velocity = -1.5f * bomb->position;
 	bomb->angularVelocity = Random(-20.0f, 20.0f);
@@ -99,12 +130,12 @@ void LaunchBomb()
 
 void Demo5(Body* b, Joint* j)
 {
-	b->Set(Vec2(100.0f, 20.0f), FLT_MAX);
-	b->friction = 0.2f;
-	b->position.Set(0.0f, -0.5f * b->width.y);
-	b->rotation = 0.0f;
-	world.Add(b);
-	++b; ++numBodies;
+	//b->Set(Vec2(100.0f, 20.0f), FLT_MAX);
+	//b->friction = 0.2f;
+	//b->position.Set(0.0f, -0.5f * b->width.y);
+	//b->rotation = 0.0f;
+	//world.Add(b);
+	//++b; ++numBodies;
 
 	Vec2 x(-6.0f, 0.75f);
 	Vec2 y;
@@ -115,17 +146,17 @@ void Demo5(Body* b, Joint* j)
 
 		for (int j = i; j < 12; ++j)
 		{
-			b->Set(Vec2(1.0f, 1.0f), 10.0f);
-			b->friction = 0.2f;
+			b->Set(Vec2(10.0f, 10.0f), 10.0f);
+			b->friction = 0.5f;
 			b->position = y;
 			world.Add(b);
 			++b; ++numBodies;
 
-			y += Vec2(1.125f, 0.0f);
+			y += Vec2(30.125f, 0.0f);
 		}
 
 		//x += Vec2(0.5625f, 1.125f);
-		x += Vec2(0.5625f, 2.0f);
+		x += Vec2(30.5625f, 20.0f);
 	}
 }
 
@@ -250,18 +281,6 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 			exit();
 			break;
 		}
-		//case 'w':
-		//	m_QuaternionRotation.rotate(rotation_x++ * 3.14 / 180.f, { 1,0,0 });
-		//	break;
-		//case 's':
-		//	m_QuaternionRotation.rotate(rotation_x--* 3.14 / 180.f, { 1,0,0 });
-		//	break;
-		//case 'a':
-		//	m_QuaternionRotation.rotate(rotation_z++* 3.14 / 180.f, { 0,0,1 });
-		//	break;
-		//case 'd':
-		//	m_QuaternionRotation.rotate(rotation_z--* 3.14 / 180.f, { 0,0,1 });
-		//	break;
 		case 'w':
 		case 's':
 		case 'a':

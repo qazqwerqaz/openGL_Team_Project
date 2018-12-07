@@ -27,6 +27,8 @@ void Map::Draw()
 	glColor3f(1, 0, 0);
 
 	//glBegin(GL_TRIANGLES);
+	glPushMatrix();
+	glTranslatef(0, -100, 0);
 	for (auto& a : vertices)
 	{
 		//glNormal3f(0,1, 0);
@@ -38,6 +40,7 @@ void Map::Draw()
 		glutSolidCube(5);
 		glPopMatrix();
 	}
+	glPopMatrix();
 	//glEnd();
 	glColor3f(1,1,1);
 
