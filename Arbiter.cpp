@@ -13,7 +13,7 @@
 #include "Body.h"
 #include "World.h"
 
-#include "glut.h"
+#include <gl/freeglut.h>
 
 Arbiter::Arbiter(Body* b1, Body* b2)
 {

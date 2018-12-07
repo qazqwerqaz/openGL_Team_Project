@@ -1,10 +1,7 @@
 #pragma once
 #define EPSILON				0.001f
 #include "stdafx.h"
-inline float Sign(float x)
-{
-	return x < 0.0f ? -1.0f : 1.0f;
-}
+
 
 
 class Vector2
@@ -328,69 +325,71 @@ namespace V4
 	}
 }
 
-inline Vector2 operator * (const Matrix2x2& A, const Vector2& v)
-{
-	return Vector2(A.col1.x * v.x + A.col2.x * v.y, A.col1.y * v.x + A.col2.y * v.y);
-}
+namespace aaa {
+	inline Vector2 operator * (const Matrix2x2& A, const Vector2& v)
+	{
+		return Vector2(A.col1.x * v.x + A.col2.x * v.y, A.col1.y * v.x + A.col2.y * v.y);
+	}
 
-inline Vector2 operator + (const Vector2& a, const Vector2& b)
-{
-	return Vector2(a.x + b.x, a.y + b.y);
-}
+	inline Vector2 operator + (const Vector2& a, const Vector2& b)
+	{
+		return Vector2(a.x + b.x, a.y + b.y);
+	}
 
-inline Vector2 operator - (const Vector2& a, const Vector2& b)
-{
-	return Vector2(a.x - b.x, a.y - b.y);
-}
-
-
-inline Matrix2x2 operator * (const Matrix2x2& A, const Matrix2x2& B)
-{
-	return Matrix2x2(A * B.col1, A * B.col2);
-}
-
-inline Vector2 Abs(const Vector2& a)
-{
-	return Vector2(fabsf(a.x), fabsf(a.y));
-}
-
-inline Matrix2x2 Abs(const Matrix2x2& A)
-{
-	return Matrix2x2(Abs(A.col1), Abs(A.col2));
-}
-
-inline Matrix2x2 operator + (const Matrix2x2& A, const Matrix2x2& B)
-{
-	return Matrix2x2(A.col1 + B.col1, A.col2 + B.col2);
-}
-
-inline float Cross(const Vector2& a, const Vector2& b)
-{
-	return a.x * b.y - a.y * b.x;
-}
-
-inline Vector2 Cross(const Vector2& a, float s)
-{
-	return Vector2(s * a.y, -s * a.x);
-}
-
-inline Vector2 Cross(float s, const Vector2& a)
-{
-	return Vector2(-s * a.y, s * a.x);
-}
+	inline Vector2 operator - (const Vector2& a, const Vector2& b)
+	{
+		return Vector2(a.x - b.x, a.y - b.y);
+	}
 
 
-inline float Min(float a, float b)
-{
-	return a < b ? a : b;
-}
+	inline Matrix2x2 operator * (const Matrix2x2& A, const Matrix2x2& B)
+	{
+		return Matrix2x2(A * B.col1, A * B.col2);
+	}
 
-inline float Max(float a, float b)
-{
-	return a > b ? a : b;
-}
+	inline Vector2 Abs(const Vector2& a)
+	{
+		return Vector2(fabsf(a.x), fabsf(a.y));
+	}
 
-inline float Clamp(float a, float low, float high)
-{
-	return Max(low, Min(a, high));
+	inline Matrix2x2 Abs(const Matrix2x2& A)
+	{
+		return Matrix2x2(Abs(A.col1), Abs(A.col2));
+	}
+
+	inline Matrix2x2 operator + (const Matrix2x2& A, const Matrix2x2& B)
+	{
+		return Matrix2x2(A.col1 + B.col1, A.col2 + B.col2);
+	}
+
+	inline float Cross(const Vector2& a, const Vector2& b)
+	{
+		return a.x * b.y - a.y * b.x;
+	}
+
+	inline Vector2 Cross(const Vector2& a, float s)
+	{
+		return Vector2(s * a.y, -s * a.x);
+	}
+
+	inline Vector2 Cross(float s, const Vector2& a)
+	{
+		return Vector2(-s * a.y, s * a.x);
+	}
+
+
+	inline float Min(float a, float b)
+	{
+		return a < b ? a : b;
+	}
+
+	inline float Max(float a, float b)
+	{
+		return a > b ? a : b;
+	}
+
+	inline float Clamp(float a, float low, float high)
+	{
+		return Max(low, Min(a, high));
+	}
 }

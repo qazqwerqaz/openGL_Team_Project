@@ -28,6 +28,7 @@ public:
 
 
 private:
+	
 	Camera* m_Camera;
 	QuaternionRotation	m_QuaternionRotation;
 	//gameobject
