@@ -93,7 +93,6 @@ void Ball::move(int key,Camera *m_Camera)
 		m_QuaternionRotation_X.rotate(3.14 / 180.f * 10, m_QuaternionRotation_X.rotatePoint({ shaft_x.x,0,shaft_x.z }));
 		Pos.x += shaft_x.z;
 		Pos.z -= shaft_x.x;
-
 		break;
 	case 's':
 		m_QuaternionRotation_X.rotate(-3.14 / 180.f * 10, m_QuaternionRotation_X.rotatePoint({ shaft_x.x,0,shaft_x.z }));
