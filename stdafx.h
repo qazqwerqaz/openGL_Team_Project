@@ -10,6 +10,7 @@
 
 #include <vector>
 #include<limits>
+#include<list>
 
 //GL
 #include<gl/freeglut.h>
