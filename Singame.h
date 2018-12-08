@@ -57,6 +57,7 @@ private:
 	float rotation_y;
 	float rotation_z;
 
+	int fullmode = 0;
 
 };
 

@@ -135,7 +135,6 @@ void OBJLoader::initTexture()
 	texture[3] = LoadTexture("1_Right.bmp", 512, 512); //load the texture
 	texture[4] = LoadTexture("1_Bottom.bmp", 512, 512); //load the texture
 	texture[5] = LoadTexture("1_Top.bmp", 512, 512); //load the texture
-	texture[6] = LoadTexture("Box.bmp", 256, 256); //load the texture
 }
 
 GLuint OBJLoader::LoadTexture(const char * filename, int width, int height)

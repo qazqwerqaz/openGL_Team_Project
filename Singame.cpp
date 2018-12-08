@@ -6,6 +6,9 @@
 #include "Body.h"
 #include "Joint.h"
 
+GLuint texture[1];
+OBJLoader a;
+
 namespace {
 	Body bodies[200];
 	Joint joints[100];
@@ -52,38 +55,40 @@ namespace {
 		//abs(v1.x - v3.x);
 		if (body != Box_Ball)
 		{
+
 			glTranslatef(0, -10, 0);
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
 			glBegin(GL_QUADS);
-			glVertex3f(v1.x, 0.0f, v1.y);
-			glVertex3f(v2.x, 0.0f, v2.y);
-			glVertex3f(v3.x, 0.0f, v3.y);
-			glVertex3f(v4.x, 0.0f, v4.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v1.x, 0.0f, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, 0.0f, v2.y);
+			glTexCoord2d(0.0, 1.0f); glVertex3f(v3.x, 0.0f, v3.y);
+			glTexCoord2d(0.0, 0.0f); glVertex3f(v4.x, 0.0f, v4.y);
 
 
-			glVertex3f(v1.x, y, v1.y);
-			glVertex3f(v2.x, y, v2.y);
-			glVertex3f(v3.x, y, v3.y);
-			glVertex3f(v4.x, y, v4.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v1.x, y, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, y, v2.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v3.x, y, v3.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v4.x, y, v4.y);
 
-			glVertex3f(v4.x, 0, v4.y);
-			glVertex3f(v1.x, 0, v1.y);
-			glVertex3f(v1.x, y, v1.y);
-			glVertex3f(v4.x, y, v4.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v4.x, 0, v4.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v1.x, 0, v1.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v1.x, y, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v4.x, y, v4.y);
 
-			glVertex3f(v3.x, 0, v3.y);
-			glVertex3f(v2.x, 0, v2.y);
-			glVertex3f(v2.x, y, v2.y);
-			glVertex3f(v3.x, y, v3.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v3.x, 0, v3.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v2.x, 0, v2.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, y, v2.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v3.x, y, v3.y);
 
-			glVertex3f(v1.x, 0.0f, v1.y);
-			glVertex3f(v2.x, 0.0f, v2.y);
-			glVertex3f(v2.x, y, v2.y);
-			glVertex3f(v1.x, y, v1.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v1.x, 0.0f, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, 0.0f, v2.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v2.x, y, v2.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v1.x, y, v1.y);
 
-			glVertex3f(v4.x, 0.0f, v4.y);
-			glVertex3f(v3.x, 0.0f, v3.y);
-			glVertex3f(v3.x, y, v3.y);
-			glVertex3f(v4.x, y, v4.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v4.x, 0.0f, v4.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v3.x, 0.0f, v3.y);
+			glTexCoord2d(0.0, 1.0f); glVertex3f(v3.x, y, v3.y);
+			glTexCoord2d(0.0, 0.0f); glVertex3f(v4.x, y, v4.y);
 
 			glEnd();
 		}
@@ -232,18 +237,21 @@ Singame::~Singame()
 
 }
 
+
+
 void Singame::init()
 {
 	InitDemo();
 
 	m_Camera = new Camera;
-	//glutFullScreen();
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
 	rotation_z = 0;
+
+	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
@@ -275,8 +283,8 @@ void Singame::reset()
 
 void Singame::render()
 {
-	RECT r;
-	ClipCursor(&r);
+	//RECT r;
+	//ClipCursor(&r);
 
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
@@ -378,6 +386,19 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 			break;
 		case '3':
 			lightPos[1] -= 10;
+			break;
+		case '=':
+			fullmode = (fullmode + 1) % 2;
+			if (fullmode == 1)
+			{
+				printf("FullMode On \n");
+				glutFullScreen();
+			}
+			else
+			{
+				glutPositionWindow(0, 0);
+				glutReshapeWindow(1200, 900);
+			}
 			break;
 		default:
 			break;
