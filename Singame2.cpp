@@ -1,12 +1,13 @@
 #include "stdafx.h"
-#include "Singame.h"
+#include "Singame2.h"
 #include "GLFramework.h"
 
 #include "World.h"
 #include "Body.h"
 #include "Joint.h"
 
-namespace {
+namespace
+{
 	Body bodies[200];
 	Joint joints[100];
 
@@ -140,7 +141,7 @@ namespace {
 		if (!Box_Ball)
 		{
 			Box_Ball = bodies + numBodies;
-			Box_Ball->Set(Vec2(30.0f, 30.0f), 10);
+			Box_Ball->Set(Vec2(30.0f, 30.0f), 10.f);
 			Box_Ball->friction = 0.2f;
 			world.Add(Box_Ball);
 			++numBodies;
@@ -221,18 +222,18 @@ namespace {
 		Demo5(bodies, joints);
 	}
 }
-Singame::Singame()
+Singame2::Singame2()
 {
 
 }
 
 
-Singame::~Singame()
+Singame2::~Singame2()
 {
 
 }
 
-void Singame::init()
+void Singame2::init()
 {
 	InitDemo();
 
@@ -252,9 +253,6 @@ void Singame::init()
 	//glEnable(GL_CULL_FACE);
 	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
-
-	glEnable(GL_LIGHT1);
-
 	//À§Ä¡
 	aw.init();
 	minGu.init();
@@ -262,17 +260,17 @@ void Singame::init()
 	LaunchBox_Ball();
 }
 
-void Singame::exit()
+void Singame2::exit()
 {
 	delete m_Camera;
 }
 
-void Singame::reset()
+void Singame2::reset()
 {
 
 }
 
-void Singame::render()
+void Singame2::render()
 {
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
@@ -282,17 +280,12 @@ void Singame::render()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
+
+
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);
 	glPopMatrix();
-
-	glLightf(GL_LIGHT1, GL_AMBIENT, (0.25, 0.25, 0.25, 1));
-	glLightf(GL_LIGHT1, GL_DIFFUSE, (1, 0, 0));
-	glLightf(GL_LIGHT1, GL_SPECULAR, (1, 1, 1, 1));
-	//glLightf(GL_LIGHT1, GL_POSITION, ())
-
-
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
@@ -329,12 +322,12 @@ void Singame::render()
 
 }
 
-void Singame::reshape(int w, int h)
+void Singame2::reshape(int w, int h)
 {
 
 }
 
-void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
+void Singame2::keyboard(int key, bool pressed, int x, int y, bool special)
 {
 	if (pressed)
 		switch (key)
@@ -366,17 +359,21 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 		default:
 			break;
 		}
+	else
+	{
+		
+	}
 
 }
 
-void Singame::mouse(int button, bool pressed, int x, int y)
+void Singame2::mouse(int button, bool pressed, int x, int y)
 {
 	right_button_pressed = false;
 	if (button == GLUT_RIGHT_BUTTON)
 		right_button_pressed = true;
 }
 
-void Singame::motion(bool pressed, int x, int y)
+void Singame2::motion(bool pressed, int x, int y)
 {
 	ShowCursor(false);
 	if (right_button_pressed)
@@ -384,7 +381,7 @@ void Singame::motion(bool pressed, int x, int y)
 	else		computeMatricesFromInputs(x, y, 'w', pressed);
 }
 
-void Singame::update(float fDeltaTime)
+void Singame2::update(float fDeltaTime)
 {
 	static float timer;
 	timer += fDeltaTime;
@@ -410,7 +407,7 @@ namespace {
 	float speed = 0.5f; // 3 units / second
 	float mouseSpeed = 0.0005f;
 }
-void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
+void Singame2::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glutGet(GLUT_ELAPSED_TIME);

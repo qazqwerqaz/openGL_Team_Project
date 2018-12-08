@@ -4,17 +4,18 @@
 #include "Camera.h"
 #include "LinearMath.h"
 #include "Transformations.h"
+#include "Body.h"
 class Ball
 {
 public:
 	Ball();
 	~Ball();
 	void init();
-	void Draw();
+	void Draw(Body& Box_Ball);
 	void update(float time, std::vector<Vector3>& other, std::vector<Vector3>& otherU);
 	bool Collide(std::vector<Vector3>& otherV, std::vector<Vector3>& otherUV);
 
-	void move(int key,Camera *m_Camera);
+	void move(int key,Camera *m_Camera, Body& Box_Ball);
 public:
 	OBJLoader a;
 

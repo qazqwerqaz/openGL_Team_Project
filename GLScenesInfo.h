@@ -4,6 +4,8 @@
 
 /*~~~~~HEADER FILES~~~~*/
 #include "Singame.h"
+#include "Singame2.h"
+
 
 struct GLSceneInfo
 {
