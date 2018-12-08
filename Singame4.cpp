@@ -1,13 +1,14 @@
 #include "stdafx.h"
-#include "Singame3.h"
+#include "Singame4.h"
 #include "GLFramework.h"
 
 #include "World.h"
 #include "Body.h"
 #include "Joint.h"
 
-namespace
-{
+
+
+namespace {
 	GLuint texture[1];
 	OBJLoader a;
 
@@ -15,13 +16,6 @@ namespace
 	Joint joints[100];
 
 	Body* bomb = NULL;
-	Body* bomb1 = NULL;
-	Body* bomb2 = NULL;
-	Body* bomb3 = NULL;
-	Body* bomb4 = NULL;
-	Body* bomb5 = NULL;
-	Body* bomb6 = NULL;
-
 
 	Body* Box_Ball = NULL;
 
@@ -41,6 +35,8 @@ namespace
 
 	bool Viewpoint = true;
 
+	float maze_size = 10;
+
 	void DrawBody(Body* body)
 	{
 		Mat22 R(body->rotation);
@@ -59,9 +55,11 @@ namespace
 
 		glPushMatrix();
 
+
+
 		glMultMatrixf(&curMatrix);
 
-		float y = Box_size;
+		float y = 200;
 		//abs(v1.x - v3.x);
 		if (body != Box_Ball)
 		{
@@ -144,106 +142,24 @@ namespace
 			++numBodies;
 		}
 
-		bomb->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
+		bomb->position.Set(-10,10);
 		bomb->rotation = Random(-1.5f, 1.5f);
 		bomb->velocity = -1.5f * bomb->position;
 		bomb->angularVelocity = Random(-20.0f, 20.0f);
 	}
-
-	void LaunchBomb1()
-	{
-		if (!bomb1)
-		{
-			bomb1 = bodies + numBodies;
-			bomb1->Set(Vec2(10.0f, 10.0f), 50.0f);
-			bomb1->friction = 0.2f;
-			world.Add(bomb1);
-			++numBodies;
-		}
-
-		bomb1->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
-		bomb1->rotation = Random(-1.5f, 1.5f);
-		bomb1->velocity = -1.5f * bomb1->position;
-		bomb1->angularVelocity = Random(-20.0f, 20.0f);
-	}
-	void LaunchBomb2()
-	{
-		if (!bomb2)
-		{
-			bomb2 = bodies + numBodies;
-			bomb2->Set(Vec2(10.0f, 10.0f), 50.0f);
-			bomb2->friction = 0.2f;
-			world.Add(bomb2);
-			++numBodies;
-		}
-
-		bomb2->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
-		bomb2->rotation = Random(-1.5f, 1.5f);
-		bomb2->velocity = -1.5f * bomb2->position;
-		bomb2->angularVelocity = Random(-20.0f, 20.0f);
-	}
-	void LaunchBomb3()
-	{
-		if (!bomb3)
-		{
-			bomb3 = bodies + numBodies;
-			bomb3->Set(Vec2(10.0f, 10.0f), 50.0f);
-			bomb3->friction = 0.2f;
-			world.Add(bomb3);
-			++numBodies;
-		}
-
-		bomb3->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
-		bomb3->rotation = Random(-1.5f, 1.5f);
-		bomb3->velocity = -1.5f * bomb3->position;
-		bomb3->angularVelocity = Random(-20.0f, 20.0f);
-	}
-	void LaunchBomb4()
-	{
-		if (!bomb4)
-		{
-			bomb4 = bodies + numBodies;
-			bomb4->Set(Vec2(10.0f, 10.0f), 50.0f);
-			bomb4->friction = 0.2f;
-			world.Add(bomb4);
-			++numBodies;
-		}
-
-		bomb4->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
-		bomb4->rotation = Random(-1.5f, 1.5f);
-		bomb4->velocity = -1.5f * bomb4->position;
-		bomb4->angularVelocity = Random(-20.0f, 20.0f);
-	}
-	void LaunchBomb5()
-	{
-		if (!bomb5)
-		{
-			bomb5 = bodies + numBodies;
-			bomb5->Set(Vec2(10.0f, 10.0f), 50.0f);
-			bomb5->friction = 0.2f;
-			world.Add(bomb5);
-			++numBodies;
-		}
-
-		bomb5->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
-		bomb5->rotation = Random(-1.5f, 1.5f);
-		bomb5->velocity = -1.5f * bomb5->position;
-		bomb5->angularVelocity = Random(-20.0f, 20.0f);
-	}
-
 
 	void LaunchBox_Ball()
 	{
 		if (!Box_Ball)
 		{
 			Box_Ball = bodies + numBodies;
-			Box_Ball->Set(Vec2(30.0f, 30.0f), 10.f);
+			Box_Ball->Set(Vec2(30.0f, 30.0f), 10);
 			Box_Ball->friction = 0.2f;
 			world.Add(Box_Ball);
 			++numBodies;
 		}
 
-		Box_Ball->position.Set(400, 0);
+		Box_Ball->position.Set(0, 0);
 		Box_Ball->rotation = Random(-1.5f, 1.5f);
 		Box_Ball->velocity = -1.5f * Box_Ball->position;
 		Box_Ball->angularVelocity = Random(-20.0f, 20.0f);
@@ -253,54 +169,197 @@ namespace
 	{
 		//벽그리기
 		{
-			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
+			b->Set(Vec2(0.0f, maze_size * 90.0f), FLT_MAX);
 			b->friction = 0.2f;
-			b->position.Set(500.0f, 0.0f * b->width.y);
+			b->position.Set(maze_size *50.0f, maze_size *5.0f);
 			b->rotation = 0.0f;
 			world.Add(b);
 			++b; ++numBodies;
 
-			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
+			b->Set(Vec2(maze_size *100.0f, maze_size * 0.0f), FLT_MAX);
 			b->friction = 0.2f;
-			b->position.Set(-500.0f, 0.0f * b->width.y);
+			b->position.Set(maze_size *0.0f, maze_size *50.0f);
 			b->rotation = 0.0f;
 			world.Add(b);
 			++b; ++numBodies;
 
-			b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
+			b->Set(Vec2(maze_size * 100.0f, maze_size * 0.0f), FLT_MAX);
 			b->friction = 0.2f;
-			b->position.Set(0.0f, 500.0f * b->width.y);
+			b->position.Set(maze_size * 0.0f, maze_size * -50.0f);
 			b->rotation = 0.0f;
 			world.Add(b);
 			++b; ++numBodies;
 
-			b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
+			//벽위치
+			//////
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
 			b->friction = 0.2f;
-			b->position.Set(0.0f, -500.0f * b->width.y);
+			b->position.Set(maze_size * 45.0f, maze_size * -10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * -15.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 35.0f, maze_size * -20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+
+			b->Set(Vec2(maze_size * 30.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 25.0f, maze_size * 30.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * 35.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 30.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 10.0f, maze_size * 15.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 5.0f, maze_size * 20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 20.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 0.0f, maze_size * 30.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 15.0f, maze_size * 10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 5.0f, maze_size * 0.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 40.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 0.0f, maze_size * -20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * -45.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 30.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 25.0f, maze_size * -40.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 30.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 10.0f, maze_size * -25.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 20.0f, maze_size * -10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 20.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 20.0f, maze_size * -20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 30.0f, maze_size * -30.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 30.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 30.0f, maze_size * 5.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(25.0f, 0.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 30.0f, maze_size * 20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 20.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * 10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+
+			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 10.0f, maze_size * 45.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 20.0f, maze_size * 40.0f);
 			b->rotation = 0.0f;
 			world.Add(b);
 			++b; ++numBodies;
 		}
 
-		Vec2 x(-6.0f, 0.75f);
-		Vec2 y;
-
-
-		b->Set(Vec2(Box_size, Box_size), FLT_MAX);
+		b->Set(Vec2(20 * maze_size, 1), 10.0f);
 		b->friction = 0.5f;
-		b->position = Vec2(100, 100);
-		world.Add(b);
-		++b; ++numBodies;
-
-		b->Set(Vec2(Box_size, Box_size), 10.0f);
-		b->friction = 0.5f;
-		b->position = Vec2(200, 100);
-		world.Add(b);
-		++b; ++numBodies;
-
-		b->Set(Vec2(Box_size, Box_size), 10.0f);
-		b->friction = 0.5f;
-		b->position = Vec2(100, 100);
+		b->position = Vec2(-100, 100);
 		world.Add(b);
 		++b; ++numBodies;
 	}
@@ -315,18 +374,20 @@ namespace
 		Demo5(bodies, joints);
 	}
 }
-Singame3::Singame3()
+Singame4::Singame4()
 {
 
 }
 
 
-Singame3::~Singame3()
+Singame4::~Singame4()
 {
 
 }
 
-void Singame3::init()
+
+
+void Singame4::init()
 {
 	InitDemo();
 
@@ -356,20 +417,31 @@ void Singame3::init()
 	minGu.init();
 	m_skybox.initTexture();
 	LaunchBox_Ball();
+
+	Box_Ball->position.x = 0;
+	Box_Ball->position.y = -0;
+
 }
 
-void Singame3::exit()
+void Singame4::exit()
 {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
+	glDisable(GL_COLOR_MATERIAL);
 	delete m_Camera;
 }
 
-void Singame3::reset()
+void Singame4::reset()
 {
 
 }
 
-void Singame3::render()
+void Singame4::render()
 {
+	//RECT r;
+	//ClipCursor(&r);
+
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
@@ -378,12 +450,24 @@ void Singame3::render()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-
-
 	glPushMatrix();
+	glColor3f(1, 0, 0);
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);
 	glPopMatrix();
+
+	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
+	GLfloat diffuseLight[] = { 1, 0, 0, 1 };
+	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };
+
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight0);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, lit_spc);
+	glMateriali(GL_LIGHT1, GL_SHININESS, 64);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT1);
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
@@ -398,9 +482,16 @@ void Singame3::render()
 		glMultMatrixf(&a);
 
 		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
-		aw.Draw(*Box_Ball);
 
-		minGu.Draw();
+		if(Viewpoint)
+			aw.Draw(*Box_Ball);
+		
+		glPushMatrix();
+		glColor3f(0, 0, 1);
+		glTranslatef(0, -20, 0);
+		glScalef(1000, 1, 1000);
+		glutSolidCube(1);
+		glPopMatrix();
 	}
 	glPopMatrix();
 
@@ -420,12 +511,12 @@ void Singame3::render()
 
 }
 
-void Singame3::reshape(int w, int h)
+void Singame4::reshape(int w, int h)
 {
 
 }
 
-void Singame3::keyboard(int key, bool pressed, int x, int y, bool special)
+void Singame4::keyboard(int key, bool pressed, int x, int y, bool special)
 {
 	if (pressed)
 		switch (key)
@@ -441,31 +532,38 @@ void Singame3::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 'd':
 			aw.move(key, m_Camera, *Box_Ball);
 			break;
+		case '=':
+			fullmode = (fullmode + 1) % 2;
+			if (fullmode == 1)
+			{
+				printf("FullMode On \n");
+				glutFullScreen();
+			}
+			else
+			{
+				glutPositionWindow(0, 0);
+				glutReshapeWindow(1200, 900);
+			}
+			break;
+		case 'n':
+			m_Framework->toScene("Ingame2"); break;
 		case '1':
 			Viewpoint = !Viewpoint;
 			break;
-		case 'n':
-			m_Framework->toScene("Ingame4"); break;
-			break;
-
 		default:
 			break;
 		}
-	else
-	{
-
-	}
 
 }
 
-void Singame3::mouse(int button, bool pressed, int x, int y)
+void Singame4::mouse(int button, bool pressed, int x, int y)
 {
 	right_button_pressed = false;
 	if (button == GLUT_RIGHT_BUTTON)
 		right_button_pressed = true;
 }
 
-void Singame3::motion(bool pressed, int x, int y)
+void Singame4::motion(bool pressed, int x, int y)
 {
 	ShowCursor(false);
 	if (Viewpoint)
@@ -479,18 +577,12 @@ void Singame3::motion(bool pressed, int x, int y)
 		computeMatricesFromInputs(x, y, ' ', pressed);
 }
 
-void Singame3::update(float fDeltaTime)
+void Singame4::update(float fDeltaTime)
 {
 	static float timer;
 	timer += fDeltaTime;
 	if (timer >= 5)
 	{
-		LaunchBomb();
-		LaunchBomb1();
-		LaunchBomb2();
-		LaunchBomb3();
-		LaunchBomb4();
-		LaunchBomb5();
 		timer = 0;
 	}
 	aw.update(fDeltaTime, minGu.vertices, minGu.normals);
@@ -499,7 +591,7 @@ void Singame3::update(float fDeltaTime)
 
 namespace {
 	// Initial position : on +Z
-	Vector3 position = Vector3(0, 100, 5);
+	Vector3 position = Vector3(0, 100, 100);
 	// Initial horizontal angle : toward -Z
 	float horizontalAngle = 3.14f;
 	// Initial vertical angle : none
@@ -509,8 +601,24 @@ namespace {
 
 	float speed = 0.5f; // 3 units / second
 	float mouseSpeed = 0.0005f;
+
+	void material0()
+	{
+		GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };         // 주변광의 강도
+		GLfloat specref[] = { 1.0f,1.0f,1.0f,1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight0);
+		glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 0.0);
+		glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0.0);
+
+		glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, ambientLight0);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
+		glMateriali(GL_FRONT, GL_SHININESS, 64);
+		glColor3f(1, 1, 1);
+		glTranslatef(0, 0, -200);
+		glutSolidSphere(50, 200, 200);
+	}
 }
-void Singame3::computeMatricesFromInputs(int x, int y, int key, int pressed) {
+void Singame4::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glutGet(GLUT_ELAPSED_TIME);
@@ -551,7 +659,7 @@ void Singame3::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	// Move forward
 	if (key == 'w' && pressed) {
-		position = V3::add(position, direction * deltaTime * speed);
+		position = V3::add(Vector3(0, 0, 0), V3::add(position, direction * deltaTime * speed));
 	}
 	// Move backward
 	if (key == 's' && pressed) {
@@ -567,19 +675,20 @@ void Singame3::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	}
 
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
-	
+
 	if (key == ' ')
 	{
-		m_Camera->setEye(Vector3(Box_Ball->position.x + 200 * sin(horizontalAngle), 50, Box_Ball->position.y + 200 * cos(horizontalAngle)));
-		m_Camera->setTarget(Vector3(Box_Ball->position.x, 0, Box_Ball->position.y));
+		m_Camera->setEye(Vector3(Box_Ball->position.x + 20 * sin(horizontalAngle), 10, Box_Ball->position.y + 20 * cos(horizontalAngle)));
+		m_Camera->setTarget(V3::add(Vector3(Box_Ball->position.x, 20 * sin(verticalAngle), Box_Ball->position.y),direction));
 	}
 	else
 	{
 		m_Camera->setEye(Vector3(Box_Ball->position.x + 300 * sin(horizontalAngle), 300, Box_Ball->position.y + 300 * cos(horizontalAngle)));
-		m_Camera->setTarget(Vector3(Box_Ball->position.x, 0, Box_Ball->position.y));
+		m_Camera->setTarget(Vector3(Box_Ball->position.x,300 * sin(verticalAngle), Box_Ball->position.y));
 	}
-	//m_Camera->setEye(position);
 	//m_Camera->setTarget(V3::add(position, direction));
+
+	//m_Camera->setUp(Vector3(0,1,0));
 	//m_Camera->setUp(up);
 
 	lightPos[0] = position.x;
@@ -587,5 +696,10 @@ void Singame3::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	lightPos[2] = position.z;
 	lastTime = currentTime;
 }
+
+
+
+
+
 
 
