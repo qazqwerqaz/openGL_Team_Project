@@ -33,6 +33,8 @@ namespace {
 
 	float Box_size = 30;
 
+	bool Viewpoint = true;
+
 	void DrawBody(Body* body)
 	{
 		Mat22 R(body->rotation);
@@ -382,19 +384,6 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 'd':
 			aw.move(key, m_Camera,*Box_Ball);
 			break;
-		case '5':
-			LaunchBomb();
-			lightPos[0] += 10;
-			break;
-		case '2':
-			lightPos[0] -= 10;
-			break;
-		case '1':
-			lightPos[1] += 10;
-			break;
-		case '3':
-			lightPos[1] -= 10;
-			break;
 		case '=':
 			fullmode = (fullmode + 1) % 2;
 			if (fullmode == 1)
@@ -410,6 +399,9 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 			break;
 		case 'n':
 			m_Framework->toScene("Ingame2"); break;
+		case '1':
+			Viewpoint = !Viewpoint;
+			break;
 		default:
 			break;
 		}
@@ -426,9 +418,15 @@ void Singame::mouse(int button, bool pressed, int x, int y)
 void Singame::motion(bool pressed, int x, int y)
 {
 	ShowCursor(false);
-	if (right_button_pressed)
-		computeMatricesFromInputs(x, y, 's', pressed);
-	else		computeMatricesFromInputs(x, y, 'w', pressed);
+	if (Viewpoint)
+	{
+		if (right_button_pressed)
+			computeMatricesFromInputs(x, y, 's', pressed);
+		else
+			computeMatricesFromInputs(x, y, 'w', pressed);
+	}
+	else
+		computeMatricesFromInputs(x, y, ' ', pressed);
 }
 
 void Singame::update(float fDeltaTime)
@@ -531,9 +529,16 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
-	m_Camera->setEye(Vector3(Box_Ball->position.x + 300*sin(horizontalAngle ), 300, Box_Ball->position.y + 300 * cos(horizontalAngle)));
-	m_Camera->setTarget(Vector3(Box_Ball->position.x,0, Box_Ball->position.y));
-
+	if (key == ' ')
+	{
+		m_Camera->setEye(Vector3(Box_Ball->position.x + 200 * sin(horizontalAngle), 50, Box_Ball->position.y + 200 * cos(horizontalAngle)));
+		m_Camera->setTarget(Vector3(Box_Ball->position.x, 0, Box_Ball->position.y));
+	}
+	else
+	{
+		m_Camera->setEye(Vector3(Box_Ball->position.x + 300 * sin(horizontalAngle), 300, Box_Ball->position.y + 300 * cos(horizontalAngle)));
+		m_Camera->setTarget(Vector3(Box_Ball->position.x, 0, Box_Ball->position.y));
+	}
 	//m_Camera->setTarget(V3::add(position, direction));
 
 	//m_Camera->setUp(Vector3(0,1,0));
