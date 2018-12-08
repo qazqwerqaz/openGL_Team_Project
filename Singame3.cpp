@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Singame2.h"
+#include "Singame3.h"
 #include "GLFramework.h"
 
 #include "World.h"
@@ -8,6 +8,9 @@
 
 namespace
 {
+	GLuint texture[1];
+	OBJLoader a;
+
 	Body bodies[200];
 	Joint joints[100];
 
@@ -60,38 +63,40 @@ namespace
 		//abs(v1.x - v3.x);
 		if (body != Box_Ball)
 		{
+
 			glTranslatef(0, -10, 0);
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
 			glBegin(GL_QUADS);
-			glVertex3f(v1.x, 0.0f, v1.y);
-			glVertex3f(v2.x, 0.0f, v2.y);
-			glVertex3f(v3.x, 0.0f, v3.y);
-			glVertex3f(v4.x, 0.0f, v4.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v1.x, 0.0f, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, 0.0f, v2.y);
+			glTexCoord2d(0.0, 1.0f); glVertex3f(v3.x, 0.0f, v3.y);
+			glTexCoord2d(0.0, 0.0f); glVertex3f(v4.x, 0.0f, v4.y);
 
 
-			glVertex3f(v1.x, y, v1.y);
-			glVertex3f(v2.x, y, v2.y);
-			glVertex3f(v3.x, y, v3.y);
-			glVertex3f(v4.x, y, v4.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v1.x, y, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, y, v2.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v3.x, y, v3.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v4.x, y, v4.y);
 
-			glVertex3f(v4.x, 0, v4.y);
-			glVertex3f(v1.x, 0, v1.y);
-			glVertex3f(v1.x, y, v1.y);
-			glVertex3f(v4.x, y, v4.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v4.x, 0, v4.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v1.x, 0, v1.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v1.x, y, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v4.x, y, v4.y);
 
-			glVertex3f(v3.x, 0, v3.y);
-			glVertex3f(v2.x, 0, v2.y);
-			glVertex3f(v2.x, y, v2.y);
-			glVertex3f(v3.x, y, v3.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v3.x, 0, v3.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v2.x, 0, v2.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, y, v2.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v3.x, y, v3.y);
 
-			glVertex3f(v1.x, 0.0f, v1.y);
-			glVertex3f(v2.x, 0.0f, v2.y);
-			glVertex3f(v2.x, y, v2.y);
-			glVertex3f(v1.x, y, v1.y);
+			glTexCoord2d(0.0f, 1.0f); glVertex3f(v1.x, 0.0f, v1.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v2.x, 0.0f, v2.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v2.x, y, v2.y);
+			glTexCoord2d(0.0f, 0.0f); glVertex3f(v1.x, y, v1.y);
 
-			glVertex3f(v4.x, 0.0f, v4.y);
-			glVertex3f(v3.x, 0.0f, v3.y);
-			glVertex3f(v3.x, y, v3.y);
-			glVertex3f(v4.x, y, v4.y);
+			glTexCoord2d(1.0f, 0.0f); glVertex3f(v4.x, 0.0f, v4.y);
+			glTexCoord2d(1.0f, 1.0f); glVertex3f(v3.x, 0.0f, v3.y);
+			glTexCoord2d(0.0, 1.0f); glVertex3f(v3.x, y, v3.y);
+			glTexCoord2d(0.0, 0.0f); glVertex3f(v4.x, y, v4.y);
 
 			glEnd();
 		}
@@ -308,27 +313,30 @@ namespace
 		Demo5(bodies, joints);
 	}
 }
-Singame2::Singame2()
+Singame3::Singame3()
 {
 
 }
 
 
-Singame2::~Singame2()
+Singame3::~Singame3()
 {
 
 }
 
-void Singame2::init()
+void Singame3::init()
 {
 	InitDemo();
 
 	m_Camera = new Camera;
-	//glutFullScreen();
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
 	rotation_z = 0;
+
+	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
@@ -339,6 +347,8 @@ void Singame2::init()
 	//glEnable(GL_CULL_FACE);
 	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
+
+
 	//À§Ä¡
 	aw.init();
 	minGu.init();
@@ -346,17 +356,17 @@ void Singame2::init()
 	LaunchBox_Ball();
 }
 
-void Singame2::exit()
+void Singame3::exit()
 {
 	delete m_Camera;
 }
 
-void Singame2::reset()
+void Singame3::reset()
 {
 
 }
 
-void Singame2::render()
+void Singame3::render()
 {
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
@@ -387,7 +397,7 @@ void Singame2::render()
 
 		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
 		aw.Draw(*Box_Ball);
-		
+
 		minGu.Draw();
 	}
 	glPopMatrix();
@@ -408,12 +418,12 @@ void Singame2::render()
 
 }
 
-void Singame2::reshape(int w, int h)
+void Singame3::reshape(int w, int h)
 {
 
 }
 
-void Singame2::keyboard(int key, bool pressed, int x, int y, bool special)
+void Singame3::keyboard(int key, bool pressed, int x, int y, bool special)
 {
 	if (pressed)
 		switch (key)
@@ -427,7 +437,7 @@ void Singame2::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 's':
 		case 'a':
 		case 'd':
-			aw.move(key, m_Camera,*Box_Ball);
+			aw.move(key, m_Camera, *Box_Ball);
 			break;
 		case '5':
 			LaunchBomb();
@@ -447,19 +457,19 @@ void Singame2::keyboard(int key, bool pressed, int x, int y, bool special)
 		}
 	else
 	{
-		
+
 	}
 
 }
 
-void Singame2::mouse(int button, bool pressed, int x, int y)
+void Singame3::mouse(int button, bool pressed, int x, int y)
 {
 	right_button_pressed = false;
 	if (button == GLUT_RIGHT_BUTTON)
 		right_button_pressed = true;
 }
 
-void Singame2::motion(bool pressed, int x, int y)
+void Singame3::motion(bool pressed, int x, int y)
 {
 	ShowCursor(false);
 	if (right_button_pressed)
@@ -467,7 +477,7 @@ void Singame2::motion(bool pressed, int x, int y)
 	else		computeMatricesFromInputs(x, y, 'w', pressed);
 }
 
-void Singame2::update(float fDeltaTime)
+void Singame3::update(float fDeltaTime)
 {
 	static float timer;
 	timer += fDeltaTime;
@@ -498,7 +508,7 @@ namespace {
 	float speed = 0.5f; // 3 units / second
 	float mouseSpeed = 0.0005f;
 }
-void Singame2::computeMatricesFromInputs(int x, int y, int key, int pressed) {
+void Singame3::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glutGet(GLUT_ELAPSED_TIME);

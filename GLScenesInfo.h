@@ -5,7 +5,7 @@
 /*~~~~~HEADER FILES~~~~*/
 #include "Singame.h"
 #include "Singame2.h"
-
+#include"Singame3.h"
 
 struct GLSceneInfo
 {
@@ -17,7 +17,8 @@ struct GLSceneInfo
 /*~~~~~~~SCENES~~~~~~~*/
 const GLSceneInfo SCENES[] =
 {
-	{"Ingame", new Singame, true}
+	{"Ingame", new Singame3, true},
+
 };
 
 /*~~~STARTING SCENE~~~*/

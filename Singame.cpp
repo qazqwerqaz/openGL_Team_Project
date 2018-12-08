@@ -6,10 +6,12 @@
 #include "Body.h"
 #include "Joint.h"
 
-GLuint texture[1];
-OBJLoader a;
+
 
 namespace {
+	GLuint texture[1];
+	OBJLoader a;
+
 	Body bodies[200];
 	Joint joints[100];
 
@@ -273,6 +275,10 @@ void Singame::init()
 
 void Singame::exit()
 {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
+	glDisable(GL_COLOR_MATERIAL);
 	delete m_Camera;
 }
 
