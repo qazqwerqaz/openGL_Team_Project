@@ -15,7 +15,8 @@ namespace {
 	Body bodies[200];
 	Joint joints[100];
 
-	Body* bomb = NULL;
+	Body* wall1[20] = { NULL };
+	
 
 	Body* Box_Ball = NULL;
 
@@ -37,6 +38,239 @@ namespace {
 
 	float maze_size = 10;
 
+	void Demo5(Body* b, Joint* j)
+	{
+		//벽그리기
+		{
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 90.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size *50.0f, maze_size *5.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size *100.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size *0.0f, maze_size *50.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 100.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 0.0f, maze_size * -50.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			//벽위치
+			//////
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 45.0f, maze_size * -10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * -15.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 35.0f, maze_size * -20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+
+			b->Set(Vec2(maze_size * 30.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 25.0f, maze_size * 30.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * 35.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 30.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 10.0f, maze_size * 15.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 5.0f, maze_size * 20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 20.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 0.0f, maze_size * 30.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 15.0f, maze_size * 10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 5.0f, maze_size * 0.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 40.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 0.0f, maze_size * -20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * -45.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 30.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 25.0f, maze_size * -40.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 30.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 10.0f, maze_size * -25.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 20.0f, maze_size * -10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 20.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 20.0f, maze_size * -20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 30.0f, maze_size * -30.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 30.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 30.0f, maze_size * 5.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 10.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(25.0f, 0.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 30.0f, maze_size * 20.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 20.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 40.0f, maze_size * 10.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+
+			b->Set(Vec2(maze_size * 1.0f, maze_size * 10.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 10.0f, maze_size * 45.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+
+			b->Set(Vec2(maze_size * 20.0f, maze_size * 1.0f), FLT_MAX);
+			b->friction = 0.2f;
+			b->position.Set(maze_size * 20.0f, maze_size * 40.0f);
+			b->rotation = 0.0f;
+			world.Add(b);
+			++b; ++numBodies;
+		}
+
+
+	}
+
+	void LaunchBomb()
+	{
+		int i = 1;
+		int j = 1;
+		for (auto& a : wall1)
+		{
+			if (!a)
+			{
+				a = bodies + numBodies;
+				a->Set(Vec2(100.0f, 10.0f), 50.0f);
+				a->friction = 0.2f;
+				world.Add(a);
+				++numBodies;
+			}
+
+			a->position.Set(-100 * i, 10 * j);
+			a->rotation = Random(-1.5f, 1.5f);
+			a->velocity = Vec2(0, 0);
+			a->angularVelocity = Random(-20.0f, 20.0f);
+			i++;
+			if (i >= 5)
+			{
+				i = 0;
+				j++;
+			}
+		}
+	}
+	void InitDemo()
+	{
+		world.Clear();
+		numBodies = 0;
+		numJoints = 0;
+		
+		Demo5(bodies, joints);
+
+		LaunchBomb();
+	}
+
 	void DrawBody(Body* body)
 	{
 		Mat22 R(body->rotation);
@@ -48,10 +282,9 @@ namespace {
 		Vec2 v3 = x + R * Vec2(h.x, h.y);
 		Vec2 v4 = x + R * Vec2(-h.x, h.y);
 
-		if (body == bomb)
-			glColor3f(0.4f, 0.9f, 0.4f);
-		else
-			glColor3f(0.8f, 0.8f, 0.9f);
+
+
+		glColor3f(0.8f, 0.8f, 0.9f);
 
 		glPushMatrix();
 
@@ -100,6 +333,15 @@ namespace {
 
 			glEnd();
 		}
+		else
+		{
+			if (v4.x <= -500)
+			{
+				InitDemo();
+				Box_Ball->position.x = 550;
+				Box_Ball->position.y = -550;
+			}
+		}
 		glPopMatrix();
 	}
 
@@ -131,248 +373,30 @@ namespace {
 		glPopMatrix();
 	}
 
-	void LaunchBomb()
-	{
-		if (!bomb)
-		{
-			bomb = bodies + numBodies;
-			bomb->Set(Vec2(10.0f, 10.0f), 50.0f);
-			bomb->friction = 0.2f;
-			world.Add(bomb);
-			++numBodies;
-		}
 
-		bomb->position.Set(-10,10);
-		bomb->rotation = Random(-1.5f, 1.5f);
-		bomb->velocity = -1.5f * bomb->position;
-		bomb->angularVelocity = Random(-20.0f, 20.0f);
-	}
 
 	void LaunchBox_Ball()
 	{
 		if (!Box_Ball)
 		{
 			Box_Ball = bodies + numBodies;
-			Box_Ball->Set(Vec2(30.0f, 30.0f), 10);
+			Box_Ball->Set(Vec2(20.0f, 20.0f), 10);
 			Box_Ball->friction = 0.2f;
 			world.Add(Box_Ball);
 			++numBodies;
 		}
 
-		Box_Ball->position.Set(0, 0);
-		Box_Ball->rotation = Random(-1.5f, 1.5f);
-		Box_Ball->velocity = -1.5f * Box_Ball->position;
-		Box_Ball->angularVelocity = Random(-20.0f, 20.0f);
+		Box_Ball->position.Set(550, -550);
+		Box_Ball->rotation = 0;
+		Box_Ball->velocity = Vec2(0,0);
+		Box_Ball->angularVelocity = 0;
 	}
 
-	void Demo5(Body* b, Joint* j)
-	{
-		//벽그리기
-		{
-			b->Set(Vec2(0.0f, maze_size * 90.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size *50.0f, maze_size *5.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size *100.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size *0.0f, maze_size *50.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 100.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 0.0f, maze_size * -50.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			//벽위치
-			//////
-
-			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 45.0f, maze_size * -10.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 40.0f, maze_size * -15.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 10.0f, 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 35.0f, maze_size * -20.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
 
 
-			b->Set(Vec2(maze_size * 30.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 25.0f, maze_size * 30.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
+	
 
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 40.0f, maze_size * 35.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 30.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 10.0f, maze_size * 15.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 5.0f, maze_size * 20.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 20.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 0.0f, maze_size * 30.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 15.0f, maze_size * 10.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 5.0f, maze_size * 0.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 40.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 0.0f, maze_size * -20.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 40.0f, maze_size * -45.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 30.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 25.0f, maze_size * -40.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 30.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 10.0f, maze_size * -25.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 20.0f, maze_size * -10.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 20.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 20.0f, maze_size * -20.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 30.0f, maze_size * -30.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 30.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 30.0f, maze_size * 5.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 10.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(25.0f, 0.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 30.0f, maze_size * 20.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 20.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 40.0f, maze_size * 10.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-
-			b->Set(Vec2(maze_size * 0.0f, maze_size * 10.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 10.0f, maze_size * 45.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(maze_size * 20.0f, maze_size * 0.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(maze_size * 20.0f, maze_size * 40.0f);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-		}
-
-		b->Set(Vec2(20 * maze_size, 1), 10.0f);
-		b->friction = 0.5f;
-		b->position = Vec2(-100, 100);
-		world.Add(b);
-		++b; ++numBodies;
-	}
-
-	void InitDemo()
-	{
-		world.Clear();
-		numBodies = 0;
-		numJoints = 0;
-		bomb = NULL;
-
-		Demo5(bodies, joints);
-	}
+	
 }
 Singame4::Singame4()
 {
@@ -417,9 +441,9 @@ void Singame4::init()
 	minGu.init();
 	m_skybox.initTexture();
 	LaunchBox_Ball();
-
-	Box_Ball->position.x = 0;
-	Box_Ball->position.y = -0;
+	LaunchBomb();
+	Box_Ball->position.x = 550;
+	Box_Ball->position.y = -550;
 
 }
 
@@ -441,7 +465,18 @@ void Singame4::render()
 {
 	//RECT r;
 	//ClipCursor(&r);
-
+	int i = 1;
+	int j = -2;
+	for (auto& a : wall1)
+	{
+		a->position.Set(-105 * i, 105*j);
+		i++;
+		if (i >= 5)
+		{
+			i = 1;
+			j++;
+		}
+	}
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
