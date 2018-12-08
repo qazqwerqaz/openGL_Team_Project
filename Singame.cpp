@@ -252,6 +252,9 @@ void Singame::init()
 	//glEnable(GL_CULL_FACE);
 	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_LIGHT1);
+
 	//À§Ä¡
 	aw.init();
 	minGu.init();
@@ -279,12 +282,17 @@ void Singame::render()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-
-
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);
 	glPopMatrix();
+
+	glLightf(GL_LIGHT1, GL_AMBIENT, (0.25, 0.25, 0.25, 1));
+	glLightf(GL_LIGHT1, GL_DIFFUSE, (1, 0, 0));
+	glLightf(GL_LIGHT1, GL_SPECULAR, (1, 1, 1, 1));
+	//glLightf(GL_LIGHT1, GL_POSITION, ())
+
+
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
