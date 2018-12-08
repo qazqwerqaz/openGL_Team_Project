@@ -454,6 +454,22 @@ namespace {
 
 	float speed = 0.5f; // 3 units / second
 	float mouseSpeed = 0.0005f;
+
+	void material0()
+	{
+		GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };         // 주변광의 강도
+		GLfloat specref[] = { 1.0f,1.0f,1.0f,1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight0);
+		glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 0.0);
+		glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0.0);
+
+		glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, ambientLight0);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
+		glMateriali(GL_FRONT, GL_SHININESS, 64);
+		glColor3f(1, 1, 1);
+		glTranslatef(0, 0, -200);
+		glutSolidSphere(50, 200, 200);
+	}
 }
 void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
@@ -514,7 +530,7 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
 	m_Camera->setEye(position);
-	m_Camera->setTarget(V3::add(position, direction));
+	//m_Camera->setTarget(V3::add(position, direction));
 	m_Camera->setUp(up);
 
 	lightPos[0] = position.x;
@@ -523,21 +539,7 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	lastTime = currentTime;
 }
 
-void material0()
-{
-	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };         // 주변광의 강도
-	GLfloat specref[] = { 1.0f,1.0f,1.0f,1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight0);
-	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 0.0);
-	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0.0);
 
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, ambientLight0);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
-	glMateriali(GL_FRONT, GL_SHININESS, 64);
-	glColor3f(1, 1, 1);
-	glTranslatef(0, 0, -200);
-	glutSolidSphere(50, 200, 200);
-}
 
 
 
