@@ -20,6 +20,6 @@ public:
 	void skybox(Vector3 Eye);
 	void FreeTexture(GLuint texture);
 private:
-	GLuint texture[6];
+	GLuint texture[7];
 };
 

@@ -43,6 +43,10 @@ private:
 	const GLfloat SpecularLight[4] = { 1.0, 1.0, 1.0, 1.0 }; // 백색조명 
 	GLfloat lightPos[4] = { -60.0, 10.0, 0.0, 1.0 };
 
+	GLfloat Ambient[4] = { 0.25,0.25,0.25,1 };
+	GLfloat Diffuse[4] = { 1.0f,1.f,1.f,1 };
+	GLfloat SpecularL[4] = { 1,1,1,1 };
+
 	GLfloat specref[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	int Specular = 60;
 

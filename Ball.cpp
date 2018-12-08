@@ -17,7 +17,7 @@ Ball::~Ball()
 void Ball::init()
 {
 	a.initTexture();
-	a.loadOBJ("Ball.obj", vertices, uvs, normals);
+	//a.loadOBJ("Ball.obj", vertices, uvs, normals);
 
 	for (auto& a : vertices)
 	{

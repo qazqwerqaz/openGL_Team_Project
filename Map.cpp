@@ -16,7 +16,7 @@ Map::~Map()
 void Map::init()
 {
 	a.initTexture();
-	a.loadOBJ("산타.obj", vertices, uvs, normals);
+	//a.loadOBJ("산타.obj", vertices, uvs, normals);
 }
 
 void Map::Draw()

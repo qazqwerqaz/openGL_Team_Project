@@ -135,6 +135,7 @@ void OBJLoader::initTexture()
 	texture[3] = LoadTexture("1_Right.bmp", 512, 512); //load the texture
 	texture[4] = LoadTexture("1_Bottom.bmp", 512, 512); //load the texture
 	texture[5] = LoadTexture("1_Top.bmp", 512, 512); //load the texture
+	texture[6] = LoadTexture("Box.bmp", 256, 256); //load the texture
 }
 
 GLuint OBJLoader::LoadTexture(const char * filename, int width, int height)
@@ -168,6 +169,60 @@ GLuint OBJLoader::LoadTexture(const char * filename, int width, int height)
 
 void OBJLoader::skybox(Vector3 Eye)
 {
+	glPushMatrix();
+	{
+		glColor3f(1, 1, 1);
+		glBindTexture(GL_TEXTURE_2D, texture[6]);
+		glBegin(GL_QUADS);
+		glTexCoord2d(1.0f, 0.0f);   glVertex3f(25, 25, -25);   // Top Right Of The Quad (Top)
+		glTexCoord2d(1.0f, 1.0f);   glVertex3f(-25, 25, -25);   // Top Left Of The Quad (Top)
+		glTexCoord2d(0.0, 1.0f);   glVertex3f(-25, 25, 25);   // Bottom Left Of The Quad (Top)
+		glTexCoord2d(0.0, 0.0f);   glVertex3f(25, 25, 25);   // Bottom Right Of The Quad (Top)
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, texture[6]);
+		glBegin(GL_QUADS);
+		glTexCoord2d(0.0f, 1.0f);   glVertex3f(25, 25, 25);   // Top Right Of The Quad (Front)
+		glTexCoord2d(1.0f, 1.0f);   glVertex3f(-25, 25, 25);   // Top Left Of The Quad (Front)
+		glTexCoord2d(1.0f, 0.0f);   glVertex3f(-25, -25, 25);   // Bottom Left Of The Quad (Front)
+		glTexCoord2d(0.0f, 0.0f);   glVertex3f(25, -25, 25);   // Bottom Right Of The Quad (Front)
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, texture[6]);
+		glBegin(GL_QUADS);
+		glTexCoord2d(0.0f, 1.0f);   glVertex3f(25, -25, -25);   // Bottom Left Of The Quad (Back)
+		glTexCoord2d(0.0f, 0.0f);   glVertex3f(-25, -25, -25);   // Bottom Right Of The Quad (Back)
+		glTexCoord2d(1.0f, 0.0f);   glVertex3f(-25, 25, -25);   // Top Right Of The Quad (Back)
+		glTexCoord2d(1.0f, 1.0f);   glVertex3f(25, 25, -25);   // Top Left Of The Quad (Back)
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, texture[6]);
+		glBegin(GL_QUADS);
+		glTexCoord2d(0.0f, 0.0f);   glVertex3f(-25, 25, -25);   // Top Right Of The Quad (Left)
+		glTexCoord2d(0.0f, 1.0f);   glVertex3f(-25, -25, -25);   // Top Left Of The Quad (Left)
+		glTexCoord2d(1.0f, 1.0f);   glVertex3f(-25, -25, 25);   // Bottom Left Of The Quad (Left) 
+		glTexCoord2d(1.0f, 0.0f);   glVertex3f(-25, 25, 25);   // Bottom Right Of The Quad (Left)
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, texture[6]);
+		glBegin(GL_QUADS);
+		glTexCoord2d(0.0f, 1.0f);   glVertex3f(25, 25, -25);   // Top Right Of The Quad (Right)
+		glTexCoord2d(1.0f, 1.0f);   glVertex3f(25, 25, 25);   // Top Left Of The Quad (Right)
+		glTexCoord2d(1.0f, 0.0f);   glVertex3f(25, -25, 25);   // Bottom Left Of The Quad (Right)
+		glTexCoord2d(0.0f, 0.0f);   glVertex3f(25, -25, -25);   // Bottom Right Of The Quad (Right)
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, texture[6]);
+		glBegin(GL_QUADS);
+		glTexCoord2d(1.0f, 0.0f);   glVertex3f(-25, -25, 25);   // Top Right Of The Quad (Top)
+		glTexCoord2d(1.0f, 1.0f);   glVertex3f(25, -25, 25);   // Top Left Of The Quad (Top)
+		glTexCoord2d(0.0, 1.0f);   glVertex3f(25, -25, -25);   // Bottom Left Of The Quad (Top)
+		glTexCoord2d(0.0, 0.0f);   glVertex3f(-25, -25, -25);   // Bottom Right Of The Quad (Top)
+		glEnd();
+	}
+	glPopMatrix();
+
+
 	glColor3f(1, 1, 1);
 	float x = Eye.x;
 	float y = Eye.y;

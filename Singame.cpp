@@ -240,6 +240,8 @@ void Singame::init()
 	//glutFullScreen();
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
 	rotation_z = 0;
 
@@ -253,7 +255,6 @@ void Singame::init()
 	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
 
-	glEnable(GL_LIGHT1);
 
 	//위치
 	aw.init();
@@ -274,6 +275,9 @@ void Singame::reset()
 
 void Singame::render()
 {
+	RECT r;
+	ClipCursor(&r);
+
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
@@ -283,16 +287,28 @@ void Singame::render()
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	glPushMatrix();
+	glColor3f(1, 0, 0);
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);
 	glPopMatrix();
 
-	glLightf(GL_LIGHT1, GL_AMBIENT, (0.25, 0.25, 0.25, 1));
-	glLightf(GL_LIGHT1, GL_DIFFUSE, (1, 0, 0));
-	glLightf(GL_LIGHT1, GL_SPECULAR, (1, 1, 1, 1));
-	//glLightf(GL_LIGHT1, GL_POSITION, ())
+	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
+	GLfloat diffuseLight[] = { 1, 0, 0, 1 };     
+	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; 
+	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };  
 
+	glPushMatrix();
+	glColor3f(1, 0, 0);
+	glTranslatef(Box_Ball->position.x, 20, Box_Ball->position.y);
+	glutWireSphere(5, 25, 25);
+	glPopMatrix();
 
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight0);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, lit_spc);
+	glMateriali(GL_LIGHT1, GL_SHININESS, 64);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT1);
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
@@ -309,7 +325,7 @@ void Singame::render()
 		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
 		aw.Draw(*Box_Ball);
 		
-		minGu.Draw();
+		minGu.Draw(); 
 	}
 	glPopMatrix();
 
@@ -477,5 +493,24 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	lightPos[2] = position.z;
 	lastTime = currentTime;
 }
+
+void material0()
+{
+	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };         // 주변광의 강도
+	GLfloat specref[] = { 1.0f,1.0f,1.0f,1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight0);
+	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 0.0);
+	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0.0);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, ambientLight0);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
+	glMateriali(GL_FRONT, GL_SHININESS, 64);
+	glColor3f(1, 1, 1);
+	glTranslatef(0, 0, -200);
+	glutSolidSphere(50, 200, 200);
+}
+
+
+
 
 
