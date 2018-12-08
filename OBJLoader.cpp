@@ -29,6 +29,32 @@ void OBJLoader::init()
 }
 
 
+void OBJLoader::Hud()
+{
+	glPushAttrib(GL_LIGHTING_BIT |GL_DEPTH_BUFFER_BIT |GL_TEXTURE_BIT);
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_TEXTURE_2D);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
+	glRasterPos2f(0.1f, 0.6f);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glutSolidSphere(100, 10, 10);
+	glRasterPos2f(0.0f, 0.0f);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopAttrib();
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+
+}
+
 
 bool OBJLoader::loadOBJ(
 	const char * path,
@@ -168,6 +194,8 @@ GLuint OBJLoader::LoadTexture(const char * filename, int width, int height)
 
 void OBJLoader::skybox(Vector3 Eye)
 {
+	Hud();
+
 	glColor3f(1, 1, 1);
 	float x = Eye.x;
 	float y = Eye.y;

@@ -14,6 +14,9 @@ public:
 		std::vector<Vector2> & out_uvs,
 		std::vector<Vector3> & out_normals);
 
+	// Hud 
+	void Hud();
+
 	//Texture ·Îµå
 	void initTexture();
 	GLuint LoadTexture(const char * filename, int width, int height);
