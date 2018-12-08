@@ -140,7 +140,7 @@ void LaunchBox_Ball()
 	if (!Box_Ball)
 	{
 		Box_Ball = bodies + numBodies;
-		Box_Ball->Set(Vec2(30.0f, 30.0f), 100.0f);
+		Box_Ball->Set(Vec2(30.0f, 30.0f), FLT_MAX);
 		Box_Ball->friction = 0.2f;
 		world.Add(Box_Ball);
 		++numBodies;
@@ -188,18 +188,27 @@ void Demo5(Body* b, Joint* j)
 	Vec2 x(-6.0f, 0.75f);
 	Vec2 y;
 
-	std::random_device rn;
-	std::uniform_int_distribution<int> range(-400, 400);
-	for (int i = 0; i < 10; ++i)
-	{
-		y.x = range(rn);
-		y.y = range(rn);
-		b->Set(Vec2(Box_size, Box_size), 10.0f);
-		b->friction = 0.5f;
-		b->position = y;
-		world.Add(b);
-		++b; ++numBodies;
-	}
+
+	b->Set(Vec2(Box_size, Box_size), FLT_MAX);
+	b->friction = 0.5f;
+	b->position = Vec2(100, 100);
+	world.Add(b);
+	++b; ++numBodies;
+
+	b->Set(Vec2(Box_size, Box_size), 10.0f);
+	b->friction = 0.5f;
+	b->position = Vec2(200, 100);
+	world.Add(b);
+	++b; ++numBodies;
+
+	b->Set(Vec2(Box_size, Box_size), 10.0f);
+	b->friction = 0.5f;
+	b->position = Vec2(100, 100);
+	world.Add(b);
+	++b; ++numBodies;
+
+
+
 }
 
 void InitDemo()

@@ -49,7 +49,12 @@ void Ball::update(float time, std::vector<Vector3>& other, std::vector<Vector3>&
 {
 	bool m_Collide = false;
 	
+	static float timer;
+	timer += time;
+	if (timer >= 1)
+	{
 
+	}
 	Pos.x += Move.x;
 	Pos.y += Move.y;
 	Pos.z += Move.z;
