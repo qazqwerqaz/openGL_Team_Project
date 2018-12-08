@@ -52,9 +52,30 @@ namespace {
 			glColor3f(0.8f, 0.8f, 0.9f);
 
 		glPushMatrix();
-		
-	
-		
+		//glLoadIdentity();
+		//glutSolidCube(1);
+
+		glPushMatrix();
+		glColor3f(1, 1, 1);
+		std::string str;
+
+		str = abs(int(Box_Ball->velocity.x + Box_Ball->velocity.y));
+
+
+
+		float count = 0.0;
+		for (int s = 1; s <= 100; s *= 10)
+		{
+			glRasterPos2i(count, 8);
+			if(count == 0.0)
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[0] % 10 + 48);
+			else
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (str[0] / s) % 10 + 48);
+
+			count -= 0.5;
+		}
+
+		glPopMatrix();
 		glMultMatrixf(&curMatrix);
 
 		float y = Box_size;
@@ -311,9 +332,9 @@ void Singame::render()
 	glPopMatrix();
 
 	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
-	GLfloat diffuseLight[] = { 1, 0, 0, 1 };     
-	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; 
-	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };  
+	GLfloat diffuseLight[] = { 1, 0, 0, 1 };
+	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };
 
 	glPushMatrix();
 	glColor3f(1, 0, 0);
@@ -342,8 +363,8 @@ void Singame::render()
 
 		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
 		aw.Draw(*Box_Ball);
-		
-		minGu.Draw(); 
+
+		minGu.Draw();
 	}
 	glPopMatrix();
 
@@ -382,7 +403,7 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 's':
 		case 'a':
 		case 'd':
-			aw.move(key, m_Camera,*Box_Ball);
+			aw.move(key, m_Camera, *Box_Ball);
 			break;
 		case '=':
 			fullmode = (fullmode + 1) % 2;
@@ -512,7 +533,7 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	// Move forward
 	if (key == 'w' && pressed) {
-		position = V3::add(Vector3(0, 0, 0),V3::add(position, direction * deltaTime * speed));
+		position = V3::add(Vector3(0, 0, 0), V3::add(position, direction * deltaTime * speed));
 	}
 	// Move backward
 	if (key == 's' && pressed) {
