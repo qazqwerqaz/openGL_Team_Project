@@ -192,6 +192,7 @@ void OBJLoader::skybox(Vector3 Eye)
 
 		glBindTexture(GL_TEXTURE_2D, texture[1]);
 		glBegin(GL_QUADS);
+		glNormal3f(0.0f, 1.0f, 0.0f);
 		glTexCoord2d(0.0f, 1.0f);   glVertex3f(width, height, length);   // Top Right Of The Quad (Front)
 		glTexCoord2d(1.0f, 1.0f);   glVertex3f(-width, height, length);   // Top Left Of The Quad (Front)
 		glTexCoord2d(1.0f, 0.0f);   glVertex3f(-width, -height, length);   // Bottom Left Of The Quad (Front)
@@ -200,6 +201,7 @@ void OBJLoader::skybox(Vector3 Eye)
 
 		glBindTexture(GL_TEXTURE_2D, texture[0]);
 		glBegin(GL_QUADS);
+		glNormal3f(0.0f, -1.0f, 0.0f);
 		glTexCoord2d(0.0f, 1.0f);   glVertex3f(width, -height, -length);   // Bottom Left Of The Quad (Back)
 		glTexCoord2d(0.0f, 0.0f);   glVertex3f(-width, -height, -length);   // Bottom Right Of The Quad (Back)
 		glTexCoord2d(1.0f, 0.0f);   glVertex3f(-width, height, -length);   // Top Right Of The Quad (Back)
