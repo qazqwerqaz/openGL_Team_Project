@@ -406,6 +406,8 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 				glutReshapeWindow(1200, 900);
 			}
 			break;
+		case 'n':
+			m_Framework->toScene("Ingame2"); break;
 		default:
 			break;
 		}

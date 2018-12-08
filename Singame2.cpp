@@ -569,6 +569,10 @@ void Singame2::keyboard(int key, bool pressed, int x, int y, bool special)
 			World::positionCorrection = !World::positionCorrection;
 			break;
 
+		case 'n':
+			m_Framework->toScene("Ingame3"); break;
+			break;
+
 		default:
 			break;
 		}

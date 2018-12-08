@@ -17,10 +17,12 @@ struct GLSceneInfo
 /*~~~~~~~SCENES~~~~~~~*/
 const GLSceneInfo SCENES[] =
 {
-	{"Ingame", new Singame2, true},
+	{"Ingame1", new Singame, true},
+	{"Ingame2", new Singame2, false},
+	{"Ingame3", new Singame3, false},
 
 };
 
 /*~~~STARTING SCENE~~~*/
-const std::string STARTING_SCENE{ "Ingame" };
+const std::string STARTING_SCENE{ "Ingame1" };
 /*-------------------------------------------------------*/
