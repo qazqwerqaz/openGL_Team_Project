@@ -566,9 +566,14 @@ void Singame3::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
-	m_Camera->setEye(position);
-	m_Camera->setTarget(V3::add(position, direction));
-	m_Camera->setUp(up);
+
+
+	m_Camera->setEye(Vector3(Box_Ball->position.x + 300 * sin(horizontalAngle), 300, Box_Ball->position.y + 300 * cos(horizontalAngle)));
+	m_Camera->setTarget(Vector3(Box_Ball->position.x, 0, Box_Ball->position.y));
+
+	//m_Camera->setEye(position);
+	//m_Camera->setTarget(V3::add(position, direction));
+	//m_Camera->setUp(up);
 
 	lightPos[0] = position.x;
 	lightPos[1] = position.y;
