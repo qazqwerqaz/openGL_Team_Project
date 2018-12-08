@@ -128,7 +128,6 @@ bool Ball::Collide(std::vector<Vector3>& otherV, std::vector<Vector3>& otherNorm
 
 void Ball::move(int key, Camera *m_Camera,Body& Box_Ball)
 {
-	m_Camera->setTarget(Vector3(Box_Ball.position.x, 0, Box_Ball.position.y));
 	Vector3 shaft_z = V3::normalize(V3::subtract(m_Camera->getEye(), m_Camera->getTarget()));
 	Vector3 shaft_x = V3::normalize(Vector3(shaft_z.z, 0, -shaft_z.x));
 

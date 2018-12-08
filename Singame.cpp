@@ -50,7 +50,9 @@ namespace {
 			glColor3f(0.8f, 0.8f, 0.9f);
 
 		glPushMatrix();
-
+		
+	
+		
 		glMultMatrixf(&curMatrix);
 
 		float y = Box_size;
@@ -444,7 +446,7 @@ void Singame::update(float fDeltaTime)
 
 namespace {
 	// Initial position : on +Z
-	Vector3 position = Vector3(0, 100, 5);
+	Vector3 position = Vector3(0, 100, 100);
 	// Initial horizontal angle : toward -Z
 	float horizontalAngle = 3.14f;
 	// Initial vertical angle : none
@@ -512,7 +514,7 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	// Move forward
 	if (key == 'w' && pressed) {
-		position = V3::add(position, direction * deltaTime * speed);
+		position = V3::add(Vector3(0, 0, 0),V3::add(position, direction * deltaTime * speed));
 	}
 	// Move backward
 	if (key == 's' && pressed) {
@@ -529,9 +531,13 @@ void Singame::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
-	m_Camera->setEye(position);
+	m_Camera->setEye(Vector3(Box_Ball->position.x + 300*sin(horizontalAngle ), 300, Box_Ball->position.y + 300 * cos(horizontalAngle)));
+	m_Camera->setTarget(Vector3(Box_Ball->position.x,0, Box_Ball->position.y));
+
 	//m_Camera->setTarget(V3::add(position, direction));
-	m_Camera->setUp(up);
+
+	//m_Camera->setUp(Vector3(0,1,0));
+	//m_Camera->setUp(up);
 
 	lightPos[0] = position.x;
 	lightPos[1] = position.y;
