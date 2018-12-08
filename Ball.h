@@ -15,8 +15,9 @@ public:
 	void update(float time, std::vector<Vector3>& other, std::vector<Vector3>& otherU);
 	bool Collide(std::vector<Vector3>& otherV, std::vector<Vector3>& otherUV);
 
-	void move(int key,Camera *m_Camera, Body& Box_Ball);
+	void move(int key,Camera *m_Camera, Body& Box_Ball,bool pressed);
 public:
+	std::list<int> keyarr;
 	OBJLoader a;
 
 	Vector3 Pos{ 0,0,0 };

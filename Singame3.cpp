@@ -439,7 +439,7 @@ void Singame3::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 's':
 		case 'a':
 		case 'd':
-			aw.move(key, m_Camera, *Box_Ball);
+			aw.move(key, m_Camera, *Box_Ball,pressed);
 			break;
 		case '1':
 			Viewpoint = !Viewpoint;
@@ -453,7 +453,7 @@ void Singame3::keyboard(int key, bool pressed, int x, int y, bool special)
 		}
 	else
 	{
-
+		aw.move(' ', m_Camera, *Box_Ball, pressed);
 	}
 
 }

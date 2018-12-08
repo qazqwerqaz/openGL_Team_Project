@@ -37,6 +37,7 @@ private:
 	Map minGu;
 	//
 
+	std::list<int> keyarr;
 	// 조명
 	const GLfloat AmbientLight[4] = { 1.0f, 1.0f, 1.0f, 1.0F }; // 녹색조명 
 	const GLfloat DiffuseLight[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; // 적색조명 

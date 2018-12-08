@@ -25,5 +25,5 @@ const GLSceneInfo SCENES[] =
 };
 
 /*~~~STARTING SCENE~~~*/
-const std::string STARTING_SCENE{ "Ingame4" };
+const std::string STARTING_SCENE{ "Ingame1" };
 /*-------------------------------------------------------*/

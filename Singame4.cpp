@@ -16,7 +16,7 @@ namespace {
 	Joint joints[100];
 
 	Body* wall1[20] = { NULL };
-	
+
 
 	Body* Box_Ball = NULL;
 
@@ -265,7 +265,7 @@ namespace {
 		world.Clear();
 		numBodies = 0;
 		numJoints = 0;
-		
+
 		Demo5(bodies, joints);
 
 		LaunchBomb();
@@ -388,15 +388,15 @@ namespace {
 
 		Box_Ball->position.Set(550, -550);
 		Box_Ball->rotation = 0;
-		Box_Ball->velocity = Vec2(0,0);
+		Box_Ball->velocity = Vec2(0, 0);
 		Box_Ball->angularVelocity = 0;
 	}
 
 
 
-	
 
-	
+
+
 }
 Singame4::Singame4()
 {
@@ -469,7 +469,7 @@ void Singame4::render()
 	int j = -2;
 	for (auto& a : wall1)
 	{
-		a->position.Set(-105 * i, 105*j);
+		a->position.Set(-105 * i, 105 * j);
 		i++;
 		if (i >= 5)
 		{
@@ -518,9 +518,9 @@ void Singame4::render()
 
 		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
 
-		if(Viewpoint)
+		if (Viewpoint)
 			aw.Draw(*Box_Ball);
-		
+
 		glPushMatrix();
 		glColor3f(0, 0, 1);
 		glTranslatef(0, -20, 0);
@@ -554,6 +554,8 @@ void Singame4::reshape(int w, int h)
 void Singame4::keyboard(int key, bool pressed, int x, int y, bool special)
 {
 	if (pressed)
+	{
+
 		switch (key)
 		{
 		case VK_ESCAPE:
@@ -565,7 +567,7 @@ void Singame4::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 's':
 		case 'a':
 		case 'd':
-			aw.move(key, m_Camera, *Box_Ball);
+			aw.move(key, m_Camera, *Box_Ball, pressed);
 			break;
 		case '=':
 			fullmode = (fullmode + 1) % 2;
@@ -588,6 +590,9 @@ void Singame4::keyboard(int key, bool pressed, int x, int y, bool special)
 		default:
 			break;
 		}
+	}
+	else
+		aw.move(key, m_Camera, *Box_Ball, pressed);
 
 }
 
@@ -714,12 +719,12 @@ void Singame4::computeMatricesFromInputs(int x, int y, int key, int pressed) {
 	if (key == ' ')
 	{
 		m_Camera->setEye(Vector3(Box_Ball->position.x + 20 * sin(horizontalAngle), 10, Box_Ball->position.y + 20 * cos(horizontalAngle)));
-		m_Camera->setTarget(V3::add(Vector3(Box_Ball->position.x, 20 * sin(verticalAngle), Box_Ball->position.y),direction));
+		m_Camera->setTarget(V3::add(Vector3(Box_Ball->position.x, 20 * sin(verticalAngle), Box_Ball->position.y), direction));
 	}
 	else
 	{
 		m_Camera->setEye(Vector3(Box_Ball->position.x + 300 * sin(horizontalAngle), 300, Box_Ball->position.y + 300 * cos(horizontalAngle)));
-		m_Camera->setTarget(Vector3(Box_Ball->position.x,300 * sin(verticalAngle), Box_Ball->position.y));
+		m_Camera->setTarget(Vector3(Box_Ball->position.x, 300 * sin(verticalAngle), Box_Ball->position.y));
 	}
 	//m_Camera->setTarget(V3::add(position, direction));
 
