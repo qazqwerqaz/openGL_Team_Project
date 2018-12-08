@@ -229,8 +229,8 @@ void Singame::init()
 
 	m_Camera = new Camera;
 	//glutFullScreen();
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	rotation_x = 0;
 	rotation_z = 0;
 
@@ -241,8 +241,8 @@ void Singame::init()
 	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
 	//glEnable(GL_CULL_FACE);
-	glShadeModel(GL_FLAT);
-
+	//glShadeModel(GL_FLAT);
+	glShadeModel(GL_SMOOTH);
 	//À§Ä¡
 	aw.init();
 	minGu.init();
@@ -377,6 +377,7 @@ void Singame::update(float fDeltaTime)
 		timer = 0;
 	}
 	aw.update(fDeltaTime, minGu.vertices, minGu.normals);
+
 }
 
 
