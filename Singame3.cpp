@@ -11,7 +11,10 @@ namespace
 	GLuint texture[2];
 	OBJLoader a;
 
-	Body bodies[200];
+	int Space[20][6];
+	int inputer = 0;
+
+	Body bodies[300];
 	Joint joints[100];
 
 	Body* bomb = NULL;
@@ -275,21 +278,38 @@ namespace
 		Vec2 x(-6.0f, 0.75f);
 		Vec2 y;
 
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 50; ++i)
 		{
-			b->Set(Vec2(Box_size + 10, Box_size + 10), FLT_MAX);
+			b->Set(Vec2(Box_size *3, Box_size + 10), FLT_MAX);
 			b->friction = 0.5f;
-			b->position = Vec2(500 + -70 * i, -215);
+			b->position = Vec2(500 + -140 * i, -215);
 			world.Add(b);
 			++b; ++numBodies;
 		}
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 50; ++i)
 		{
-			b->Set(Vec2(Box_size + 10, Box_size + 10), FLT_MAX);
+			b->Set(Vec2(Box_size * 3, Box_size + 10), FLT_MAX);
 			b->friction = 0.5f;
-			b->position = Vec2(500 + -70 * i, +215);
+			b->position = Vec2(500 + -140 * i, +215);
 			world.Add(b);
 			++b; ++numBodies;
+		}
+
+		for (int i = 0; i < 20; ++i)
+		{
+			for (int j = 0; j < 6; ++j)
+			{
+				printf("%d  ",Space[i][j]);
+				if (Space[i][j] != 1)
+				{
+					b->Set(Vec2(Box_size + 10, Box_size * 2), FLT_MAX);
+					b->friction = 0.5f;
+					b->position = Vec2(-350 * i, +185 - 75 * j);
+					world.Add(b);
+					++b; ++numBodies;
+				}
+			}
+			printf("\n");
 		}
 
 	}
@@ -318,7 +338,20 @@ Singame3::~Singame3()
 void Singame3::init()
 {
 	InitDemo();
-
+		
+	for (int i = 0; i < 20; ++i)
+	{
+		inputer = rand() % 6;
+		Space[i][inputer] = 1;
+	}
+	for (int i = 0; i < 20; ++i)
+	{
+		for (int j = 0; j < 6; ++j)
+		{
+			printf("%d  ", Space[i][j]);
+		}
+		printf("\n");
+	}
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
@@ -358,6 +391,8 @@ void Singame3::reset()
 
 }
 
+int collide = 0;
+
 void Singame3::render()
 {
 	m_Camera->ready();
@@ -367,8 +402,6 @@ void Singame3::render()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
-
 
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
