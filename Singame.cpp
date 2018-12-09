@@ -9,7 +9,10 @@
 namespace {
 	GLuint texture[2];
 	OBJLoader a;
-	//HWND hwnd;
+
+	HWND hwnd;
+	DWORD Music1;
+	MCI_PLAY_PARMS     mciPlayParms;
 
 	Body bodies[200];
 	Joint joints[100];
@@ -271,7 +274,7 @@ void Singame::init()
 	rotation_x = 0;
 	rotation_z = 0;
 
-	//Music1 = LoadWAV(hwnd, L"Linda_March.mp3");
+	Music1 = a.LoadWAV(hwnd, L"Linda_March.mp3");
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 	texture[1] = a.LoadTexture("Grass.bmp", 1024, 1024);
 	m_Camera->setDistance(200.f);
@@ -293,6 +296,7 @@ void Singame::init()
 
 void Singame::exit()
 {
+	mciSendCommand(1, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
 	//a.FreeTexture(0);
 	//a.FreeTexture(1);
 	world.Clear();
@@ -310,7 +314,7 @@ void Singame::render()
 {
 	//RECT r;
 	//ClipCursor(&r);
-
+	Music1 = mciSendCommand(1, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&mciPlayParms);
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 

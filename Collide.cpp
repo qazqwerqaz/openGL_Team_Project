@@ -330,6 +330,5 @@ int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 			++numContacts;
 		}
 	}
-
 	return numContacts;
 }

@@ -27,11 +27,11 @@ public:
 	GLuint LoadTexture(const char * filename, int width, int height);
 	void skybox(Vector3 Eye);
 	void FreeTexture(GLuint texture);
+
+	DWORD LoadWAV(HWND hWnd, LPCTSTR lpszWave);
 private:
 	GLuint texture[7];
 
-
-	DWORD LoadWAV(HWND hWnd, LPCTSTR lpszWave);
 	// 사운드 로드
 	MCI_OPEN_PARMS     mciOpenParms;
 	MCI_PLAY_PARMS     mciPlayParms;

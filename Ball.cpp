@@ -60,6 +60,17 @@ void Ball::Draw(Body& Box_Ball)
 
 void Ball::update(float time, std::vector<Vector3>& other, std::vector<Vector3>& otherNormal)
 {
+	if (Sound == 1)
+	{
+		if (Count == 0)
+			sndPlaySound(L"Sand.wav", SND_ASYNC);
+		Count += time;
+		if (Count > 0.9)
+		{
+			Count = 0;
+			Sound = 0;
+		}
+	}
 	bool m_Collide = false;
 
 	Pos.x += Move.x;
@@ -118,21 +129,29 @@ void Ball::move(int key, Camera *m_Camera, Body& Box_Ball, bool pressed)
 			m_QuaternionRotation_X.rotate(3.14 / 180.f * 20, m_QuaternionRotation_X.rotatePoint({ shaft_x.x,0,shaft_x.z }));
 			Box_Ball.velocity.x += shaft_x.z * 5;
 			Box_Ball.velocity.y -= shaft_x.x * 5;
+			if (Sound == 0)
+				Sound = 1;
 			break;
 		case 's':
 			m_QuaternionRotation_X.rotate(-3.14 / 180.f * 20, m_QuaternionRotation_X.rotatePoint({ shaft_x.x,0,shaft_x.z }));
 			Box_Ball.velocity.x -= shaft_x.z * 5;
 			Box_Ball.velocity.y += shaft_x.x * 5;
+			if (Sound == 0)
+				Sound = 1;
 			break;
 		case 'a':
 			m_QuaternionRotation_X.rotate(-3.14 / 180.f * 20, m_QuaternionRotation_X.rotatePoint({ shaft_z.x,0,shaft_z.z }));
 			Box_Ball.velocity.x -= shaft_x.x * 5;
 			Box_Ball.velocity.y -= shaft_x.z * 5;
+			if (Sound == 0)
+				Sound = 1;
 			break;
 		case 'd':
 			m_QuaternionRotation_X.rotate(3.14 / 180.f * 20, m_QuaternionRotation_X.rotatePoint({ shaft_z.x,0,shaft_z.z }));
 			Box_Ball.velocity.x += shaft_x.x * 5;
 			Box_Ball.velocity.y += shaft_x.z * 5;
+			if (Sound == 0)
+				Sound = 1;
 			break;
 		case ' ':
 
