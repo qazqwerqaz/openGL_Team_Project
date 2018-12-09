@@ -12,6 +12,10 @@ namespace
 	GLuint texture[2];
 	OBJLoader a;
 
+	HWND hwnd;
+	DWORD Music1;
+	MCI_PLAY_PARMS     mciPlayParms;
+
 	int Space[20][6];
 	int inputer = 0;
 
@@ -373,8 +377,10 @@ void Singame3::init()
 	rotation_x = 0;
 	rotation_z = 0;
 
+	Music1 = a.LoadWAV(hwnd, L"Deltalune.mp3");
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 	texture[1] = a.LoadTexture("Ball.bmp", 256, 256);
+	Music1 = mciSendCommand(1, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&mciPlayParms);
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
 	m_Camera->setSensitivity(1.f);
@@ -391,6 +397,7 @@ void Singame3::init()
 
 void Singame3::exit()
 {
+	mciSendCommand(1, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT1);
 	//a.FreeTexture(0);
@@ -410,7 +417,7 @@ void Singame3::render()
 {
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
-
+	
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);

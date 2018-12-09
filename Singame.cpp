@@ -275,6 +275,7 @@ void Singame::init()
 	rotation_z = 0;
 
 	Music1 = a.LoadWAV(hwnd, L"Linda_March.mp3");
+	Music1 = mciSendCommand(1, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&mciPlayParms);
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 	texture[1] = a.LoadTexture("Grass.bmp", 1024, 1024);
 	m_Camera->setDistance(200.f);
@@ -314,7 +315,6 @@ void Singame::render()
 {
 	//RECT r;
 	//ClipCursor(&r);
-	Music1 = mciSendCommand(1, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&mciPlayParms);
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 

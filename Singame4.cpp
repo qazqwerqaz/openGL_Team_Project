@@ -10,6 +10,10 @@ namespace {
 	GLuint texture[2];
 	OBJLoader a;
 
+	HWND hwnd;
+	DWORD Music1;
+	MCI_PLAY_PARMS     mciPlayParms;
+
 	Body bodies[200];
 	Joint joints[100];
 
@@ -418,8 +422,10 @@ void Singame4::init()
 	rotation_x = 0;
 	rotation_z = 0;
 
+	Music1 = a.LoadWAV(hwnd, L"ice_cave.mp3");
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 	texture[1] = a.LoadTexture("Ball.Bmp", 256, 256);
+	Music1 = mciSendCommand(1, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&mciPlayParms);
 
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
@@ -445,6 +451,7 @@ void Singame4::init()
 
 void Singame4::exit()
 {
+	mciSendCommand(1, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
 	//glDisable(GL_LIGHTING);
 	//glDisable(GL_LIGHT1);
 	//a.FreeTexture(0);

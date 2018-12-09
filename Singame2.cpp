@@ -455,6 +455,7 @@ void Singame2::init()
 
 void Singame2::exit()
 {
+	mciSendCommand(1, MCI_CLOSE, 0, (DWORD)(LPVOID)NULL);
 	world.Clear();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
