@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "OBJLoader.h"
-
+#include <tchar.h>
 
 
 OBJLoader::OBJLoader()
