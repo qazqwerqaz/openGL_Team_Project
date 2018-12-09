@@ -86,6 +86,7 @@ namespace
 		}
 		glPopMatrix();
 
+
 		//abs(v1.x - v3.x);
 		if (body != Box_Ball)
 		{
@@ -337,8 +338,6 @@ Singame3::~Singame3()
 
 void Singame3::init()
 {
-	InitDemo();
-		
 	for (int i = 0; i < 20; ++i)
 	{
 		inputer = rand() % 6;
@@ -352,6 +351,9 @@ void Singame3::init()
 		}
 		printf("\n");
 	}
+	InitDemo();
+		
+	
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
@@ -378,6 +380,8 @@ void Singame3::init()
 	minGu.init();
 	m_skybox.initTexture();
 	LaunchBox_Ball();
+
+
 }
 
 void Singame3::exit()
@@ -436,7 +440,10 @@ void Singame3::render()
 	world.Step(timeStep);
 
 	for (int i = 0; i < numBodies; ++i)
+	{
+
 		DrawBody(bodies + i);
+	}
 
 	for (int i = 0; i < numJoints; ++i)
 		DrawJoint(joints + i);
