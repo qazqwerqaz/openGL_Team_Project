@@ -32,7 +32,7 @@ void Ball::init()
 void Ball::Draw(Body& Box_Ball)
 {
 	glPushMatrix();
-	glTranslatef(Box_Ball.position.x, Pos.y, Box_Ball.position.y);
+	glTranslatef(Box_Ball.position.x, Pos.y - 10, Box_Ball.position.y);
 	glColor3f(1, 0, 0);
 
 	glPushMatrix();

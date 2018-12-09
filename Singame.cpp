@@ -76,7 +76,8 @@ namespace {
 		}
 
 		glPopMatrix();
-		glMultMatrixf(&curMatrix);
+
+		//glMultMatrixf(&curMatrix);
 
 		float y = Box_size;
 		//abs(v1.x - v3.x);
@@ -184,7 +185,7 @@ namespace {
 		if (!Box_Ball)
 		{
 			Box_Ball = bodies + numBodies;
-			Box_Ball->Set(Vec2(30.0f, 30.0f), 10);
+			Box_Ball->Set(Vec2(40.0f, 40.0f), 10);
 			Box_Ball->friction = 0.2f;
 			world.Add(Box_Ball);
 			++numBodies;
@@ -201,14 +202,14 @@ namespace {
 
 		//벽그리기
 		{
-			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
+			b->Set(Vec2(10.0f, 1000.0f), FLT_MAX);
 			b->friction = 0.2f;
 			b->position.Set(500.0f, 0.0f * b->width.y);
 			b->rotation = 0.0f;
 			world.Add(b);
 			++b; ++numBodies;
 
-			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
+			b->Set(Vec2(10.0f, 1000.0f), FLT_MAX);
 			b->friction = 0.2f;
 			b->position.Set(-500.0f, 0.0f * b->width.y);
 			b->rotation = 0.0f;
@@ -222,7 +223,7 @@ namespace {
 			world.Add(b);
 			++b; ++numBodies;
 
-			b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
+			b->Set(Vec2(1000.0f, 10.0f), FLT_MAX);
 			b->friction = 0.2f;
 			b->position.Set(0.0f, -500.0f * b->width.y);
 			b->rotation = 0.0f;
@@ -379,6 +380,15 @@ void Singame::render()
 		glGetFloatv(GL_MODELVIEW_MATRIX, &curMatrix);
 		aw.Draw(*Box_Ball);
 
+
+		world.Step(timeStep);
+
+		for (int i = 0; i < numBodies; ++i)
+			DrawBody(bodies + i);
+
+		for (int i = 0; i < numJoints; ++i)
+			DrawJoint(joints + i);
+
 		minGu.Draw();
 	}
 	glPopMatrix();
@@ -387,15 +397,9 @@ void Singame::render()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(0.0f, -7.0f, -25.0f);
+	
 
-	world.Step(timeStep);
-
-	for (int i = 0; i < numBodies; ++i)
-		DrawBody(bodies + i);
-
-	for (int i = 0; i < numJoints; ++i)
-		DrawJoint(joints + i);
+	
 
 }
 
