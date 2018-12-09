@@ -6,10 +6,8 @@
 #include "Body.h"
 #include "Joint.h"
 
-
-
 namespace {
-	GLuint texture[1];
+	GLuint texture[2];
 	OBJLoader a;
 
 	Body bodies[200];
@@ -421,6 +419,7 @@ void Singame4::init()
 	rotation_z = 0;
 
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
+	texture[1] = a.LoadTexture("Ball.Bmp", 256, 256);
 
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
@@ -446,11 +445,12 @@ void Singame4::init()
 
 void Singame4::exit()
 {
+	//glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHT1);
+	//a.FreeTexture(0);
+	//a.FreeTexture(1);
+
 	world.Clear();
-	glDisable(GL_LIGHTING);
-	glDisable(GL_LIGHT0);
-	glDisable(GL_LIGHT1);
-	glDisable(GL_COLOR_MATERIAL);
 	delete m_Camera;
 }
 
@@ -478,11 +478,6 @@ void Singame4::render()
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
 	glPushMatrix();
 	glColor3f(1, 0, 0);
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
@@ -490,7 +485,7 @@ void Singame4::render()
 	glPopMatrix();
 
 	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
-	GLfloat diffuseLight[] = { 1, 0, 1, 1 };
+	GLfloat diffuseLight[] = { 1, 0.6, 0.2, 1 };
 	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };
 
@@ -526,11 +521,16 @@ void Singame4::render()
 		for (int i = 0; i < numJoints; ++i)
 			DrawJoint(joints + i);
 
+		//////////////////////////////////////////////////////////ÁÂÇ¥
 		glPushMatrix();
-		glColor3f(0, 0, 1);
 		glTranslatef(0, -20, 0);
-		glScalef(1000, 1, 1000);
-		glutSolidCube(1);
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0, 0); glVertex3f(-500, 1, -500);
+		glTexCoord2f(0, 1); glVertex3f(-500, 1, 500);
+		glTexCoord2f(1, 1); glVertex3f(500, 1, 500);
+		glTexCoord2f(1, 0); glVertex3f(500, 1, -500);
+		glEnd();
 		glPopMatrix();
 	}
 	glPopMatrix();

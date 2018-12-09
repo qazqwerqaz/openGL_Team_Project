@@ -435,9 +435,8 @@ void Singame2::init()
 	InitDemo();
 
 	m_Camera = new Camera;
-	//glutFullScreen();
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	rotation_x = 0;
 	rotation_z = 0;
 
@@ -472,11 +471,6 @@ void Singame2::render()
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-	//glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
-	//glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);
@@ -484,7 +478,6 @@ void Singame2::render()
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
-	//glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, gray);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 	glMateriali(GL_FRONT, GL_SHININESS, Specular);
 

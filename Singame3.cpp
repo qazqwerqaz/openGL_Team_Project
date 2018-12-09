@@ -299,7 +299,6 @@ namespace
 		{
 			for (int j = 0; j < 6; ++j)
 			{
-				printf("%d  ",Space[i][j]);
 				if (Space[i][j] != 1)
 				{
 					b->Set(Vec2(Box_size + 10, Box_size * 2), FLT_MAX);
@@ -309,7 +308,6 @@ namespace
 					++b; ++numBodies;
 				}
 			}
-			printf("\n");
 		}
 	}
 
@@ -341,38 +339,23 @@ void Singame3::init()
 		inputer = rand() % 6;
 		Space[i][inputer] = 1;
 	}
-	for (int i = 0; i < 20; ++i)
-	{
-		for (int j = 0; j < 6; ++j)
-		{
-			printf("%d  ", Space[i][j]);
-		}
-		printf("\n");
-	}
+
 	InitDemo();
 		
-	
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
 	rotation_z = 0;
 
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
-	texture[1] = a.LoadTexture("Grass.bmp", 1024, 1024);
+	texture[1] = a.LoadTexture("Ball.bmp", 256, 256);
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
 	m_Camera->setSensitivity(1.f);
 
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-	//glEnable(GL_CULL_FACE);
-	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
-
-
 	//À§Ä¡
 	aw.init();
 	minGu.init();
@@ -384,6 +367,10 @@ void Singame3::init()
 
 void Singame3::exit()
 {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT1);
+	//a.FreeTexture(0);
+	//a.FreeTexture(1);
 	world.Clear();
 	delete m_Camera;
 }
@@ -399,11 +386,6 @@ void Singame3::render()
 {
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
@@ -446,8 +428,6 @@ void Singame3::render()
 		minGu.Draw();
 	}
 	glPopMatrix();
-
-
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

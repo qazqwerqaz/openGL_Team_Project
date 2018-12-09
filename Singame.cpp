@@ -265,7 +265,6 @@ void Singame::init()
 
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
@@ -292,11 +291,11 @@ void Singame::init()
 
 void Singame::exit()
 {
-	a.FreeTexture(0);
-	a.FreeTexture(1);
+	//a.FreeTexture(0);
+	//a.FreeTexture(1);
 
 	glDisable(GL_LIGHTING);
-	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
 	delete m_Camera;
 }
 
