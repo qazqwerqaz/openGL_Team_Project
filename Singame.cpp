@@ -378,9 +378,7 @@ void Singame::render()
 	glPopMatrix();
 
 
-	///////////////////////////////////////////
-	//¿¡ÈÞ½Ã¹ß
-	///////////////////////////////////////////
+	glColor3f(1, 0, 0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(0.0f, -7.0f, -25.0f);

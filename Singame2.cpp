@@ -461,6 +461,8 @@ void Singame2::init()
 
 void Singame2::exit()
 {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
 	world.Clear();
 	delete m_Camera;
 }

@@ -8,7 +8,7 @@
 
 namespace
 {
-	GLuint texture[1];
+	GLuint texture[2];
 	OBJLoader a;
 
 	Body bodies[200];
@@ -41,6 +41,16 @@ namespace
 
 	bool Viewpoint = true;
 
+	void Ground()
+	{
+		glBegin(GL_QUADS);
+		glTexCoord2f(0, 0); glVertex3f(-250, 1, -250);
+		glTexCoord2f(0, 1); glVertex3f(-250, 1, 250);
+		glTexCoord2f(1, 1); glVertex3f(250, 1, 250);
+		glTexCoord2f(1, 0); glVertex3f(250, 1, -250);
+		glEnd();
+	}
+
 	void DrawBody(Body* body)
 	{
 		Mat22 R(body->rotation);
@@ -62,6 +72,17 @@ namespace
 		glMultMatrixf(&curMatrix);
 
 		float y = Box_size;
+
+		glPushMatrix();
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+		glTranslatef(1000, -45, 00);
+		for (int i = 0; i < 50; ++i)
+		{
+			glTranslatef(-500, 0, 0);
+			Ground();
+		}
+		glPopMatrix();
+
 		//abs(v1.x - v3.x);
 		if (body != Box_Ball)
 		{
@@ -149,7 +170,6 @@ namespace
 		bomb->velocity = -1.5f * bomb->position;
 		bomb->angularVelocity = Random(-20.0f, 20.0f);
 	}
-
 	void LaunchBomb1()
 	{
 		if (!bomb1)
@@ -231,7 +251,6 @@ namespace
 		bomb5->angularVelocity = Random(-20.0f, 20.0f);
 	}
 
-
 	void LaunchBox_Ball()
 	{
 		if (!Box_Ball)
@@ -256,24 +275,23 @@ namespace
 		Vec2 x(-6.0f, 0.75f);
 		Vec2 y;
 
+		for (int i = 0; i < 100; ++i)
+		{
+			b->Set(Vec2(Box_size + 10, Box_size + 10), FLT_MAX);
+			b->friction = 0.5f;
+			b->position = Vec2(500 + -70 * i, -215);
+			world.Add(b);
+			++b; ++numBodies;
+		}
+		for (int i = 0; i < 100; ++i)
+		{
+			b->Set(Vec2(Box_size + 10, Box_size + 10), FLT_MAX);
+			b->friction = 0.5f;
+			b->position = Vec2(500 + -70 * i, +215);
+			world.Add(b);
+			++b; ++numBodies;
+		}
 
-		b->Set(Vec2(Box_size, Box_size), FLT_MAX);
-		b->friction = 0.5f;
-		b->position = Vec2(100, 100);
-		world.Add(b);
-		++b; ++numBodies;
-
-		b->Set(Vec2(Box_size, Box_size), 10.0f);
-		b->friction = 0.5f;
-		b->position = Vec2(200, 100);
-		world.Add(b);
-		++b; ++numBodies;
-
-		b->Set(Vec2(Box_size, Box_size), 10.0f);
-		b->friction = 0.5f;
-		b->position = Vec2(100, 100);
-		world.Add(b);
-		++b; ++numBodies;
 	}
 
 	void InitDemo()
@@ -303,14 +321,14 @@ void Singame3::init()
 
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
 	rotation_z = 0;
 
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
-
+	texture[1] = a.LoadTexture("Grass.bmp", 1024, 1024);
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
 	m_Camera->setSensitivity(1.f);
@@ -419,7 +437,19 @@ void Singame3::keyboard(int key, bool pressed, int x, int y, bool special)
 		case 'n':
 			m_Framework->toScene("Ingame4"); break;
 			break;
-
+		case '=':
+			fullmode = (fullmode + 1) % 2;
+			if (fullmode == 1)
+			{
+				printf("FullMode On \n");
+				glutFullScreen();
+			}
+			else
+			{
+				glutPositionWindow(0, 0);
+				glutReshapeWindow(1200, 900);
+			}
+			break;
 		default:
 			break;
 		}
