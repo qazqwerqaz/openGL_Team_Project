@@ -446,11 +446,6 @@ void Singame2::init()
 	m_Camera->setSensitivity(1.f);
 
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
-
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-	//glEnable(GL_CULL_FACE);
-	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
 	//À§Ä¡
 	aw.init();
@@ -477,12 +472,10 @@ void Singame2::render()
 	m_Camera->ready();
 	m_skybox.skybox(Vector3(m_Camera->getEye()));
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
-
+	//glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
+	//glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+	//glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
+	//glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	glPushMatrix();
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);

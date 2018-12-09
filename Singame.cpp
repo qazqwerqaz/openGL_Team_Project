@@ -6,8 +6,6 @@
 #include "Body.h"
 #include "Joint.h"
 
-
-
 namespace {
 	GLuint texture[2];
 	OBJLoader a;
@@ -256,13 +254,10 @@ Singame::Singame()
 
 }
 
-
 Singame::~Singame()
 {
 
 }
-
-
 
 void Singame::init()
 {
@@ -270,7 +265,7 @@ void Singame::init()
 
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
@@ -302,8 +297,6 @@ void Singame::exit()
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
-	glDisable(GL_LIGHT1);
-	glDisable(GL_COLOR_MATERIAL);
 	delete m_Camera;
 }
 
@@ -332,7 +325,7 @@ void Singame::render()
 	glPopMatrix();
 
 	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
-	GLfloat diffuseLight[] = { 1, 0, 0, 1 };
+	GLfloat diffuseLight[] = { 1, 0.5, 0, 1 };
 	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };
 
@@ -378,6 +371,7 @@ void Singame::render()
 	glPopMatrix();
 
 
+	/*
 	glColor3f(1, 0, 0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -386,8 +380,6 @@ void Singame::render()
 	std::string str;
 
 	str = abs(int(Box_Ball->velocity.x + Box_Ball->velocity.y));
-
-
 
 	float count = 0.0;
 	for (int s = 1; s <= 100; s *= 10)
@@ -400,9 +392,7 @@ void Singame::render()
 
 		count -= 0.5;
 	}
-
-	
-
+	*/
 }
 
 void Singame::reshape(int w, int h)

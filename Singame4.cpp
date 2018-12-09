@@ -414,7 +414,7 @@ void Singame4::init()
 
 	m_Camera = new Camera;
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	rotation_x = 0;
@@ -490,10 +490,9 @@ void Singame4::render()
 	glPopMatrix();
 
 	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
-	GLfloat diffuseLight[] = { 1, 0, 0, 1 };
+	GLfloat diffuseLight[] = { 1, 0, 1, 1 };
 	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };
-
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight0);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);

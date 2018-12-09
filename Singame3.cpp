@@ -25,7 +25,6 @@ namespace
 	Body* bomb5 = NULL;
 	Body* bomb6 = NULL;
 
-
 	Body* Box_Ball = NULL;
 
 	float timeStep = 1.0f / 60.0f;
@@ -312,7 +311,6 @@ namespace
 			}
 			printf("\n");
 		}
-
 	}
 
 	void InitDemo()
@@ -411,6 +409,24 @@ void Singame3::render()
 	glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
 	glutSolidCube(10);
 	glPopMatrix();
+
+	GLfloat ambientLight0[] = { 0.25f, 0.25f, 0.25f, 0.25f };
+	GLfloat diffuseLight[] = { 1, 0, 0, 1 };
+	GLfloat lit_spc[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat lightPos0[] = { Box_Ball->position.x,  20,  Box_Ball->position.y, 1.0f };
+
+	glPushMatrix();
+	glColor3f(1, 0, 0);
+	glTranslatef(Box_Ball->position.x, 20, Box_Ball->position.y);
+	glutWireSphere(5, 25, 25);
+	glPopMatrix();
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight0);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, lit_spc);
+	glMateriali(GL_LIGHT1, GL_SHININESS, 64);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos0);
+	glEnable(GL_LIGHT1);
 
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
