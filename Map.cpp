@@ -41,11 +41,11 @@ void Map::Draw()
 	}
 	glPopMatrix();*/
 
-	glColor3f(1.f, 1.f, 0.f);
-	glPushMatrix();
-	glTranslatef(0, -45, 0);
-	glScalef(1000.f, 1.f, 1000.f);
-	glutSolidCube(1);
+	//glColor3f(1.f, 1.f, 0.f);
+	//glPushMatrix();
+	//glTranslatef(0, -45, 0);
+	//glScalef(1000.f, 1.f, 1000.f);
+	//glutSolidCube(1);
 
 	glPopMatrix();
 	//glEnd();

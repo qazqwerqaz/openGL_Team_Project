@@ -14,11 +14,15 @@ Ball::~Ball()
 {
 }
 
+GLuint texture[1];
+OBJLoader a;
+
 void Ball::init()
 {
 	a.initTexture();
 	//a.loadOBJ("Ball.obj", vertices, uvs, normals);
 
+	texture[0] = a.LoadTexture("Ball.bmp", 256, 256);
 	for (auto& a : vertices)
 	{
 		a.x *= 3; a.y *= 3, a.z *= 3;
@@ -34,10 +38,19 @@ void Ball::Draw(Body& Box_Ball)
 	glPushMatrix();
 	{
 		glMultMatrixf(&m_QuaternionRotation_X.getRotationMatrix());
-
-		glutSolidSphere(20, 30, 30);
-		glColor3f(1, 1, 1);
-		glutWireSphere(20, 30, 30);
+		{
+			glEnable(GL_TEXTURE_GEN_S);
+			glEnable(GL_TEXTURE_GEN_T);
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+			glBindTexture(GL_TEXTURE_2D, texture[0]);
+			glColor3f(1, 1, 1);
+			glutSolidSphere(20, 30, 30);
+			glDisable(GL_TEXTURE_GEN_S);
+			glDisable(GL_TEXTURE_GEN_T);
+		}
+		glColor3f(0, 0, 0);
+		glutWireSphere(20, 10, 30);
 	}
 	glPopMatrix();
 	glEnd();

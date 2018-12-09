@@ -251,36 +251,7 @@ namespace
 
 	void Demo5(Body* b, Joint* j)
 	{
-		//벽그리기
-		{
-			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(500.0f, 0.0f * b->width.y);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
 
-			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(-500.0f, 0.0f * b->width.y);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(0.0f, 500.0f * b->width.y);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-
-			b->Set(Vec2(1000.0f, 1.0f), FLT_MAX);
-			b->friction = 0.2f;
-			b->position.Set(0.0f, -500.0f * b->width.y);
-			b->rotation = 0.0f;
-			world.Add(b);
-			++b; ++numBodies;
-		}
 
 		Vec2 x(-6.0f, 0.75f);
 		Vec2 y;

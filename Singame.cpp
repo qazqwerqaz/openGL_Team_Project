@@ -9,7 +9,7 @@
 
 
 namespace {
-	GLuint texture[1];
+	GLuint texture[2];
 	OBJLoader a;
 
 	Body bodies[200];
@@ -80,6 +80,17 @@ namespace {
 
 		float y = Box_size;
 		//abs(v1.x - v3.x);
+		glPushMatrix();
+		glTranslatef(0, -45, 0);
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0, 0); glVertex3f(-500, 1, -500);
+		glTexCoord2f(0, 1); glVertex3f(-500, 1, 500);
+		glTexCoord2f(1, 1); glVertex3f(500, 1, 500);
+		glTexCoord2f(1, 0); glVertex3f(500, 1, -500);
+		glEnd();
+		glPopMatrix();
+
 		if (body != Box_Ball)
 		{
 
@@ -140,6 +151,7 @@ namespace {
 
 		glPushMatrix();
 		glMultMatrixf(&curMatrix);
+		glColor3f(1, 0, 0);
 		glBegin(GL_LINES);
 		glVertex3f(x1.x, 0.0f, x1.y);
 		glVertex3f(p1.x, 0.0f, p1.y);
@@ -186,6 +198,7 @@ namespace {
 
 	void Demo5(Body* b, Joint* j)
 	{
+
 		//벽그리기
 		{
 			b->Set(Vec2(1.0f, 1000.0f), FLT_MAX);
@@ -279,7 +292,7 @@ void Singame::init()
 	rotation_z = 0;
 
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
-
+	texture[1] = a.LoadTexture("Grass.bmp", 1024, 1024);
 	m_Camera->setDistance(200.f);
 	m_Camera->setPerspective(60.f, 10.f, 7000.f);
 	m_Camera->setSensitivity(1.f);
@@ -290,7 +303,6 @@ void Singame::init()
 	//glShadeModel(GL_FLAT);
 	glShadeModel(GL_SMOOTH);
 
-
 	//위치
 	aw.init();
 	minGu.init();
@@ -300,6 +312,9 @@ void Singame::init()
 
 void Singame::exit()
 {
+	a.FreeTexture(0);
+	a.FreeTexture(1);
+
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHT1);
@@ -428,8 +443,6 @@ void Singame::keyboard(int key, bool pressed, int x, int y, bool special)
 		}
 	else
 		aw.move(' ', m_Camera, *Box_Ball, pressed);
-
-
 }
 
 void Singame::mouse(int button, bool pressed, int x, int y)
