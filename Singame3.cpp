@@ -6,6 +6,7 @@
 #include "Body.h"
 #include "Joint.h"
 
+
 namespace
 {
 	GLuint texture[2];
@@ -126,7 +127,26 @@ namespace
 
 			glEnd();
 		}
+		
+		
 		glPopMatrix();
+
+		if (Box_Ball == body) return;
+		if (bomb  == body )	return;
+		if (bomb1 == body )	return;
+		if (bomb2 == body )	return;
+		if (bomb3 == body )	return;
+		if (bomb4 == body )	return;
+		if (bomb5 == body )	return;
+
+		
+			if (Box_Ball->position.x - 35 > body->position.x + 10) return;
+			if(Box_Ball->position.x + 35 < body->position.x - 10) return;
+			if(Box_Ball->position.y + 35 < body->position.y - 20) return;
+			if(Box_Ball->position.y - 35 > body->position.y + 20) return;
+
+			Box_Ball->position.Set(300, 0);
+			Box_Ball->velocity.Set(0, 0);
 	}
 
 	void DrawJoint(Joint* joint)
@@ -184,7 +204,7 @@ namespace
 			++numBodies;
 		}
 
-		bomb1->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
+		bomb1->position.Set(Random(-400.0f + Box_Ball->position.x, 400.0f+ Box_Ball->position.y), Random(-400.0f, 400.0f));
 		bomb1->rotation = Random(-1.5f, 1.5f);
 		bomb1->velocity = -1.5f * bomb1->position;
 		bomb1->angularVelocity = Random(-20.0f, 20.0f);
@@ -200,7 +220,8 @@ namespace
 			++numBodies;
 		}
 
-		bomb2->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
+		bomb2->position.Set(Random(-400.0f + Box_Ball->position.x, 400.0f + Box_Ball->position.y), Random(-400.0f, 400.0f));
+
 		bomb2->rotation = Random(-1.5f, 1.5f);
 		bomb2->velocity = -1.5f * bomb2->position;
 		bomb2->angularVelocity = Random(-20.0f, 20.0f);
@@ -216,7 +237,8 @@ namespace
 			++numBodies;
 		}
 
-		bomb3->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
+		bomb3->position.Set(Random(-400.0f + Box_Ball->position.x, 400.0f + Box_Ball->position.y), Random(-400.0f, 400.0f));
+
 		bomb3->rotation = Random(-1.5f, 1.5f);
 		bomb3->velocity = -1.5f * bomb3->position;
 		bomb3->angularVelocity = Random(-20.0f, 20.0f);
@@ -232,7 +254,8 @@ namespace
 			++numBodies;
 		}
 
-		bomb4->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
+		bomb4->position.Set(Random(-400.0f + Box_Ball->position.x, 400.0f + Box_Ball->position.y), Random(-400.0f, 400.0f));
+
 		bomb4->rotation = Random(-1.5f, 1.5f);
 		bomb4->velocity = -1.5f * bomb4->position;
 		bomb4->angularVelocity = Random(-20.0f, 20.0f);
@@ -248,7 +271,8 @@ namespace
 			++numBodies;
 		}
 
-		bomb5->position.Set(Random(-400.0f, 400.0f), Random(-400.0f, 400.0f));
+		bomb5->position.Set(Random(-400.0f + Box_Ball->position.x, 400.0f + Box_Ball->position.y), Random(-400.0f, 400.0f));
+
 		bomb5->rotation = Random(-1.5f, 1.5f);
 		bomb5->velocity = -1.5f * bomb5->position;
 		bomb5->angularVelocity = Random(-20.0f, 20.0f);

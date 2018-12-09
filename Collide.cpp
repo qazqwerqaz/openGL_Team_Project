@@ -11,6 +11,7 @@
 
 #include "Arbiter.h"
 #include "Body.h"
+#include "Collide.h"
 
 // Box vertex and edge numbering:
 //
@@ -23,6 +24,8 @@
 //    |        |
 //   v3 ------ v4
 //        e3
+
+
 
 enum Axis
 {
@@ -310,7 +313,7 @@ int Collide(Contact* contacts, Body* bodyA, Body* bodyB)
 	// Now clipPoints2 contains the clipping points.
 	// Due to roundoff, it is possible that clipping removes all points.
 
-	int numContacts = 0;
+	numContacts = 0;
 	for (int i = 0; i < 2; ++i)
 	{
 		float separation = Dot(frontNormal, clipPoints2[i].v) - front;

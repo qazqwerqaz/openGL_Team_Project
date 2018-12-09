@@ -8,6 +8,8 @@
 #include "OBJLoader.h"
 
 
+
+
 class Singame3 :
 	public GLScene
 {
