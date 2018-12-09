@@ -265,7 +265,7 @@ namespace
 		if (!Box_Ball)
 		{
 			Box_Ball = bodies + numBodies;
-			Box_Ball->Set(Vec2(30.0f, 30.0f), 50.f);
+			Box_Ball->Set(Vec2(40.0f, 40.0f), 50.f);
 			Box_Ball->friction = 0.2f;
 			world.Add(Box_Ball);
 			++numBodies;
@@ -455,6 +455,7 @@ void Singame2::init()
 
 void Singame2::exit()
 {
+	world.Clear();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 	world.Clear();

@@ -142,8 +142,8 @@ namespace
 		
 			if (Box_Ball->position.x - 35 > body->position.x + 10) return;
 			if(Box_Ball->position.x + 35 < body->position.x - 10) return;
-			if(Box_Ball->position.y + 35 < body->position.y - 20) return;
-			if(Box_Ball->position.y - 35 > body->position.y + 20) return;
+			if(Box_Ball->position.y + 35 < body->position.y - 15) return;
+			if(Box_Ball->position.y - 35 > body->position.y + 15) return;
 
 			Box_Ball->position.Set(300, 0);
 			Box_Ball->velocity.Set(0, 0);
@@ -283,7 +283,7 @@ namespace
 		if (!Box_Ball)
 		{
 			Box_Ball = bodies + numBodies;
-			Box_Ball->Set(Vec2(30.0f, 30.0f), 10.f);
+			Box_Ball->Set(Vec2(20.0f, 20.0f), 20.f);
 			Box_Ball->friction = 0.2f;
 			world.Add(Box_Ball);
 			++numBodies;
