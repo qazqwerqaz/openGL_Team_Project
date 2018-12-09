@@ -295,7 +295,7 @@ void Singame::exit()
 {
 	//a.FreeTexture(0);
 	//a.FreeTexture(1);
-
+	world.Clear();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT1);
 	delete m_Camera;
