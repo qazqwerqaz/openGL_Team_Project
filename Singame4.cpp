@@ -289,9 +289,6 @@ namespace {
 		glPushMatrix();
 
 
-
-		glMultMatrixf(&curMatrix);
-
 		float y = 200;
 		//abs(v1.x - v3.x);
 		if (body != Box_Ball)
@@ -521,6 +518,14 @@ void Singame4::render()
 		if (Viewpoint)
 			aw.Draw(*Box_Ball);
 
+		world.Step(timeStep);
+
+		for (int i = 0; i < numBodies; ++i)
+			DrawBody(bodies + i);
+
+		for (int i = 0; i < numJoints; ++i)
+			DrawJoint(joints + i);
+
 		glPushMatrix();
 		glColor3f(0, 0, 1);
 		glTranslatef(0, -20, 0);
@@ -536,13 +541,7 @@ void Singame4::render()
 	glLoadIdentity();
 	glTranslatef(0.0f, -7.0f, -25.0f);
 
-	world.Step(timeStep);
-
-	for (int i = 0; i < numBodies; ++i)
-		DrawBody(bodies + i);
-
-	for (int i = 0; i < numJoints; ++i)
-		DrawJoint(joints + i);
+	
 
 }
 
