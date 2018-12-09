@@ -63,9 +63,9 @@ void Ball::update(float time, std::vector<Vector3>& other, std::vector<Vector3>&
 	if (Sound == 1)
 	{
 		if (Count == 0)
-			sndPlaySound(L"Sand.wav", SND_ASYNC);
+			sndPlaySound(L"Soil.wav", SND_ASYNC);
 		Count += time;
-		if (Count > 0.9)
+		if (Count > 1.79)
 		{
 			Count = 0;
 			Sound = 0;
