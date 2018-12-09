@@ -1,6 +1,11 @@
 #pragma once
 #include "LinearMath.h"
 
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
+#include "Mmsystem.h"
+#include "Digitalv.h"
+
 class OBJLoader
 {
 public:
@@ -24,5 +29,14 @@ public:
 	void FreeTexture(GLuint texture);
 private:
 	GLuint texture[7];
+
+
+	DWORD LoadWAV(HWND hWnd, LPCTSTR lpszWave);
+	// 사운드 로드
+	MCI_OPEN_PARMS     mciOpenParms;
+	MCI_PLAY_PARMS     mciPlayParms;
+	MCI_STATUS_PARMS   mciStatus;
+
+	UINT wDeviceID = 0;
 };
 

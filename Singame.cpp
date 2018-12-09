@@ -9,6 +9,7 @@
 namespace {
 	GLuint texture[2];
 	OBJLoader a;
+	//HWND hwnd;
 
 	Body bodies[200];
 	Joint joints[100];
@@ -270,6 +271,7 @@ void Singame::init()
 	rotation_x = 0;
 	rotation_z = 0;
 
+	//Music1 = LoadWAV(hwnd, L"Linda_March.mp3");
 	texture[0] = a.LoadTexture("Box.Bmp", 256, 256);
 	texture[1] = a.LoadTexture("Grass.bmp", 1024, 1024);
 	m_Camera->setDistance(200.f);
