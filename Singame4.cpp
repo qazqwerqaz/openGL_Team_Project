@@ -446,6 +446,7 @@ void Singame4::init()
 
 void Singame4::exit()
 {
+	world.Clear();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHT1);
@@ -582,7 +583,7 @@ void Singame4::keyboard(int key, bool pressed, int x, int y, bool special)
 			}
 			break;
 		case 'n':
-			m_Framework->toScene("Ingame2"); break;
+			m_Framework->toScene("Ingame1"); break;
 		case '1':
 			Viewpoint = !Viewpoint;
 			break;

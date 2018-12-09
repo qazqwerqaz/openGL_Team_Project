@@ -331,6 +331,7 @@ void Singame3::init()
 
 void Singame3::exit()
 {
+	world.Clear();
 	delete m_Camera;
 }
 
